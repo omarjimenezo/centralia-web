@@ -1,0 +1,25 @@
+.login-container {
+    display: flex;
+    justify-content: center;
+    height: 100%;
+    align-items: center;
+    
+    .login-wrapper {
+        max-width: 20em;
+        text-align: center;
+
+        .login-image {
+            padding: 2em;
+            width: 50%;
+            height: 50%;
+        }
+    }
+}
+
+.mat-form-field {
+    width: 80%;
+}
+
+.mat-raised-button {
+    width: 100%;
+}

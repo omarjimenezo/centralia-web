@@ -1,0 +1,49 @@
+<div class="login-container">
+
+  <mat-spinner *ngIf="loading"></mat-spinner>
+
+  <mat-card color="primary" class="login-wrapper" *ngIf="!loading">
+    <mat-card-title>Iniciar Sesión</mat-card-title>
+
+    <mat-card-content>
+      <img class="login-image" src="./assets/img/auth/empty_user.png" />
+      <form [formGroup]="form">
+        <mat-form-field class="example-full-width" appearance="fill">
+          <mat-label>Email</mat-label>
+          <input
+            matInput
+            placeholder="ejemplo@dominio.com"
+            value=""
+            formControlName="email"
+          />
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Contraseña</mat-label>
+          <input
+            matInput
+            placeholder="Ingrese contraseña"
+            value=""
+            formControlName="password"
+          />
+        </mat-form-field>
+      </form>
+    </mat-card-content>
+
+    <mat-card-actions>
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="login()"
+        [disabled]="form.invalid"
+      >
+        Entrar
+      </button>
+      <br />
+      <br />
+      <button mat-button (click)="forgotPassword()">
+        Olvide mi contraseña
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</div>
