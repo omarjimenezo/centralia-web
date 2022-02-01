@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 export class LoginComponent implements OnInit {
   public form: FormGroup;
   public loading: boolean = false;
+  public hidePassword: boolean = true;
 
   constructor(
     private _fb: FormBuilder,
@@ -18,7 +19,7 @@ export class LoginComponent implements OnInit {
     private _router: Router,
     ) {
     this.form = this._fb.group({
-      email: ['', [Validators.email, Validators.required]],
+      user: ['', Validators.required],
       password: ['', Validators.required],
     });
   }
@@ -28,10 +29,10 @@ export class LoginComponent implements OnInit {
   public login(): void {
     if (this.form.valid) {
       console.log(this.form);
-      const email = this.form.value.email;
+      const user = this.form.value.user;
       const password = this.form.value.password;
 
-      (email === 'test@test.com' && password === 'Test123!')
+      (user === 'client' && password === 'Test123!')
         ? this.confirmLogin()
         : this.showError('Datos invalidos');
     }
@@ -45,7 +46,7 @@ export class LoginComponent implements OnInit {
     this.loading = true;
     setTimeout(() => {
       this.loading = false
-      this._router.navigate(['dashboard']);
+      this._router.navigate(['products']);
     }, 5000)
   }
 

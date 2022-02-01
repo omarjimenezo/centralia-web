@@ -1,16 +1,24 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './auth/components/login/login.component';
-import { DashboardComponent } from './client/components/dashboard/dashboard.component';
+import { NotFoundComponent } from './auth/components/not-found/not-found.component';
 
 const routes: Routes = [
-  {path: '', redirectTo: 'login', pathMatch: 'full'},
-  {path: 'login', component: LoginComponent},
-  {path: 'dashboard', component: DashboardComponent},
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
+
+  { path: 'login', component: LoginComponent },
+
+  {
+    path: 'client',
+    loadChildren: () =>
+      import('./client/client.module').then((m) => m.ClientModule),
+  },
+
+  { path: '**', component: NotFoundComponent }, // Wildcard route for a 404 page
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

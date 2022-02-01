@@ -1,0 +1,12 @@
+[
+    {
+        "label": "Productos",
+        "icon": "shopping_cart",
+        "route": "/client/products"
+    },
+    {
+        "label": "Panel de Control",
+        "icon": "dashboard",
+        "route": "/client/dashboard"
+    }
+]

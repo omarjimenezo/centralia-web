@@ -1,5 +1,4 @@
 <div class="login-container">
-
   <mat-spinner *ngIf="loading"></mat-spinner>
 
   <mat-card color="primary" class="login-wrapper" *ngIf="!loading">
@@ -7,25 +6,25 @@
 
     <mat-card-content>
       <img class="login-image" src="./assets/img/auth/empty_user.png" />
+
       <form [formGroup]="form">
         <mat-form-field class="example-full-width" appearance="fill">
-          <mat-label>Email</mat-label>
-          <input
-            matInput
-            placeholder="ejemplo@dominio.com"
-            value=""
-            formControlName="email"
-          />
+          <mat-label>Usuario</mat-label>
+          <input matInput value="" formControlName="user" />
         </mat-form-field>
 
         <mat-form-field appearance="fill">
           <mat-label>Contraseña</mat-label>
-          <input
-            matInput
-            placeholder="Ingrese contraseña"
-            value=""
-            formControlName="password"
-          />
+          <input matInput [type]="hidePassword ? 'password' : 'text'" formControlName="password"/>
+          <button
+            mat-icon-button
+            matSuffix
+            (click)="hidePassword = !hidePassword"
+            [attr.aria-label]="'Hide password'"
+            [attr.aria-pressed]="hidePassword"
+          >
+            <mat-icon>{{ hidePassword ? "visibility_off" : "visibility" }}</mat-icon>
+          </button>
         </mat-form-field>
       </form>
     </mat-card-content>

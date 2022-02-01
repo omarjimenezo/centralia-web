@@ -1,0 +1,29 @@
+<mat-toolbar color="primary">
+    <button mat-icon-button aria-label="icon-button with menu icon">
+        <mat-icon>menu</mat-icon>
+    </button>
+
+    <span>Centralia</span>
+
+    <span class="nav-spacer"></span>
+
+    <button
+        mat-icon-button
+        aria-label="icon-button with heart icon"
+        [routerLink]="[item.route]"
+        routerLinkActive="router-link-active"
+        *ngFor="let item of navMenu"
+    >
+        <mat-icon>{{ item.icon }}</mat-icon>
+    </button>
+
+    <span class="nav-spacer"></span>
+
+    <button
+        mat-icon-button
+        aria-label="icon-button with logout icon"
+        (click)="onLogoutClick()"
+    >
+        <mat-icon>logout</mat-icon>
+    </button>
+</mat-toolbar>
