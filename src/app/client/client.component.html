@@ -1,3 +1,23 @@
-<nav-bar></nav-bar>
+<nav-bar (menuOpen)="sidenav.toggle()"></nav-bar>
 
-<router-outlet></router-outlet>
+<mat-sidenav-container class="main-container">
+    <mat-sidenav
+        #sidenav
+        mode="side"
+        class="mat-elevation-z8"
+        [(opened)]="opened"
+        (opened)="events.push('open!')"
+        (closed)="events.push('close!')"
+    >
+        <side-bar></side-bar>
+    </mat-sidenav>
+
+    <mat-sidenav-content>
+        <div class="content-container mat-elevation-z8">
+            
+                
+              
+            <router-outlet></router-outlet>
+        </div>
+    </mat-sidenav-content>
+</mat-sidenav-container>

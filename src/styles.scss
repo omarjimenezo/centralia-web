@@ -1,4 +1,67 @@
-/* You can add global styles to this file, and also import other style files */
+@import 'colors.scss'; 
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+    height: 100%;
+}
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+
+mat-sidenav {
+    margin: 16px;
+    width: 200px;
+    border-right: none;
+    border-radius: 10px;
+    padding: 16px;
+    text-align: center;
+}
+
+.mat-drawer {
+    background: $primary;
+    color: $white;
+}
+
+.content-container {
+    border-radius: 10px;
+    margin: 16px;
+    margin-left: 20px;
+    // display: flex;
+    align-items: center;
+    font-size: 2rem;
+    color: lightgray;
+    // height: -webkit-fill-available;
+}
+
+mat-sidenav-container {
+    height: calc(100vh - 65px);
+}
+
+.title-toolbar {
+    background-color: $light-gray;
+}
+
+.menu-button {
+    width: 100%;
+    display: flex !important;
+    align-items: center;
+    justify-content: flex-start;
+    font-size: 1rem;
+
+    mat-icon {
+        margin-right: 8px;
+    }
+}
+
+.avatar {
+    margin-top: 16px;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+}
+
+.nav-spacer {
+    flex: 1 1 auto;
+  }

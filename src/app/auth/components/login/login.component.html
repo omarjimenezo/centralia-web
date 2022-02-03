@@ -1,11 +1,11 @@
 <div class="login-container">
   <mat-spinner *ngIf="loading"></mat-spinner>
 
-  <mat-card color="primary" class="login-wrapper" *ngIf="!loading">
+  <mat-card color="primary" class="login-wrapper  mat-elevation-z8" *ngIf="!loading">
     <mat-card-title>Iniciar Sesión</mat-card-title>
 
     <mat-card-content>
-      <img class="login-image" src="./assets/img/auth/empty_user.png" />
+      <img class="avatar mat-elevation-z4" src="./assets/img/auth/empty_user.png" />
 
       <form [formGroup]="form">
         <mat-form-field class="example-full-width" appearance="fill">

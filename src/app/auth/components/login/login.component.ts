@@ -46,7 +46,7 @@ export class LoginComponent implements OnInit {
     this.loading = true;
     setTimeout(() => {
       this.loading = false
-      this._router.navigate(['products']);
+      this._router.navigate(['client/products']);
     }, 5000)
   }
 

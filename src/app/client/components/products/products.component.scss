@@ -1,8 +1,37 @@
 .product-card {
     max-width: 400px;
+    margin: 10px;
 }
 
 .header-image {
     background-image: url(https://material.angular.io/assets/img/examples/shiba1.jpg);
     background-size: cover;
+}
+
+table {
+    width: 100%;
+}
+
+img {
+    width: 30px;
+    height: 30px;
+}
+
+.search-field {
+    font-size: 12px;
+    margin: 0px 0px -15px 0px !important;
+}
+
+.mat-column-id {
+    max-width: 40px;
+}
+
+.quantity-field {
+    width: 15%;
+    margin: 0px 0px 0px 0px !important;
+}
+
+
+.mat-mini-fab {
+    margin: 10px;
 }
