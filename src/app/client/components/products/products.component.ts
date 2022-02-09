@@ -6,73 +6,6 @@ import { Router } from '@angular/router';
 import { Product, ProductLine } from '../../models/product.model';
 import { ProductService } from '../../services/product.service';
 
-export interface PeriodicElement {
-    imageUrl: string;
-    name: string;
-    position: number;
-    weight: number;
-    symbol: string;
-}
-
-const ELEMENT_DATA: Product[] = [
-    {
-        line_code: 10,
-        product_code: '1276-1',
-        name: 'JABON LEON ALOE .350/20',
-        price: 14.61,
-        image: '',
-    },
-    {
-        line_code: 10,
-        product_code: '1276-2',
-        name: 'JABON LEON ALTO PODER .350/20',
-        price: 14.61,
-        image: '',
-    },
-    {
-        line_code: 10,
-        product_code: '1276-3',
-        name: 'JABON LEON BEBE .350/20',
-        price: 14.61,
-        image: '',
-    },
-    {
-        line_code: 10,
-        product_code: '1276-4',
-        name: 'JABON LEON SUAVIZANTE .350/20',
-        price: 14.61,
-        image: '',
-    },
-    {
-        line_code: 10,
-        product_code: '1276-1',
-        name: 'JABON LEON ALOE .350/20',
-        price: 14.61,
-        image: '',
-    },
-    {
-        line_code: 10,
-        product_code: '1276-2',
-        name: 'JABON LEON ALTO PODER .350/20',
-        price: 14.61,
-        image: '',
-    },
-    {
-        line_code: 10,
-        product_code: '1276-3',
-        name: 'JABON LEON BEBE .350/20',
-        price: 14.61,
-        image: '',
-    },
-    {
-        line_code: 10,
-        product_code: '1276-4',
-        name: 'JABON LEON SUAVIZANTE .350/20',
-        price: 14.61,
-        image: '',
-    },
-];
-
 @Component({
     selector: 'app-products',
     templateUrl: './products.component.html',
@@ -81,7 +14,8 @@ const ELEMENT_DATA: Product[] = [
 export class ProductsComponent implements OnInit {
     public productsResult: ProductLine[] = [];
     public dataSource: MatTableDataSource<Product>;
-    public displayedColumns = ['name', 'price', 'actions'];
+    public displayedColumns = ['sku', 'description', 'price', 'actions'];
+    public loading = false;
 
     @ViewChild(MatPaginator) paginator: MatPaginator;
     @ViewChild(MatSort) sort: MatSort;
@@ -89,13 +23,10 @@ export class ProductsComponent implements OnInit {
     constructor(
         private _router: Router,
         private _productService: ProductService
-    ) {
-        
-    }
+    ) {}
 
     public ngOnInit(): void {
         this.getProducts();
-        
     }
 
     public applyFilter(event: Event): void {
@@ -108,17 +39,18 @@ export class ProductsComponent implements OnInit {
     }
 
     public getProducts(): void {
-        this._productService
-            .getProductLine()
-            .subscribe((result: ProductLine[]) => {
-                this.dataSource = new MatTableDataSource<Product>(
-                    result[0].product
-                );
+        this.loading = true;
+        this._productService.getProductLine().subscribe(
+            (result: Product[]) => {
+                console.log('çatalog', result);
+                this.dataSource = new MatTableDataSource<Product>(result);
+                this.loading = false;   
                 this.dataSource.paginator = this.paginator;
                 this.dataSource.sort = this.sort;
-                // this.productsResult.forEach((line) => {
-                //     this.productList.push(...line.product);
-                // });
-            });
+            },
+            (error) => {
+                this.loading = false;
+            }
+        );
     }
 }

@@ -1,4 +1,4 @@
-@import 'colors.scss'; 
+@import "colors.scss";
 
 html,
 body {
@@ -9,13 +9,8 @@ body {
     font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
-
 mat-sidenav {
-    margin: 16px;
     width: 200px;
-    border-right: none;
-    border-radius: 10px;
-    padding: 16px;
     text-align: center;
 }
 
@@ -25,14 +20,11 @@ mat-sidenav {
 }
 
 .content-container {
-    border-radius: 10px;
-    margin: 16px;
-    margin-left: 20px;
-    // display: flex;
+    background-color: $white;
+    padding: 10px;
+    margin: 10px;
     align-items: center;
-    font-size: 2rem;
-    color: lightgray;
-    // height: -webkit-fill-available;
+    height: auto;
 }
 
 mat-sidenav-container {
@@ -64,4 +56,4 @@ mat-sidenav-container {
 
 .nav-spacer {
     flex: 1 1 auto;
-  }
+}

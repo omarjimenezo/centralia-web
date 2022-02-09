@@ -9,7 +9,8 @@ import { Product, ProductLine } from '../models/product.model';
 export class ProductService {
     constructor(private _http: HttpClient) {}
 
-    public getProductLine(): Observable<ProductLine[]> {
-        return this._http.get<ProductLine[]>('./assets/data/products.json');
+    public getProductLine(): Observable<Product[]> {
+        return this._http.get<Product[]>('https://centralia.app/api/catalog/user/2');
+        // return this._http.get<ProductLine[]>('./assets/data/products.json');
     }
 }

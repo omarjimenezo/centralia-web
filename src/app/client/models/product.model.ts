@@ -1,13 +1,13 @@
 export interface ProductLine {
-    line_code: number,
-    name: string,
-    product: Product[]
+    id: number,
+    name: string
 }
 
 export interface Product {
-    line_code: number,
-    product_code: string,
-    name: string,
+    id: number,
+    category_id: number,
+    sku: string,
+    description: string,
     price: number,
     image: string
 }
