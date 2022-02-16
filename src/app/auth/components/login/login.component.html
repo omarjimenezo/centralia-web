@@ -1,48 +1,64 @@
 <div class="login-container">
-  <mat-spinner *ngIf="loading"></mat-spinner>
+    <mat-spinner *ngIf="loading"></mat-spinner>
 
-  <mat-card color="primary" class="login-wrapper  mat-elevation-z8" *ngIf="!loading">
-    <mat-card-title>Iniciar Sesión</mat-card-title>
-
-    <mat-card-content>
-      <img class="avatar mat-elevation-z4" src="./assets/img/auth/empty_user.png" />
-
-      <form [formGroup]="form">
-        <mat-form-field class="example-full-width" appearance="fill">
-          <mat-label>Usuario</mat-label>
-          <input matInput value="" formControlName="user" />
-        </mat-form-field>
-
-        <mat-form-field appearance="fill">
-          <mat-label>Contraseña</mat-label>
-          <input matInput [type]="hidePassword ? 'password' : 'text'" formControlName="password"/>
-          <button
-            mat-icon-button
-            matSuffix
-            (click)="hidePassword = !hidePassword"
-            [attr.aria-label]="'Hide password'"
-            [attr.aria-pressed]="hidePassword"
-          >
-            <mat-icon>{{ hidePassword ? "visibility_off" : "visibility" }}</mat-icon>
-          </button>
-        </mat-form-field>
-      </form>
-    </mat-card-content>
-
-    <mat-card-actions>
-      <button
-        mat-raised-button
+    <mat-card
         color="primary"
-        (click)="login()"
-        [disabled]="form.invalid"
-      >
-        Entrar
-      </button>
-      <br />
-      <br />
-      <button mat-button (click)="forgotPassword()">
-        Olvide mi contraseña
-      </button>
-    </mat-card-actions>
-  </mat-card>
+        class="login-wrapper mat-elevation-z8"
+        *ngIf="!loading"
+    >
+        <mat-card-title>Iniciar Sesión</mat-card-title>
+
+        <mat-card-content>
+            <img
+                class="avatar mat-elevation-z4"
+                src="./assets/img/auth/empty_user.png"
+            />
+
+            <form [formGroup]="form">
+                <mat-form-field class="example-full-width" appearance="fill">
+                    <mat-label>Usuario</mat-label>
+                    <input
+                        matInput
+                        value=""
+                        formControlName="user"
+                        (keyup.enter)="login()"
+                    />
+                </mat-form-field>
+
+                <mat-form-field appearance="fill">
+                    <mat-label>Contraseña</mat-label>
+                    <input
+                        matInput
+                        [type]="hidePassword ? 'password' : 'text'"
+                        formControlName="password"
+                        (keyup.enter)="login()"
+                    />
+                    <mat-icon
+                        mat-icon-button
+                        matSuffix
+                        (click)="hidePassword = !hidePassword"
+                        >{{
+                            hidePassword ? "visibility_off" : "visibility"
+                        }}</mat-icon
+                    >
+                </mat-form-field>
+            </form>
+        </mat-card-content>
+
+        <mat-card-actions>
+            <button
+                mat-raised-button
+                color="primary"
+                (click)="login()"
+                [disabled]="form.invalid"
+            >
+                Entrar
+            </button>
+            <br />
+            <br />
+            <button mat-button (click)="forgotPassword()">
+                Olvide mi contraseña
+            </button>
+        </mat-card-actions>
+    </mat-card>
 </div>

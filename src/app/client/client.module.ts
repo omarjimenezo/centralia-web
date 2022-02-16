@@ -8,6 +8,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
+import { MatBadgeModule } from '@angular/material/badge';
 import { MatInputModule } from '@angular/material/input';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -56,6 +57,7 @@ import { SideBarComponent } from './navigation/side-bar/side-bar.component';
         MatFormFieldModule,
         MatPaginatorModule,
         MatSortModule,
+        MatBadgeModule,
     ],
     exports: [
         ClientComponent,

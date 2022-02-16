@@ -1,7 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { Router } from '@angular/router';
-import { NavBarService } from '../../services/nav-bar.service';
-import { NavMenu } from '../../models/nav-bar.model';
+import { CatalogSearchService } from '../../services/catalog-search.service';
 
 @Component({
     selector: 'nav-bar',
@@ -11,26 +9,20 @@ import { NavMenu } from '../../models/nav-bar.model';
 export class NavBarComponent implements OnInit {
     @Output() menuOpen = new EventEmitter();
 
-    public navMenu: NavMenu[] = [];
+    public productsAdded: number;
+    public isMobile: boolean;
 
-    constructor(private _router: Router, private _menuService: NavBarService) {}
+    constructor(private _catalogSearchService: CatalogSearchService) {}
 
     public ngOnInit(): void {
-        this.getMenu();
+        if (window.screen.width <= 700) { // 768px portrait
+            this.isMobile = true;
+          }
+        this.productsAdded = 5;
     }
 
-    public getMenu(): void {
-        this._menuService.getNavMenu().subscribe((result) => {
-            this.navMenu = result;
-        });
-    }
-
-    public onMenuOpen(): void {
-        this.menuOpen.emit('ok');
-        console.log('openmenu')
-    }
-
-    public onLogoutClick(): void {
-        this._router.navigate(['login']);
+    public onSearch(event: Event) {
+        const filterValue = (event.target as HTMLInputElement).value;
+        this._catalogSearchService.setSearch(filterValue.trim().toLowerCase());
     }
 }

@@ -1,3 +1,7 @@
+
+.catalog-container {
+
+}
 .product-card {
     max-width: 400px;
     margin: 10px;
@@ -9,17 +13,12 @@
 }
 
 table {
-    width: 100%;
+    width: 50%;
 }
 
 img {
     width: 30px;
     height: 30px;
-}
-
-.search-field {
-    font-size: 12px;
-    margin: 0px 0px -15px 0px !important;
 }
 
 .mat-column-id {
@@ -46,7 +45,7 @@ img {
     text-align: right;
 }
 
-@media screen and (max-width: 900px) {
+@media screen and (max-width: 700px) {
     .title-toolbar{
         display: flex;
         flex-direction: column;
@@ -56,35 +55,35 @@ img {
 
     .mat-table {
         border: 0;
-        vertical-align: middle;
+        // vertical-align: middle;
     }
 
     .mat-table caption {
         font-size: 1em;
     }
 
-    .mat-table .mat-header-cell {
-        border: 10px solid;
-        clip: rect(0 0 0 0);
-        height: 1px;
-        margin: -1px;
-        padding: 0;
-        position: absolute;
-        width: 1px;
-    }
+    // .mat-table .mat-header-cell {
+    //     border: 10px solid;
+    //     clip: rect(0 0 0 0);
+    //     height: 1px;
+    //     margin: -1px;
+    //     padding: 0;
+    //     position: absolute;
+    //     width: 1px;
+    // }
 
-    .mat-table .mat-row {
-        border-bottom: 5px solid #ddd;
-        display: block;
-        padding: 0 24px;
-        min-height: 0;
-    }
-    /*
-    .mat-table .mat-row:nth-child(even) {background: #CCC}
+    // .mat-table .mat-row {
+    //     border-bottom: 5px solid #ddd;
+    //     display: block;
+    //     padding: 0 24px;
+    //     min-height: 0;
+    // }
+    
+    .mat-table .mat-row:nth-child(even) {background: #f3f3f3}
     .mat-table .mat-row:nth-child(odd) {background: #FFF}
-    */
+    
     .mat-table .mat-cell {
-        border-bottom: 1px solid #ddd;
+        // border-bottom: 1px solid #ddd;
         display: block;
         font-size: 1em;
         text-align: right;
@@ -92,24 +91,25 @@ img {
         // height: 30px;
         margin-bottom: 4%;
     }
-    .mat-table .mat-cell:before {
-        /*
-      * aria-label has no advantage, it won't be read inside a table
-      content: attr(aria-label);
-      */
-        content: attr(data-label);
-        float: left;
-        text-transform: uppercase;
-        font-weight: normal;
-        font-weight: bold;
-        font-size: 0.85em;
-    }
+    // .mat-table .mat-cell:before {
+    //     /*
+    //   * aria-label has no advantage, it won't be read inside a table
+    //   content: attr(aria-label);
+    //   */
+    //     content: attr(data-label);
+    //     float: left;
+    //     text-transform: uppercase;
+    //     font-weight: normal;
+    //     font-weight: bold;
+    //     font-size: 0.85em;
+    // }
     .mat-table .mat-cell:last-child {
         border-bottom: 0;
+        float: inline-end;
     }
-    .mat-table .mat-cell:first-child {
-        margin-top: 4%;
-    }
+    // .mat-table .mat-cell:first-child {
+    //     margin-top: 4%;
+    // }
 
     .mat-column-actions {
         text-align: center !important;
@@ -120,6 +120,10 @@ img {
         padding: 0;
     }
 
+    .mat-cell:last-of-type {
+        padding: 0;
+    }
+    
     .quantity-field {
         width: 5em;
     }

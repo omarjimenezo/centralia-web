@@ -1,0 +1,33 @@
+.mat-toolbar-row {
+    justify-content: center;
+}
+
+.catalog-search-field {
+    width: 50%;
+    text-align: center;
+    font-size: 15px;
+}
+
+.button-cart-big { 
+    visibility: visible;
+    position: absolute;
+}
+
+.button-cart-small { 
+    visibility: hidden;
+}
+
+@media screen and (max-width: 700px) {
+    .catalog-search-field {
+        width: 80%;
+    }
+
+    .button-cart-big { 
+        visibility: hidden;
+    }
+
+    .button-cart-small { 
+        visibility: visible;
+        align-self: end;
+    }
+}

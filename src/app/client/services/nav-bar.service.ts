@@ -4,15 +4,12 @@ import { Observable } from 'rxjs';
 import { NavMenu } from '../models/nav-bar.model';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root',
 })
 export class NavBarService {
+    constructor(private _http: HttpClient) {}
 
-  constructor(
-    private _http: HttpClient
-  ) { }
-
-  public getNavMenu(): Observable<NavMenu[]> {
-    return this._http.get<NavMenu[]>('./assets/data/menu.json');
-  }
+    public getNavMenu(): Observable<NavMenu[]> {
+        return this._http.get<NavMenu[]>('./assets/data/menu.json');
+    }
 }

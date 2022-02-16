@@ -1,18 +1,11 @@
+<div class="catalog-container">
+    
 <mat-toolbar class="title-toolbar mat-elevation-z5">
-    <span>Realizar Pedido</span>
+    <span>Catalogo de productos</span>
 
     <span class="nav-spacer"></span>
 
-    <mat-form-field color="primary" appearance="standard" class="search-field">
-        <mat-label>Buscar</mat-label>
-        <input
-            matInput
-            (keyup)="applyFilter($event)"
-            placeholder=""
-            #input
-        />
-        <mat-icon matSuffix>search</mat-icon>
-    </mat-form-field>
+    
 </mat-toolbar>
 
 <mat-table
@@ -21,12 +14,6 @@
     [dataSource]="dataSource"
     class="mat-elevation-z5"
 >
-    <ng-container matColumnDef="sku">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>SKU</mat-header-cell>
-        <mat-cell *matCellDef="let element" data-label="SKU">{{
-            element.sku
-        }}</mat-cell>
-    </ng-container>
     <ng-container matColumnDef="description">
         <mat-header-cell *matHeaderCellDef mat-sort-header
             >Descripción</mat-header-cell
@@ -70,7 +57,7 @@
 
     <tr class="mat-row" *matNoDataRow>
         <td class="mat-cell" colspan="4">
-            No data matching the filter "{{ input.value }}"
+            No se encontró "{{ dataSource.filter }}"
         </td>
     </tr>
 </mat-table>
@@ -84,3 +71,5 @@
     class="mat-elevation-z5"
     aria-label="Select page of users"
 ></mat-paginator>
+
+</div>

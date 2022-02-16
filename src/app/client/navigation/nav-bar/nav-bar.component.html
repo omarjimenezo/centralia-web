@@ -1,29 +1,32 @@
 <mat-toolbar color="primary">
-    <button mat-icon-button aria-label="icon-button with menu icon" (click)="onMenuOpen()">
-        <mat-icon>menu</mat-icon>
-    </button>
+    <mat-toolbar-row>
+        <span>Centralia</span>
 
-    <span>Centralia</span>
+        <span class="nav-spacer"></span>
 
-    <span class="nav-spacer"></span>
+        <button class="button-cart-big" mat-raised-button>
+            5 productos <mat-icon>shopping_cart</mat-icon>
+        </button>
 
-    <button
-        mat-icon-button
-        aria-label="icon-button with heart icon"
-        [routerLink]="[item.route]"
-        routerLinkActive="router-link-active"
-        *ngFor="let item of navMenu"
-    >
-        <mat-icon>{{ item.icon }}</mat-icon>
-    </button>
+        <button class="button-cart-small" mat-mini-fab color="default" matBadge="{{productsAdded}}" matBadgeColor="accent"><mat-icon>shopping_cart</mat-icon></button>
+        <!-- Include text description of the icon's meaning for screen-readers -->
+        <span class="cdk-visually-hidden">
+            Carrito de compras con {{ productsAdded }} productos
+        </span>
 
-    <span class="nav-spacer"></span>
+        <span class="nav-spacer"></span>
 
-    <button
-        mat-icon-button
-        aria-label="icon-button with logout icon"
-        (click)="onLogoutClick()"
-    >
-        <mat-icon>logout</mat-icon>
-    </button>
+        <button mat-raised-button color="accent">Hacer pedido</button>
+    </mat-toolbar-row>
+    <mat-toolbar-row>
+        <mat-form-field
+            color="primary"
+            appearance="standard"
+            class="catalog-search-field"
+        >
+            <mat-label>Buscar Productos</mat-label>
+            <input matInput (keyup)="onSearch($event)" placeholder="" />
+            <mat-icon matSuffix>search</mat-icon>
+        </mat-form-field>
+    </mat-toolbar-row>
 </mat-toolbar>

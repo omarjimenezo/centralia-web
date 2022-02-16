@@ -4,9 +4,10 @@ import { LoginComponent } from './auth/components/login/login.component';
 import { NotFoundComponent } from './auth/components/not-found/not-found.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'login', pathMatch: 'full' },
-
-  { path: 'login', component: LoginComponent },
+  { path: '', redirectTo: 'client', pathMatch: 'full' },
+  
+  // Login desactivado en la primera etapa
+  // { path: 'login', component: LoginComponent },
 
   {
     path: 'client',
