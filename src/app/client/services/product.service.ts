@@ -1,7 +1,7 @@
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Product, ProductLine } from '../models/product.model';
+import { Category, Product } from '../models/product.model';
 
 @Injectable({
     providedIn: 'root',
@@ -9,8 +9,12 @@ import { Product, ProductLine } from '../models/product.model';
 export class ProductService {
     constructor(private _http: HttpClient) {}
 
-    public getProductLine(): Observable<Product[]> {
+    public getCatalog(): Observable<Product[]> {
         return this._http.get<Product[]>('https://centralia.app/api/catalog/user/2');
+        // return this._http.get<ProductLine[]>('./assets/data/products.json');
+    }
+    public getCategory(): Observable<Category[]> {
+        return this._http.get<Category[]>('https://centralia.app/api/categories/user/2');
         // return this._http.get<ProductLine[]>('./assets/data/products.json');
     }
 }

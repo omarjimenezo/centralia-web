@@ -1,4 +1,4 @@
-export interface ProductLine {
+export interface Category {
     id: number,
     name: string
 }

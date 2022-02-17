@@ -3,7 +3,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
-import { Product, ProductLine } from '../../models/product.model';
+import { Product } from '../../models/product.model';
 import { CatalogSearchService } from '../../services/catalog-search.service';
 import { ProductService } from '../../services/product.service';
 
@@ -13,9 +13,8 @@ import { ProductService } from '../../services/product.service';
     styleUrls: ['./products.component.scss'],
 })
 export class ProductsComponent implements OnInit {
-    public productsResult: ProductLine[] = [];
     public dataSource: MatTableDataSource<Product>;
-    public displayedColumns = ['description', 'price', 'actions'];
+    public displayedColumns = ['description', 'price', 'quantity', 'add', 'mobile'];
     public loading = false;
 
     @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -48,7 +47,7 @@ export class ProductsComponent implements OnInit {
 
     public getProducts(): void {
         this.loading = true;
-        this._productService.getProductLine().subscribe(
+        this._productService.getCatalog().subscribe(
             (result: Product[]) => {
                 this.dataSource = new MatTableDataSource<Product>(result);
                 this.loading = false;   

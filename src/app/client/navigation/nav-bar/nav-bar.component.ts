@@ -1,5 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Category } from '../../models/product.model';
 import { CatalogSearchService } from '../../services/catalog-search.service';
+import { ProductService } from '../../services/product.service';
 
 @Component({
     selector: 'nav-bar',
@@ -10,15 +12,31 @@ export class NavBarComponent implements OnInit {
     @Output() menuOpen = new EventEmitter();
 
     public productsAdded: number;
-    public isMobile: boolean;
+    public loading: boolean;
+    public categories: Category[];
 
-    constructor(private _catalogSearchService: CatalogSearchService) {}
+    constructor(
+        private _catalogSearchService: CatalogSearchService,
+        private _productService: ProductService
+    ) {}
 
     public ngOnInit(): void {
-        if (window.screen.width <= 700) { // 768px portrait
-            this.isMobile = true;
-          }
+        this.getCategories();
         this.productsAdded = 5;
+    }
+
+    public getCategories(): void {
+        this.loading = true;
+        this._productService.getCategory().subscribe(
+            (result: Category[]) => {
+                this.categories = result;
+                console.log(this.categories)
+                this.loading = false;
+            },
+            (error) => {
+                this.loading = false;
+            }
+        );
     }
 
     public onSearch(event: Event) {

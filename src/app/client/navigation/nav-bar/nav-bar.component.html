@@ -8,7 +8,15 @@
             5 productos <mat-icon>shopping_cart</mat-icon>
         </button>
 
-        <button class="button-cart-small" mat-mini-fab color="default" matBadge="{{productsAdded}}" matBadgeColor="accent"><mat-icon>shopping_cart</mat-icon></button>
+        <button
+            class="button-cart-small"
+            mat-mini-fab
+            color="default"
+            matBadge="{{ productsAdded }}"
+            matBadgeColor="accent"
+        >
+            <mat-icon>shopping_cart</mat-icon>
+        </button>
         <!-- Include text description of the icon's meaning for screen-readers -->
         <span class="cdk-visually-hidden">
             Carrito de compras con {{ productsAdded }} productos
@@ -19,6 +27,14 @@
         <button mat-raised-button color="accent">Hacer pedido</button>
     </mat-toolbar-row>
     <mat-toolbar-row>
+        <mat-form-field color="default" appearance="standard" class="catalog-category">
+            <mat-label>Categorias</mat-label>
+            <mat-select>
+                <mat-option *ngFor="let category of categories" value="id">{{category.name}}</mat-option>
+            </mat-select>
+            <mat-hint align="end">Here's the dropdown arrow ^</mat-hint>
+        </mat-form-field>
+
         <mat-form-field
             color="primary"
             appearance="standard"
