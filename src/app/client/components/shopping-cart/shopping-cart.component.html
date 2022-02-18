@@ -1,0 +1,27 @@
+<h2 mat-dialog-title>Carrito de Compras</h2>
+
+<mat-divider></mat-divider>
+
+<mat-dialog-content class="mat-typography">
+    <mat-selection-list #items>
+        <mat-list-option *ngFor="let product of products">
+            {{ product }}
+        </mat-list-option>
+    </mat-selection-list>
+
+    <p>Productos seleccionados: {{ items.selectedOptions.selected.length }}</p>
+</mat-dialog-content>
+
+<mat-divider></mat-divider>
+
+<mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Cancel</button>
+    <button
+        mat-raised-button
+        color="primary"
+        [mat-dialog-close]="products"
+        cdkFocusInitial
+    >
+        Hacer Pedido
+    </button>
+</mat-dialog-actions>

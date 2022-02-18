@@ -62,7 +62,6 @@
                 </div>
                 <div class="mobile-actions">
                     <div>
-
                         <mat-form-field
                             class="quantity-field"
                             appearance="standard"
@@ -73,8 +72,11 @@
                         </mat-form-field>
                     </div>
                     <div>
-
-                        <button mat-raised-button color="accent" color="primary">
+                        <button
+                            mat-raised-button
+                            color="accent"
+                            color="primary"
+                        >
                             Agregar Producto
                         </button>
                     </div>
@@ -87,7 +89,7 @@
 
         <tr class="mat-row" *matNoDataRow>
             <td class="mat-cell" colspan="4">
-                No se encontró "{{ dataSource.filter }}"
+                0 productos encontrados
             </td>
         </tr>
     </mat-table>
