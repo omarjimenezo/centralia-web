@@ -1,9 +1,9 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { Router } from '@angular/router';
-import { Catalog } from '../../models/catalog.model';
+import { ActivatedRoute } from '@angular/router';
+import { ICatalog } from '../../models/catalog.model';
 import { CatalogService } from '../../services/catalog.service';
 
 @Component({
@@ -11,8 +11,8 @@ import { CatalogService } from '../../services/catalog.service';
     templateUrl: './catalog.component.html',
     styleUrls: ['./catalog.component.scss'],
 })
-export class CatalogComponent implements OnInit {
-    public dataSource: MatTableDataSource<Catalog>;
+export class CatalogComponent implements OnInit, AfterViewInit {
+    public dataSource: MatTableDataSource<ICatalog>;
     public displayedColumns = [
         'description',
         'price',
@@ -26,13 +26,11 @@ export class CatalogComponent implements OnInit {
     @ViewChild(MatSort) sort: MatSort;
 
     constructor(
-        private _router: Router,
+        private _route: ActivatedRoute,
         private _catalogService: CatalogService
     ) {}
 
     public ngOnInit(): void {
-        this.getCatalog();
-
         this._catalogService.getSearch.subscribe((data: string) => {
             console.log('Busqueda', data);
             if (data !== '') {
@@ -48,12 +46,23 @@ export class CatalogComponent implements OnInit {
         });
     }
 
+    public ngAfterViewInit() {
+        this.setProviderId();
+        this.getCatalog();
+    }
+
+    public setProviderId(): void {
+        const urlParam: string = this._route.snapshot.paramMap.get('id')!;
+        console.log('param', urlParam);
+        this._catalogService.setProviderId(urlParam);
+    }
+
     public getCatalog(): void {
         this.loading = true;
         this._catalogService.getCatalog.subscribe(
-            (catalog: Catalog[]) => {
+            (catalog: ICatalog[]) => {
                 if (catalog.length > 0) {
-                    this.dataSource = new MatTableDataSource<Catalog>(catalog);
+                    this.dataSource = new MatTableDataSource<ICatalog>(catalog);
                     this.loading = false;
                     this.dataSource.paginator = this.paginator;
                     this.dataSource.sort = this.sort;
@@ -77,13 +86,13 @@ export class CatalogComponent implements OnInit {
 
     public applyFilter(data: string) {
         this.loading = true;
-        if(data !== 'N') {
+        if (data !== 'N') {
             this._catalogService.getCatalog.subscribe(
-                (current_catalog: Catalog[]) => {
+                (current_catalog: ICatalog[]) => {
                     const filteredCatalog = current_catalog.filter(
                         (catalog) => catalog.category === data
                     );
-                    this.dataSource = new MatTableDataSource<Catalog>(
+                    this.dataSource = new MatTableDataSource<ICatalog>(
                         filteredCatalog
                     );
                     this.loading = false;

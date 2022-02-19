@@ -26,6 +26,10 @@ mat-sidenav {
     height: auto;
 }
 
+.section-container {
+    padding-bottom: 5px;
+}
+
 mat-sidenav-container {
     height: calc(100vh - 65px);
 }

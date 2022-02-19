@@ -1,8 +1,9 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { Category } from '../../models/catalog.model';
-import { CatalogService } from '../../services/catalog.service';
 import { MatDialog } from '@angular/material/dialog';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ShoppingCartComponent } from '../../components/shopping-cart/shopping-cart.component';
+import { ICategory } from '../../models/catalog.model';
+import { CatalogService } from '../../services/catalog.service';
 
 @Component({
     selector: 'nav-bar',
@@ -14,22 +15,34 @@ export class NavBarComponent implements OnInit {
 
     public productsAdded: number;
     public loading: boolean;
-    public categories: Category[];
+    public categories: ICategory[];
 
     constructor(
+        private _route: ActivatedRoute,
+        private _router: Router,
         private _catalogService: CatalogService,
         public dialog: MatDialog
     ) {}
 
     public ngOnInit(): void {
+        this.setProviderId();
         this.getCategories();
         this.productsAdded = 5;
+        console.log('route', this._router.url)
+    }
+
+    public setProviderId(): void {
+        const urlParam: string = this._route.snapshot.paramMap.get('id')!;
+        this._catalogService.setProviderId(
+            urlParam
+        );
     }
 
     public getCategories(): void {
         this.loading = true;
+        this._catalogService.initCategory();
         this._catalogService.getCategory.subscribe(
-            (category: Category[]) => {
+            (category: ICategory[]) => {
                 if (category.length > 0) {
                     this.categories = category;
                     console.log('categorias', this.categories);

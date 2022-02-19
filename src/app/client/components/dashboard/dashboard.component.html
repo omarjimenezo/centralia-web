@@ -1,1 +1,55 @@
-<p>dashboard works!</p>
+<div class="section-container">
+    <mat-toolbar class="title-toolbar mat-elevation-z5">
+        <span>Proveedores</span>
+
+        <span class="nav-spacer"></span>
+    </mat-toolbar>
+
+    <div *ngIf="isMobile; then mobileCard; else desktopCard"></div>
+
+    <ng-template #mobileCard>
+        <mat-card class="mobile-provider-card" (click)="onProviderCardClick(provider.id)"
+        *ngFor="let provider of providers">
+            <mat-card-header>
+                <div mat-card-avatar class="header-image" [style.backgroundImage]="'url(' + provider.img + ')'"></div>
+                <mat-card-title>{{ provider.name }}</mat-card-title>
+                <mat-card-subtitle class="mat-rating"
+                    ><mat-icon>star</mat-icon
+                    >{{ provider.rating }}</mat-card-subtitle
+                >
+                <mat-card-subtitle>{{
+                    provider.description
+                }}</mat-card-subtitle>
+                <mat-card-subtitle>{{ provider.address }}</mat-card-subtitle>
+            </mat-card-header>
+        </mat-card>
+    </ng-template>
+
+    <ng-template #desktopCard>
+        <div class="card-container" >
+
+            <mat-card
+                class="provider-card"
+                (click)="onProviderCardClick(provider.id)"
+                *ngFor="let provider of providers"
+            >
+                <mat-card-title-group>
+                    <img
+                        mat-card-lg-image
+                        [src]="provider.img"
+                        alt="Provider Picture"
+                    />
+                    <mat-card-title>{{ provider.name }}</mat-card-title>
+                    <mat-card-subtitle class="mat-rating"
+                        ><mat-icon>star</mat-icon
+                        >{{ provider.rating }}</mat-card-subtitle
+                    >
+                    <mat-card-subtitle>{{
+                        provider.description
+                    }}</mat-card-subtitle>
+                    <mat-card-subtitle>{{ provider.address }}</mat-card-subtitle>
+                </mat-card-title-group>
+            </mat-card>
+        </div>
+    </ng-template>
+</div>

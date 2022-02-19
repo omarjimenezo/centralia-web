@@ -1,5 +1,4 @@
 import { Component, OnInit } from "@angular/core";
-import { Catalog } from "../../models/catalog.model";
 
 @Component({
     selector: 'shopping-cart',

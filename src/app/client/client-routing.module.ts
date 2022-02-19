@@ -9,9 +9,9 @@ const routes: Routes = [
     path: '',
     component: ClientComponent,
     children: [
-      { path: '', component: CatalogComponent },
-      { path: 'inicio', component: DashboardComponent },
-      { path: 'catalogo', component: CatalogComponent },
+      { path: '', component: DashboardComponent },
+      { path: 'proveedores', component: DashboardComponent },
+      { path: 'catalogo/:id', component: CatalogComponent },
     ],
   },
 ];
