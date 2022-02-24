@@ -6,6 +6,7 @@ export interface ICategory {
 export interface ICatalog {
     id: number;
     category: string;
+    quantity?: number;
     sku: string;
     description: string;
     price: string;
@@ -13,8 +14,8 @@ export interface ICatalog {
 }
 
 export interface IOrder {
-    id: number;
     sku: string;
     description: string;
     price: string;
+    quantity: number;
 }

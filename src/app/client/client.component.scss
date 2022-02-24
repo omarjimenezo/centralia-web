@@ -1,1 +1,8 @@
-@import url("../../colors.scss");
+@import "../../colors.scss";
+
+.content-container {
+    background-color: $white;
+    margin: 20px;
+    align-items: center;
+    height: auto;
+}

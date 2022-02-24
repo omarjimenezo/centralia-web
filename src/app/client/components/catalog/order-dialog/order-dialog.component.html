@@ -1,0 +1,23 @@
+<h2 mat-dialog-title>Resumen de Pedido</h2>
+
+<mat-divider></mat-divider>
+
+<mat-dialog-content class="mat-typography">
+    <order-table></order-table>
+
+</mat-dialog-content>
+
+<mat-divider></mat-divider>
+
+<h2 class="order-total">Total: {{orderTotal | currency}}</h2>
+<mat-dialog-actions align="end">
+    <button mat-raised-button mat-dialog-close>Cerrar</button>
+    <button
+        mat-raised-button
+        color="primary"
+        [mat-dialog-close]="order"
+        cdkFocusInitial
+    >
+        Hacer Pedido
+    </button>
+</mat-dialog-actions>

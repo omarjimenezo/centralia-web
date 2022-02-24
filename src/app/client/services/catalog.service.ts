@@ -2,32 +2,36 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { ICatalog, ICategory } from '../models/catalog.model';
+import { NavBarService } from './nav-bar.service';
 
 @Injectable({
     providedIn: 'root',
 })
 export class CatalogService {
     private baseURL: string = 'https://centralia.app/api';
-    private _search = new BehaviorSubject<string>('');
-    private _filter = new BehaviorSubject<string>('');
-    private _providerId = new BehaviorSubject<string>('');
     private _catalog = new BehaviorSubject<ICatalog[]>([]);
     private _category = new BehaviorSubject<ICategory[]>([]);
 
-    constructor(private _http: HttpClient) {
-        this.initCatalog();
-        this.initCategory();
+    constructor(
+        private _http: HttpClient,
+        private _navBarService: NavBarService
+    ) {
+        this._navBarService.getProviderId.subscribe((providerId) => {
+            this.initCatalog(providerId);
+            this.initCategory(providerId);
+        });
     }
 
     // Catalog
-
-    public initCatalog(): void {
-        if (this._providerId.value) {
+    public initCatalog(providerId: string): void {
+        if (providerId) {
             this._http
-                .get<ICatalog[]>(
-                    `${this.baseURL}/catalog/user/${this._providerId.value}`
-                )
+                .get<ICatalog[]>(`${this.baseURL}/catalog/user/${providerId}`)
                 .subscribe((catalog: ICatalog[]) => {
+                    catalog.map(
+                        (product) =>
+                            (product.price = product.price.replace(',', '.'))
+                    );
                     this.setCatalog(catalog);
                 });
         }
@@ -42,12 +46,11 @@ export class CatalogService {
     }
 
     //  Category
-
-    public initCategory(): void {
-        if (this._providerId.value) {
+    public initCategory(providerId: string): void {
+        if (providerId) {
             this._http
                 .get<ICategory[]>(
-                    `${this.baseURL}/categories/user/${this._providerId.value}`
+                    `${this.baseURL}/categories/user/${providerId}`
                 )
                 .subscribe((category: ICategory[]) => {
                     this.setCategory(category);
@@ -61,38 +64,5 @@ export class CatalogService {
 
     get getCategory(): Observable<ICategory[]> {
         return this._category.asObservable();
-    }
-
-    // Provider
-
-    public setProviderId(id: string) {
-        if(id) {
-            this._providerId.next(id);
-            this.initCatalog();
-            this.initCategory();
-        }
-    }
-
-    get getProviderId(): Observable<string> {
-        return this._providerId.asObservable();
-    }
-    // Search
-
-    public setSearch(data: string): void {
-        this._search.next(data);
-    }
-
-    get getSearch(): Observable<string> {
-        return this._search.asObservable();
-    }
-
-    // Filter
-
-    public setFilter(data: string): void {
-        this._filter.next(data);
-    }
-
-    get getFilter(): Observable<string> {
-        return this._filter.asObservable();
     }
 }

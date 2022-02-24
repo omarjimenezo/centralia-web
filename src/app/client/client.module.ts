@@ -9,13 +9,14 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatGridListModule } from '@angular/material/grid-list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { MatListModule } from '@angular/material/list';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatListModule } from '@angular/material/list';
 import {
     MatSnackBarModule,
     MAT_SNACK_BAR_DEFAULT_OPTIONS
@@ -25,20 +26,22 @@ import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { ClientRoutingModule } from './client-routing.module';
 import { ClientComponent } from './client.component';
+import { CatalogTableComponent } from './components/catalog/catalog-table/catalog-table.component';
 import { CatalogComponent } from './components/catalog/catalog.component';
+import { OrderTableComponent } from './components/catalog/order-table/order-table.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
-import { ShoppingCartComponent } from './components/shopping-cart/shopping-cart.component';
+import { OrderDialogComponent } from './components/catalog/order-dialog/order-dialog.component';
 import { NavBarComponent } from './navigation/nav-bar/nav-bar.component';
-import { SideBarComponent } from './navigation/side-bar/side-bar.component';
 
 @NgModule({
     declarations: [
         ClientComponent,
         DashboardComponent,
         CatalogComponent,
+        CatalogTableComponent,
         NavBarComponent,
-        SideBarComponent,
-        ShoppingCartComponent,
+        OrderTableComponent,
+        OrderDialogComponent,
     ],
     imports: [
         CommonModule,
@@ -46,6 +49,7 @@ import { SideBarComponent } from './navigation/side-bar/side-bar.component';
         ReactiveFormsModule,
         ClientRoutingModule,
         HttpClientModule,
+        ReactiveFormsModule,
 
         // Angular Material
         MatCardModule,
@@ -66,14 +70,16 @@ import { SideBarComponent } from './navigation/side-bar/side-bar.component';
         MatSelectModule,
         MatDialogModule,
         MatListModule,
+        MatGridListModule,
     ],
     exports: [
         ClientComponent,
         DashboardComponent,
         CatalogComponent,
+        CatalogTableComponent,
         NavBarComponent,
-        SideBarComponent,
-        ShoppingCartComponent,
+        OrderTableComponent,
+        OrderDialogComponent,
     ],
     providers: [
         {

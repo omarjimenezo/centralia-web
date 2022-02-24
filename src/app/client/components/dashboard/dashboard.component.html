@@ -1,9 +1,12 @@
 <div class="section-container">
-    <mat-toolbar class="title-toolbar mat-elevation-z5">
-        <span>Proveedores</span>
 
+    <div class="title-container">
+        <h2>Proveedores</h2>
+    
         <span class="nav-spacer"></span>
-    </mat-toolbar>
+    
+        <mat-divider></mat-divider>
+    </div>
 
     <div *ngIf="isMobile; then mobileCard; else desktopCard"></div>
 

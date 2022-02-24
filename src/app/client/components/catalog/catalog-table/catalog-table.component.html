@@ -1,0 +1,53 @@
+<mat-table
+    matSort
+    *ngIf="!loading"
+    [dataSource]="dataSource"
+    class="mat-elevation-z5"
+>
+    <ng-container matColumnDef="desktop">
+        <mat-header-cell *matHeaderCellDef> Descripción </mat-header-cell>
+        <mat-cell *matCellDef="let element; let i = index">
+            <div class="desktop-data">
+                <div class="mat-description-tile">
+                    {{ element.description }} <br />
+                    <strong>${{ element.price  }}</strong>
+                </div>
+
+                <div class="mat-actions-tile">
+                    <div>
+                        <mat-form-field
+                            class="quantity-field"
+                            appearance="outline"
+                            floatLabel="always"
+                        >
+                            <mat-label>Cantidad</mat-label>
+                            <input matInput type="number" [(ngModel)]="quantities[i]"/>
+                        </mat-form-field>
+                    </div>
+                    <div>
+                        <button mat-mini-fab color="primary" (click)="addProduct(quantities[i], element)" [disabled]="quantities[i] < 1 || !quantities[i]">
+                            <mat-icon>add</mat-icon>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns"> </mat-row>
+
+    <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell" colspan="4">0 productos encontrados</td>
+    </tr>
+</mat-table>
+
+<mat-card class="table-loading" *ngIf="loading">
+    <mat-spinner></mat-spinner>
+</mat-card>
+
+<mat-paginator
+    [pageSizeOptions]="[10, 20, 30]"
+    class="mat-elevation-z5"
+    aria-label="Select page of users"
+></mat-paginator>

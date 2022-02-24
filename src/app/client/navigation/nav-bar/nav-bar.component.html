@@ -4,30 +4,16 @@
 
         <span class="nav-spacer"></span>
 
-        <button class="button-cart-big" mat-raised-button (click)="openCartDialog()">
-            5 productos <mat-icon>shopping_cart</mat-icon>
-        </button>
-
         <button
-            class="button-cart-small"
-            mat-mini-fab
-            color="default"
-            matBadge="{{ productsAdded }}"
-            matBadgeColor="accent"
+            class="button-cart-big"
+            mat-raised-button
+            color="accent"
             (click)="openCartDialog()"
         >
-            <mat-icon>shopping_cart</mat-icon>
+            Pedido ({{ productsAdded }} Prod. {{orderTotal | currency}})
         </button>
-        <!-- Include text description of the icon's meaning for screen-readers -->
-        <span class="cdk-visually-hidden">
-            Carrito de compras con {{ productsAdded }} productos
-        </span>
-
-        <span class="nav-spacer"></span>
-
-        <button mat-raised-button color="accent">Hacer pedido</button>
     </mat-toolbar-row>
-    <mat-toolbar-row>
+    <mat-toolbar-row *ngIf="catalogToolbar">
         <mat-form-field
             color="default"
             appearance="standard"

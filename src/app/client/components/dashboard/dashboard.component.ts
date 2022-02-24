@@ -13,7 +13,7 @@ export class DashboardComponent implements OnInit {
     {
       id: 2,
       address: 'Col. Americana, CP. 45130 Zapopan, Jalisco',
-      img: 'https://material.angular.io/assets/img/examples/shiba2.jpg',
+      img: './assets/img/providers/empty_provider.png',
       name: 'Abastecedora "La Cima"',
       rating: 4.5,
       description: 'Productos en General'
@@ -22,7 +22,7 @@ export class DashboardComponent implements OnInit {
       id: 3,
       name: 'Surtidora "Los Lopez"',
       address: 'Col. Centro, CP. 45145 Guadalajara, Jalisco',
-      img: 'https://material.angular.io/assets/img/examples/shiba1.jpg',
+      img: './assets/img/providers/empty_provider.png',
       rating: 3.5,
       description: 'Productos en General'
     },
@@ -30,7 +30,7 @@ export class DashboardComponent implements OnInit {
       id: 3,
       name: 'Surtidora "Los Lopez"',
       address: 'Col. Centro, CP. 45145 Guadalajara, Jalisco',
-      img: 'https://material.angular.io/assets/img/examples/shiba1.jpg',
+      img: './assets/img/providers/empty_provider.png',
       rating: 3.5,
       description: 'Productos en General'
     },

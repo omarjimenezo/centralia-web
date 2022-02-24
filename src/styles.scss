@@ -9,52 +9,12 @@ body {
     font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
-mat-sidenav {
-    width: 200px;
-    text-align: center;
-}
-
-.mat-drawer {
-    background: $primary;
-    color: $white;
-}
-
-.content-container {
-    background-color: $white;
-    margin: 20px;
-    align-items: center;
-    height: auto;
-}
-
 .section-container {
     padding-bottom: 5px;
 }
 
-mat-sidenav-container {
-    height: calc(100vh - 65px);
-}
-
 .title-toolbar {
     background-color: $light-gray;
-}
-
-.menu-button {
-    width: 100%;
-    display: flex !important;
-    align-items: center;
-    justify-content: flex-start;
-    font-size: 1rem;
-
-    mat-icon {
-        margin-right: 8px;
-    }
-}
-
-.avatar {
-    margin-top: 16px;
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
 }
 
 .nav-spacer {

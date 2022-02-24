@@ -1,105 +1,35 @@
 <div class="section-container">
-    <mat-toolbar class="title-toolbar mat-elevation-z5">
-        <span>Productos</span>
+    <div class="title-container">
+        <h2>Catalogo</h2>
 
         <span class="nav-spacer"></span>
-    </mat-toolbar>
 
-    <mat-table
-        matSort
-        *ngIf="!loading"
-        [dataSource]="dataSource"
-        class="mat-elevation-z5"
-    >
-        <!-- Description Column -->
-        <ng-container matColumnDef="description">
-            <mat-header-cell *matHeaderCellDef> Descripción </mat-header-cell>
-            <mat-cell *matCellDef="let element">
-                {{ element.description }}
-            </mat-cell>
-        </ng-container>
+        <mat-divider></mat-divider>
+    </div>
 
-        <!-- Price Column -->
-        <ng-container matColumnDef="price">
-            <mat-header-cell *matHeaderCellDef> Precio </mat-header-cell>
-            <mat-cell *matCellDef="let element">
-                {{ element.price }}
-            </mat-cell>
-        </ng-container>
+    <div class="products-container">
+        <div class="table-container">
+            <catalog-table [loading]="loading"></catalog-table>
+        </div>
+        <div class="cart-container">
+            <mat-card color="primary" class="mat-elevation-z5">
+                <mat-card-content>
+                    <h2 mat-dialog-title>Resumen de Pedido</h2>
 
-        <!-- Quantity Column -->
-        <ng-container matColumnDef="quantity">
-            <mat-header-cell *matHeaderCellDef></mat-header-cell>
-            <mat-cell *matCellDef="let element">
-                <mat-form-field
-                    class="quantity-field"
-                    appearance="standard"
-                >
-                    <mat-label>Cantidad</mat-label>
-                    <input matInput type="number"/>
-                </mat-form-field>
-            </mat-cell>
-        </ng-container>
+                    <mat-divider></mat-divider>
 
-        <!-- Add Column -->
-        <ng-container matColumnDef="add">
-            <mat-header-cell *matHeaderCellDef></mat-header-cell>
-            <mat-cell *matCellDef="let element">
-                <button mat-raised-button color="accent" color="primary">
-                    Agregar
-                </button>
-            </mat-cell>
-        </ng-container>
+                    <order-table></order-table>
 
-        <!-- Mobile Column -->
-        <ng-container matColumnDef="mobile">
-            <mat-header-cell *matHeaderCellDef></mat-header-cell>
-            <mat-cell *matCellDef="let element">
-                <div class="mobile-data">
-                    <p class="mobile-description">{{ element.description }}</p>
-                    <p class="mobile-price">{{ element.price }}</p>
-                </div>
-                <div class="mobile-actions">
-                    <div>
-                        <mat-form-field
-                            class="quantity-field"
-                            appearance="standard"
-                            floatLabel="always"
-                        >
-                            <mat-label>Cantidad</mat-label>
-                            <input matInput type="number" />
-                        </mat-form-field>
-                    </div>
-                    <div>
-                        <button
-                            mat-raised-button
-                            color="accent"
-                            color="primary"
-                        >
-                            Agregar
-                        </button>
-                    </div>
-                </div>
-            </mat-cell>
-        </ng-container>
+                    <mat-divider></mat-divider>
+                </mat-card-content>
 
-        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-        <mat-row *matRowDef="let row; columns: displayedColumns"> </mat-row>
-
-        <tr class="mat-row" *matNoDataRow>
-            <td class="mat-cell" colspan="4">
-                0 productos encontrados
-            </td>
-        </tr>
-    </mat-table>
-
-    <mat-card class="table-loading" *ngIf="loading">
-        <mat-spinner></mat-spinner>
-    </mat-card>
-
-    <mat-paginator
-        [pageSizeOptions]="[10, 20, 30]"
-        class="mat-elevation-z5"
-        aria-label="Select page of users"
-    ></mat-paginator>
+                <h1 class="order-total">Total: {{orderTotal | currency}}</h1>
+                <mat-card-actions align="end">
+                    <button mat-raised-button color="primary">
+                        Hacer Pedido
+                    </button>
+                </mat-card-actions>
+            </mat-card>
+        </div>
+    </div>
 </div>
