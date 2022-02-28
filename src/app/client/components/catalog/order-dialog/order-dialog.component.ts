@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { ICatalog, IOrder } from '../../../models/catalog.model';
 import { OrderService } from '../../../services/order.service';
@@ -19,11 +20,11 @@ export class OrderDialogComponent implements OnInit {
     constructor(private _orderService: OrderService) {}
 
     ngOnInit(): void {
-        this.getCatalog();
+        this.getOrder();
         this.getTotal();
     }
 
-    public getCatalog(): void {
+    public getOrder(): void {
         this.loading = true;
         this._orderService.getOrder.subscribe(
             (order: IOrder[]) => {
@@ -45,8 +46,9 @@ export class OrderDialogComponent implements OnInit {
         this._orderService.setOrder(this.order);
     }
 
-    
-public getTotal(): void {
-        this._orderService.getTotal.subscribe((total) => this.orderTotal = total);
+    public getTotal(): void {
+        this._orderService.getTotal.subscribe(
+            (total) => (this.orderTotal = total)
+        );
     }
 }

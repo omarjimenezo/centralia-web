@@ -17,6 +17,7 @@
         color="primary"
         [mat-dialog-close]="order"
         cdkFocusInitial
+        [disabled]="order.length < 1"
     >
         Hacer Pedido
     </button>

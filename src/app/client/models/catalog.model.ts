@@ -11,6 +11,7 @@ export interface ICatalog {
     description: string;
     price: string;
     image: string;
+    selected?: boolean;
 }
 
 export interface IOrder {

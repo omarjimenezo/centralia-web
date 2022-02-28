@@ -17,11 +17,13 @@ export class NavBarComponent implements OnInit {
     @Output() menuOpen = new EventEmitter();
 
     public productsAdded: number;
-    public loading: boolean;
-    public catalogToolbar: boolean;
+    public loading: boolean = false;
+    public totalFadeOut: boolean = false;
     public categories: ICategory[];
     public providerId: string;
     public orderTotal: number;
+    public catalogToolbar: boolean = false;
+    public searchKey: string = '';
 
     constructor(
         private _route: ActivatedRoute,
@@ -33,8 +35,8 @@ export class NavBarComponent implements OnInit {
         public dialog: MatDialog
     ) {
         this._router.events.subscribe((val) => {
-            if(val instanceof NavigationEnd) {
-                this.catalogToolbar = (this._router.url.includes('catalogo'));
+            if (val instanceof NavigationEnd) {
+                this.catalogToolbar = this._router.url.includes('catalogo');
             }
         });
     }
@@ -42,12 +44,13 @@ export class NavBarComponent implements OnInit {
     public ngOnInit(): void {
         this.setProviderId();
         this.getCategories();
+        this.getOrder();
         this.getTotal();
     }
 
     public setProviderId(): void {
         this.providerId = this._route.snapshot.paramMap.get('id')!;
-        this._navBarService.setProviderId(this.providerId)
+        this._navBarService.setProviderId(this.providerId);
     }
 
     public getCategories(): void {
@@ -57,7 +60,6 @@ export class NavBarComponent implements OnInit {
             (category: ICategory[]) => {
                 if (category.length > 0) {
                     this.categories = category;
-                    console.log('categorias', this.categories);
                     this.loading = false;
                 }
             },
@@ -66,18 +68,22 @@ export class NavBarComponent implements OnInit {
                 this.loading = false;
             }
         );
+    }
 
+    public getOrder(): void {
         this._orderService.getOrder.subscribe((order) => {
             this.productsAdded = 0;
             order.forEach((product) => {
-                this.productsAdded += product.quantity
-            })
-        })
-
+                this.productsAdded += product.quantity;
+            });
+        });
     }
 
-    public getTotal(): void{
-        this._orderService.getTotal.subscribe((total) => this.orderTotal = total);
+    public getTotal(): void {
+        this._orderService.getTotal.subscribe((total) => {
+            this.elementFadeout();
+            this.orderTotal = total;
+        });
     }
 
     public onSearch(event: Event) {
@@ -86,6 +92,8 @@ export class NavBarComponent implements OnInit {
     }
 
     public onCategorySelect(event: string) {
+        this._catalogSearchService.setSearch('');
+        this.searchKey = '';
         this._catalogSearchService.setFilter(event);
     }
 
@@ -97,5 +105,12 @@ export class NavBarComponent implements OnInit {
         dialogRef.afterClosed().subscribe((result) => {
             console.log(`Dialog closed: ${result}`);
         });
+    }
+
+    public elementFadeout(): void {
+        this.totalFadeOut = true;
+        setTimeout(() => {
+            this.totalFadeOut = false;
+        }, 300);
     }
 }

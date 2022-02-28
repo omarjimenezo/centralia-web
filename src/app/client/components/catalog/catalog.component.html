@@ -1,4 +1,8 @@
-<div class="section-container">
+<div
+    class="section-container catalog-container"
+    [class.element-fadeout]="buttonFadeOut"
+    [class.element-fadein]="!buttonFadeOut"
+>
     <div class="title-container">
         <h2>Catalogo</h2>
 
@@ -23,13 +27,33 @@
                     <mat-divider></mat-divider>
                 </mat-card-content>
 
-                <h1 class="order-total">Total: {{orderTotal | currency}}</h1>
+                <h1 class="order-total">Total: {{ orderTotal | currency }}</h1>
                 <mat-card-actions align="end">
-                    <button mat-raised-button color="primary">
+                    <button
+                        mat-raised-button
+                        color="primary"
+                        [disabled]="order.length < 1"
+                    >
                         Hacer Pedido
                     </button>
                 </mat-card-actions>
             </mat-card>
         </div>
     </div>
+</div>
+
+<div
+    class="float-order-button"
+    [class.element-scale]="buttonFadeOut"
+    [class.element-scale]="!buttonFadeOut"
+>
+    <a
+        mat-mini-fab
+        color="primary"
+        matBadge="{{ productsAdded }}"
+        matBadgeColor="warn"
+        (click)="openOrderDialog()"
+    >
+        <mat-icon>shopping_cart</mat-icon>
+    </a>
 </div>

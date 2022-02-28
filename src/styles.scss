@@ -20,3 +20,33 @@ body {
 .nav-spacer {
     flex: 1 1 auto;
 }
+
+.element-fadeout {
+    opacity: 30%;
+    -webkit-animation: fadeout .1s; /* Safari, Chrome and Opera > 12.1 */
+    animation: fadeout .1s;
+}
+@keyframes fadeout {
+    from { opacity: 1; }
+    to   { opacity: 30%; }
+}
+
+.element-fadein {
+    opacity: 100%;
+    -webkit-animation: fadein .3s; /* Safari, Chrome and Opera > 12.1 */
+    animation: fadein .3s;
+}
+@keyframes fadein {
+    from { opacity: 30%; }
+    to   { opacity: 1; }
+}
+
+.element-scale {
+    -webkit-animation: scale .1s; /* Safari, Chrome and Opera > 12.1 */
+    animation: scale .1s;
+}
+@keyframes scale {
+    from {  transform: scale(1); }
+    to   {  transform: scale(1.3); }
+}
+

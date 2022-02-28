@@ -17,6 +17,7 @@ export class CatalogTableComponent implements OnInit {
     public order: IOrder[] = [];
     public quantities: number[] = [];
     public current_catalog: IOrder[] = [];
+    public tableFadeOut: boolean = false;
 
     public displayedColumns = ['desktop'];
 
@@ -29,7 +30,7 @@ export class CatalogTableComponent implements OnInit {
     constructor(
         private _catalogService: CatalogService,
         private _orderService: OrderService,
-        private _catalogSearchService: CatalogSearchService,
+        private _catalogSearchService: CatalogSearchService
     ) {}
 
     public ngOnInit(): void {
@@ -45,8 +46,8 @@ export class CatalogTableComponent implements OnInit {
             (catalog: ICatalog[]) => {
                 this.quantities = [];
                 if (catalog.length > 0) {
-                    catalog.forEach((product) => this.resetQuantity());
                     this.dataSource = new MatTableDataSource<ICatalog>(catalog);
+                    this.resetQuantity();
                     this.loading = false;
                     this.dataSource.paginator = this.paginator;
                     this.dataSource.sort = this.sort;
@@ -67,8 +68,9 @@ export class CatalogTableComponent implements OnInit {
 
     public getSearch(): void {
         this._catalogSearchService.getSearch.subscribe((data: string) => {
-            console.log('Busqueda', data);
-            if (data !== '') {
+            if (data === '' || data.length > 2) {
+                window.scroll(0, 0);
+                this.elementFadeout();
                 this.applySearch(data);
             }
         });
@@ -78,6 +80,8 @@ export class CatalogTableComponent implements OnInit {
         this._catalogSearchService.getFilter.subscribe((data: string) => {
             console.log('Filtro', data);
             if (data !== '') {
+                window.scroll(0, 0);
+                this.elementFadeout();
                 this.applyFilter(data);
             }
         });
@@ -86,6 +90,7 @@ export class CatalogTableComponent implements OnInit {
     public applySearch(data: string): void {
         if (this.dataSource) {
             this.dataSource.filter = data;
+            this.resetQuantity();
             if (this.dataSource.paginator) {
                 this.dataSource.paginator.firstPage();
             }
@@ -93,50 +98,66 @@ export class CatalogTableComponent implements OnInit {
     }
 
     public applyFilter(data: string) {
-        this.loading = true;
         if (data !== 'N') {
-            this._catalogService.getCatalog.subscribe(
-                (current_catalog: ICatalog[]) => {
-                    this.quantities = [];
-                    const filteredCatalog = current_catalog.filter(
-                        (product: ICatalog) => {
-                            if (product.category === data) {
-                                this.resetQuantity();
-                                return true;
-                            } else {
-                                return false;
-                            }
-                        }
-                    );
-                    this.dataSource = new MatTableDataSource<ICatalog>(
-                        filteredCatalog
-                    );
-                    this.loading = false;
-                    this.dataSource.paginator = this.paginator;
-                    this.dataSource.sort = this.sort;
-                }
-            );
+            this._catalogService.getCatalog.subscribe((catalog: ICatalog[]) => {
+                const filteredCatalog = catalog.filter(
+                    (product: ICatalog) => product.category === data
+                );
+                this.dataSource = new MatTableDataSource<ICatalog>(
+                    filteredCatalog
+                );
+                this.resetQuantity();
+                this.loading = false;
+                this.dataSource.paginator = this.paginator;
+                this.dataSource.sort = this.sort;
+            });
         } else {
             this.getCatalog();
         }
     }
 
-    public addProduct(quantity: number, element: IOrder): void {
+    public addProduct(quantity: number, element: ICatalog): void {
         const productFound = this.order.find(
             (product) => product.sku === element.sku
         );
 
         if (productFound) {
-            productFound.quantity += quantity;
+            productFound.quantity = quantity;
         } else {
-            element.quantity = quantity;
-            this.order.push(element);
+            element.selected = true;
+
+            this.order.push({
+                sku: element.sku,
+                description: element.description,
+                price: element.price,
+                quantity: quantity,
+            });
         }
         this._orderService.setOrder(this.order);
         this._orderService.calcTotal();
     }
 
     public resetQuantity(): void {
-        this.quantities.push();
+        this.quantities = [];
+        this.dataSource.data.forEach((row: ICatalog) =>
+            this.quantities.push(1)
+        );
+        this.order.forEach((product: IOrder) => {
+            if (product.quantity > 1) {
+                const rowIndex: number = this.dataSource.filteredData.findIndex(
+                    (row: ICatalog) => product.sku === row.sku
+                );
+                if(rowIndex !== -1) {
+                    this.quantities[rowIndex] = product.quantity;
+                }
+            }
+        });
+    }
+
+    public elementFadeout(): void {
+        this.tableFadeOut = true;
+        setTimeout(() => {
+            this.tableFadeOut = false;
+        }, 300)
     }
 }

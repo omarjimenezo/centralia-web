@@ -1,17 +1,25 @@
-<mat-toolbar color="primary">
+<mat-toolbar color="primary" [class.position-fixed]="catalogToolbar">
     <mat-toolbar-row>
         <span>Centralia</span>
 
         <span class="nav-spacer"></span>
 
-        <button
+        <span
+            class="button-cart-big"
+            *ngIf="catalogToolbar"
+            [class.element-fadeout]="totalFadeOut"
+            [class.element-fadein]="!totalFadeOut"
+            >Total: {{ orderTotal | currency }}</span
+        >
+        <!-- <button
             class="button-cart-big"
             mat-raised-button
             color="accent"
+            *ngIf="catalogToolbar"
             (click)="openCartDialog()"
         >
             Pedido ({{ productsAdded }} Prod. {{orderTotal | currency}})
-        </button>
+        </button> -->
     </mat-toolbar-row>
     <mat-toolbar-row *ngIf="catalogToolbar">
         <mat-form-field
@@ -36,7 +44,7 @@
             class="catalog-search-field"
         >
             <mat-label>Buscar</mat-label>
-            <input matInput (keyup)="onSearch($event)" placeholder="" />
+            <input matInput (keyup)="onSearch($event)" placeholder="" [(ngModel)]="searchKey"/>
             <mat-icon matSuffix>search</mat-icon>
         </mat-form-field>
     </mat-toolbar-row>
