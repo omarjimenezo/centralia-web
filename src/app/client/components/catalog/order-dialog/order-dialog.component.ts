@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
-import { ICatalog, IOrder } from '../../../models/catalog.model';
+import { Subscription } from 'rxjs';
+import { ICatalog, IOrder } from '../../../../common/models/catalog.model';
 import { OrderService } from '../../../services/order.service';
 
 @Component({
@@ -9,19 +10,27 @@ import { OrderService } from '../../../services/order.service';
     templateUrl: './order-dialog.component.html',
     styleUrls: ['./order-dialog.component.scss'],
 })
-export class OrderDialogComponent implements OnInit {
+export class OrderDialogComponent implements OnInit, OnDestroy {
     public order: IOrder[];
     public loading: boolean;
     public orderTotal: number = 0;
+
+    private sub_order: Subscription;
+    private sub_total: Subscription;
 
     public displayedColumns: string[] = ['product', 'quantity', 'actions'];
     public dataSource: MatTableDataSource<IOrder>;
 
     constructor(private _orderService: OrderService) {}
 
-    ngOnInit(): void {
+    public ngOnInit(): void {
         this.getOrder();
         this.getTotal();
+    }
+
+    public ngOnDestroy(): void {
+        (this.sub_order) ? this.sub_order.unsubscribe() : null;
+        (this.sub_total) ? this.sub_total.unsubscribe() : null;
     }
 
     public getOrder(): void {

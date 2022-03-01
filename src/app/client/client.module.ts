@@ -87,7 +87,7 @@ import { NavBarComponent } from './navigation/nav-bar/nav-bar.component';
             useValue: {
                 duration: 5000,
                 horizontalPosition: 'center',
-                verticalPosition: 'top',
+                verticalPosition: 'bottom',
             },
         },
     ],

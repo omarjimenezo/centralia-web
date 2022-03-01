@@ -1,11 +1,20 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import {
+    AfterViewInit,
+    ChangeDetectorRef,
+    Component,
+    Input,
+    OnDestroy,
+    OnInit,
+    ViewChild
+} from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { Subscription } from 'rxjs';
 import { CatalogSearchService } from 'src/app/client/services/catalog-search.service';
-import { NavBarService } from 'src/app/client/services/nav-bar.service';
 import { OrderService } from 'src/app/client/services/order.service';
-import { ICatalog, IOrder } from '../../../models/catalog.model';
+import { AlertService } from 'src/app/common/services/alert.service';
+import { ICatalog, IOrder } from '../../../../common/models/catalog.model';
 import { CatalogService } from '../../../services/catalog.service';
 
 @Component({
@@ -13,13 +22,18 @@ import { CatalogService } from '../../../services/catalog.service';
     templateUrl: './catalog-table.component.html',
     styleUrls: ['./catalog-table.component.scss'],
 })
-export class CatalogTableComponent implements OnInit {
+export class CatalogTableComponent implements AfterViewInit, OnDestroy, OnInit {
     public order: IOrder[] = [];
     public quantities: number[] = [];
-    public current_catalog: IOrder[] = [];
+    public catalog: ICatalog[] = [];
     public tableFadeOut: boolean = false;
 
-    public displayedColumns = ['desktop'];
+    private sub_order: Subscription;
+    private sub_catalog: Subscription;
+    private sub_catalogSearch: Subscription;
+    private sub_catalogFilter: Subscription;
+
+    public displayedColumns = ['product'];
 
     @Input() loading: boolean;
     @Input() dataSource: MatTableDataSource<ICatalog>;
@@ -30,22 +44,36 @@ export class CatalogTableComponent implements OnInit {
     constructor(
         private _catalogService: CatalogService,
         private _orderService: OrderService,
-        private _catalogSearchService: CatalogSearchService
+        private _catalogSearchService: CatalogSearchService,
+        private _alertService: AlertService,
+        private _cp: ChangeDetectorRef
     ) {}
 
     public ngOnInit(): void {
-        this.getCatalog();
-        this.getOrder();
         this.getSearch();
         this.getFilter();
+        this.getOrder();
+    }
+
+    public ngAfterViewInit(): void {
+        this.getCatalog();
+        this._cp.detectChanges();
+    }
+
+    ngOnDestroy() {
+        this.sub_order ? this.sub_order.unsubscribe() : null;
+        this.sub_catalog ? this.sub_catalog.unsubscribe() : null;
+        this.sub_catalogSearch ? this.sub_catalogSearch.unsubscribe() : null;
+        this.sub_catalogFilter ? this.sub_catalogFilter.unsubscribe() : null;
     }
 
     public getCatalog(): void {
         this.loading = true;
-        this._catalogService.getCatalog.subscribe(
+        this.sub_order = this._catalogService.getCatalog.subscribe(
             (catalog: ICatalog[]) => {
                 this.quantities = [];
                 if (catalog.length > 0) {
+                    this.catalog = catalog;
                     this.dataSource = new MatTableDataSource<ICatalog>(catalog);
                     this.resetQuantity();
                     this.loading = false;
@@ -61,30 +89,33 @@ export class CatalogTableComponent implements OnInit {
     }
 
     public getOrder(): void {
-        this._orderService.getOrder.subscribe((order) => {
+        this.sub_order = this._orderService.getOrder.subscribe((order) => {
             this.order = order;
         });
     }
 
     public getSearch(): void {
-        this._catalogSearchService.getSearch.subscribe((data: string) => {
-            if (data === '' || data.length > 2) {
-                window.scroll(0, 0);
-                this.elementFadeout();
-                this.applySearch(data);
+        this.sub_catalogSearch = this._catalogSearchService.getSearch.subscribe(
+            (data: string) => {
+                if (data === '' || data.length > 2) {
+                    window.scroll(0, 0);
+                    this.elementFadeout();
+                    this.applySearch(data);
+                }
             }
-        });
+        );
     }
 
     public getFilter(): void {
-        this._catalogSearchService.getFilter.subscribe((data: string) => {
-            console.log('Filtro', data);
-            if (data !== '') {
-                window.scroll(0, 0);
-                this.elementFadeout();
-                this.applyFilter(data);
+        this.sub_catalogFilter = this._catalogSearchService.getFilter.subscribe(
+            (data: string) => {
+                if (data !== '') {
+                    window.scroll(0, 0);
+                    this.elementFadeout();
+                    this.applyFilter(data);
+                }
             }
-        });
+        );
     }
 
     public applySearch(data: string): void {
@@ -99,55 +130,51 @@ export class CatalogTableComponent implements OnInit {
 
     public applyFilter(data: string) {
         if (data !== 'N') {
-            this._catalogService.getCatalog.subscribe((catalog: ICatalog[]) => {
-                const filteredCatalog = catalog.filter(
-                    (product: ICatalog) => product.category === data
-                );
-                this.dataSource = new MatTableDataSource<ICatalog>(
-                    filteredCatalog
-                );
-                this.resetQuantity();
-                this.loading = false;
-                this.dataSource.paginator = this.paginator;
-                this.dataSource.sort = this.sort;
-            });
+            this.sub_catalog = this._catalogService.getCatalog.subscribe(
+                (catalog: ICatalog[]) => {
+                    const filteredCatalog = catalog.filter(
+                        (product: ICatalog) => product.category === data
+                    );
+                    this.dataSource = new MatTableDataSource<ICatalog>(
+                        filteredCatalog
+                    );
+                    this.resetQuantity();
+                    this.loading = false;
+                    this.dataSource.paginator = this.paginator;
+                    this.dataSource.sort = this.sort;
+                }
+            );
         } else {
             this.getCatalog();
         }
     }
 
     public addProduct(quantity: number, element: ICatalog): void {
-        const productFound = this.order.find(
-            (product) => product.sku === element.sku
-        );
+        this._orderService.addProduct(quantity, element);
+    }
 
-        if (productFound) {
-            productFound.quantity = quantity;
-        } else {
-            element.selected = true;
-
-            this.order.push({
-                sku: element.sku,
-                description: element.description,
-                price: element.price,
-                quantity: quantity,
-            });
-        }
-        this._orderService.setOrder(this.order);
-        this._orderService.calcTotal();
+    public removeProduct(sku: string) {
+        this.catalog.map((product) => {
+            if (product.sku === sku) {
+                product.selected = false;
+                product.quantity = 0;
+            }
+        });
+        this._orderService.removeProduct(sku);
+        this._catalogService.setCatalog(this.catalog);
     }
 
     public resetQuantity(): void {
         this.quantities = [];
         this.dataSource.data.forEach((row: ICatalog) =>
-            this.quantities.push(1)
+            this.quantities.push(0)
         );
         this.order.forEach((product: IOrder) => {
-            if (product.quantity > 1) {
+            if (product.quantity > 0) {
                 const rowIndex: number = this.dataSource.filteredData.findIndex(
                     (row: ICatalog) => product.sku === row.sku
                 );
-                if(rowIndex !== -1) {
+                if (rowIndex !== -1) {
                     this.quantities[rowIndex] = product.quantity;
                 }
             }
@@ -158,6 +185,6 @@ export class CatalogTableComponent implements OnInit {
         this.tableFadeOut = true;
         setTimeout(() => {
             this.tableFadeOut = false;
-        }, 300)
+        }, 300);
     }
 }

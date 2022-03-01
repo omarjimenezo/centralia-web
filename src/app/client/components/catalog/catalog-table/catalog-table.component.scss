@@ -6,7 +6,6 @@
 
 .mat-row-selected {
     background-color: $light-success;
-    color: $white;
 }
 
 .mat-quantity-field {
@@ -25,7 +24,7 @@
     height: 650px;
 }
 
-.desktop-data {
+.product-data {
     display: flex;
     align-items: flex-start;
     width: 100%;

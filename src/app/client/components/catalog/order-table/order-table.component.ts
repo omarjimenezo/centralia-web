@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
-import { ICatalog, IOrder } from 'src/app/client/models/catalog.model';
+import { Subscription } from 'rxjs';
+import { ICatalog, IOrder } from 'src/app/common/models/catalog.model';
 import { CatalogService } from 'src/app/client/services/catalog.service';
 import { OrderService } from 'src/app/client/services/order.service';
 
@@ -9,10 +10,13 @@ import { OrderService } from 'src/app/client/services/order.service';
     templateUrl: './order-table.component.html',
     styleUrls: ['./order-table.component.scss'],
 })
-export class OrderTableComponent implements OnInit {
+export class OrderTableComponent implements OnInit, OnDestroy {
     public order: IOrder[] = [];
     public catalog: ICatalog[] = [];
     public loading: boolean;
+
+    private sub_order: Subscription;
+    private sub_catalog: Subscription;
 
     public displayedColumns: string[] = ['product', 'quantity', 'actions'];
     public dataSource: MatTableDataSource<IOrder>;
@@ -25,6 +29,11 @@ export class OrderTableComponent implements OnInit {
     ngOnInit(): void {
         this.getOrder();
         this.getCatalog();
+    }
+
+    public ngOnDestroy(): void {
+        (this.sub_order) ? this.sub_order.unsubscribe() : null;
+        (this.sub_catalog) ? this.sub_catalog.unsubscribe() : null;
     }
 
     public getOrder(): void {
@@ -47,21 +56,15 @@ export class OrderTableComponent implements OnInit {
         })
     }
 
-    public deleteProduct(sku: string): void {
-        this.order = this.order.filter((product) => {
-            return product.sku !== sku;
-        });
-
-        
+    public removeProduct(sku: string): void {
         this.catalog.map((product) => {
             if(product.sku === sku) {
                 product.selected = false
-                product.quantity = 1;
+                product.quantity = 0;
             }
         })
         
+        this._orderService.removeProduct(sku);
         this._catalogService.setCatalog(this.catalog);
-        this._orderService.setOrder(this.order);
-        this._orderService.calcTotal();
     }
 }

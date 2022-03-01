@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { ICatalog, ICategory } from '../models/catalog.model';
+import { ICatalog, ICategory } from '../../common/models/catalog.model';
 import { NavBarService } from './nav-bar.service';
 
 @Injectable({

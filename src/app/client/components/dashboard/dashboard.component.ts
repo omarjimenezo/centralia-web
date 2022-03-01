@@ -1,6 +1,6 @@
 import { Component, HostListener, OnInit } from '@angular/core';
-import { Route, Router } from '@angular/router';
-import { IProvider } from '../../models/provider.model';
+import { Router } from '@angular/router';
+import { IProvider } from 'src/app/common/models/provider.model';
 
 @Component({
   selector: 'app-dashboard',

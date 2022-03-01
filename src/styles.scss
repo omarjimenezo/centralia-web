@@ -50,3 +50,17 @@ body {
     to   {  transform: scale(1.3); }
 }
 
+// Alert Snackbar
+
+.mat-snackbar-sucess {
+    background-color: $success;
+}
+.mat-snackbar-error {
+    background-color: $error;
+}
+.mat-snackbar-alert {
+    background-color: $alert;
+}
+.mat-snackbar-info {
+    background-color: $info;
+}

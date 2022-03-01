@@ -1,10 +1,11 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
-import { ICatalog, IOrder } from '../../models/catalog.model';
+import { Subscription } from 'rxjs';
+import { ICatalog, IOrder } from '../../../common/models/catalog.model';
 import { NavBarService } from '../../services/nav-bar.service';
 import { OrderService } from '../../services/order.service';
 import { OrderDialogComponent } from './order-dialog/order-dialog.component';
@@ -14,7 +15,7 @@ import { OrderDialogComponent } from './order-dialog/order-dialog.component';
     templateUrl: './catalog.component.html',
     styleUrls: ['./catalog.component.scss'],
 })
-export class CatalogComponent implements OnInit {
+export class CatalogComponent implements OnInit, OnDestroy {
     public order: IOrder[];
     public dataSource: MatTableDataSource<ICatalog>;
     public loading: boolean = false;
@@ -22,6 +23,9 @@ export class CatalogComponent implements OnInit {
     public cols: number = 2;
     public orderTotal: number = 0;
     public productsAdded: number = 0;
+
+    private sub_order: Subscription;
+    private sub_total: Subscription;
 
     @ViewChild(MatPaginator) paginator: MatPaginator;
     @ViewChild(MatSort) sort: MatSort;
@@ -38,6 +42,12 @@ export class CatalogComponent implements OnInit {
         this.setProviderId();
         this.getTotal();
     }
+
+    public ngOnDestroy(): void {
+        (this.sub_order) ? this.sub_order.unsubscribe() : null;
+        (this.sub_total) ? this.sub_total.unsubscribe() : null;
+    }
+
 
     public getOrder(): void {
         this._orderService.getOrder.subscribe(
