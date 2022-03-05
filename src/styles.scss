@@ -54,6 +54,7 @@ body {
 
 .mat-snackbar-sucess {
     background-color: $success;
+    width: min-content;
 }
 .mat-snackbar-error {
     background-color: $error;
@@ -63,4 +64,14 @@ body {
 }
 .mat-snackbar-info {
     background-color: $info;
+}
+
+.mat-simple-snackbar-action {
+    color: $white;
+}
+
+@media (max-width: 1008px) {
+    .mat-snack-bar-handset {
+        width: 300px !important; 
+    }
 }

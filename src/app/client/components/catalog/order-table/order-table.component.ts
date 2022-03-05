@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { Subscription } from 'rxjs';
 import { CatalogService } from 'src/app/client/services/catalog.service';
-import { OrderService } from 'src/app/client/services/order.service';
+import { OrderService } from 'src/app/common/services/order.service';
 import { ICatalog } from 'src/app/common/models/catalog.model';
 import { IOrder } from 'src/app/common/models/order.model';
 

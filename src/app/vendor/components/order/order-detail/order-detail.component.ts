@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { OrderService } from 'src/app/client/services/order.service';
+import { OrderService } from 'src/app/common/services/order.service';
 
 @Component({
     selector: 'order-detail',

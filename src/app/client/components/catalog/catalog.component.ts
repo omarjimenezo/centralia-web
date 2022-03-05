@@ -5,10 +5,10 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { IOrder } from 'src/app/common/models/order.model';
+import { IOrder, IOrderList } from 'src/app/common/models/order.model';
 import { ICatalog } from '../../../common/models/catalog.model';
 import { NavBarService } from '../../services/nav-bar.service';
-import { OrderService } from '../../services/order.service';
+import { OrderService } from '../../../common/services/order.service';
 import { OrderDialogComponent } from './order-dialog/order-dialog.component';
 
 @Component({
@@ -24,6 +24,8 @@ export class CatalogComponent implements OnInit, OnDestroy {
     public cols: number = 2;
     public orderTotal: number = 0;
     public productsAdded: number = 0;
+    public client_address: string = '';
+    public client_name: string = '';
 
     private sub_order: Subscription;
     private sub_total: Subscription;
@@ -65,6 +67,19 @@ export class CatalogComponent implements OnInit, OnDestroy {
                 this.loading = false;
             }
         );
+    }
+
+    public saveOrder(): void {
+        let saveOrder: IOrderList = {
+            id: 1,
+            status: 0,
+            total: this.orderTotal,
+            client_address: this.client_address,
+            client_name: this.client_name,
+            vendor_id: 1,
+        };
+
+        this._orderService.setOrderList(saveOrder);
     }
 
     public setProviderId(): void {

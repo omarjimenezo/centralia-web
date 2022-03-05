@@ -8,7 +8,7 @@ import { IAlertInfo } from 'src/app/client/models/alert.model';
 export class AlertService {
     constructor(private _snackBar: MatSnackBar) {}
 
-    public openAlert(message: string, alertInfo: IAlertInfo, duration: number = 3000) {
+    public openAlert(message: string, alertInfo: IAlertInfo, duration: number = 300000) {
         let panelClass: string = '';
         let position: MatSnackBarVerticalPosition  = 'top';
         switch (alertInfo.type) {

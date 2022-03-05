@@ -7,10 +7,11 @@ export interface IOrder {
 
 export interface IOrderList {
     id: number;
-    date: string;
+    date?: string;
     status: number;
     total: number;
     client_name?: string;
     client_id?: number;
     client_address?: string;
+    vendor_id: number;
 }

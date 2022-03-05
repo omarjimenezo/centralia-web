@@ -6,12 +6,13 @@
     <div class="client-data">
         <mat-form-field appearance="outline">
             <mat-label>Nombre/Negocio</mat-label>
-            <input matInput placeholder="Placeholder">
+            <input matInput placeholder="Placeholder" [(ngModel)]="client_name">
             <mat-hint>Inngrese el nombre con el que el vendedor lo identifica</mat-hint>
           </mat-form-field>
+
           <mat-form-field appearance="outline">
             <mat-label>Dirección</mat-label>
-            <input matInput placeholder="Placeholder">
+            <input matInput placeholder="Placeholder" [(ngModel)]="client_address">
             <mat-hint>Ingrese su direccción completa (calle, numero, CP)</mat-hint>
           </mat-form-field>
     </div>
@@ -29,7 +30,8 @@
         color="primary"
         [mat-dialog-close]="order"
         cdkFocusInitial
-        [disabled]="order.length < 1"
+        [disabled]="order.length < 1 || (client_name.length < 3 || client_address.length < 3)"
+        (click)="saveOrder()"
     >
         Hacer Pedido
     </button>

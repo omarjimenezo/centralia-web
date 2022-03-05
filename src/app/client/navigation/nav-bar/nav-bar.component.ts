@@ -6,7 +6,7 @@ import { OrderDialogComponent } from '../../components/catalog/order-dialog/orde
 import { CatalogSearchService } from '../../services/catalog-search.service';
 import { CatalogService } from '../../services/catalog.service';
 import { NavBarService } from '../../services/nav-bar.service';
-import { OrderService } from '../../services/order.service';
+import { OrderService } from '../../../common/services/order.service';
 
 @Component({
     selector: 'nav-bar',

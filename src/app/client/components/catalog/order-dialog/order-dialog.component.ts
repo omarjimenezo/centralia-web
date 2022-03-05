@@ -1,8 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { Subscription } from 'rxjs';
-import { IOrder } from 'src/app/common/models/order.model';
-import { OrderService } from '../../../services/order.service';
+import { IOrder, IOrderList } from 'src/app/common/models/order.model';
+import { OrderService } from '../../../../common/services/order.service';
 
 @Component({
     selector: 'order-dialog',
@@ -11,8 +11,10 @@ import { OrderService } from '../../../services/order.service';
 })
 export class OrderDialogComponent implements OnInit, OnDestroy {
     public order: IOrder[];
-    public loading: boolean;
+    public loading: boolean = false;
     public orderTotal: number = 0;
+    public client_address: string = '';
+    public client_name: string = '';
 
     private sub_order: Subscription;
     private sub_total: Subscription;
@@ -44,6 +46,19 @@ export class OrderDialogComponent implements OnInit, OnDestroy {
                 this.loading = false;
             }
         );
+    }
+
+    public saveOrder(): void {
+        let saveOrder: IOrderList = {
+            id: 1,
+            status: 0,
+            total: this.orderTotal,
+            client_address: this.client_address,
+            client_name: this.client_name,
+            vendor_id: 1,
+        };
+
+        this._orderService.setOrderList(saveOrder);
     }
 
     public deleteProduct(sku: string): void {

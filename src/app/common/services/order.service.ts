@@ -1,19 +1,21 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { IOrder } from 'src/app/common/models/order.model';
+import { IOrder, IOrderList } from 'src/app/common/models/order.model';
 import { AlertService } from 'src/app/common/services/alert.service';
-import { ICatalog } from '../../common/models/catalog.model';
-import { IAlertInfo } from '../models/alert.model';
+import { ICatalog } from '../models/catalog.model';
+import { IAlertInfo } from '../../client/models/alert.model';
 
 @Injectable({
     providedIn: 'root',
 })
 export class OrderService {
     private _order = new BehaviorSubject<IOrder[]>([]);
+    private _orderList = new BehaviorSubject<IOrderList[]>([]);
     private _total = new BehaviorSubject<number>(0);
 
     constructor(private _alertService: AlertService) {}
 
+    // Order
     public setOrder(order: IOrder[]) {
         this._order.next(order);
     }
@@ -21,6 +23,34 @@ export class OrderService {
     get getOrder(): Observable<IOrder[]> {
         return this._order.asObservable();
     }
+
+    public setOrderList(order: IOrderList) {
+        let orderList: IOrderList[] = this._orderList.value;
+        orderList.push(order);
+        this._orderList.next(orderList);
+    }
+
+    get getOrderList(): Observable<IOrderList[]> {
+        return this._orderList.asObservable();
+    }
+
+    public getStatus(status: number): string {
+        let statusLabel: string = '';
+        switch (status) {
+            case 0:
+                statusLabel = 'Finalizado';
+                break;
+            case 1:
+                statusLabel = 'En Progreso';
+                break;
+            case 2:
+                statusLabel = 'Nuevo';
+                break;
+        }
+        return statusLabel;
+    }
+
+    // Total
 
     public calcTotal(): void {
         let total = 0;
@@ -37,6 +67,8 @@ export class OrderService {
     get getTotal(): Observable<number> {
         return this._total.asObservable();
     }
+
+    // Products
 
     public addProduct(quantity: number, element: ICatalog): void {
         const order = this._order.value;
@@ -57,6 +89,7 @@ export class OrderService {
                 quantity: quantity,
             });
         }
+        console.log('Order: ', order);
         this.setOrder(order);
         this.calcTotal();
         this._alertService.openAlert(
@@ -92,21 +125,5 @@ export class OrderService {
                 );
             }, 3100);
         }
-    }
-
-    public getStatus(status: number): string {
-        let statusLabel: string = '';
-        switch (status) {
-            case 0:
-                statusLabel = 'Finalizado';
-                break;
-            case 1:
-                statusLabel = 'En Progreso';
-                break;
-            case 2:
-                statusLabel = 'Nuevo';
-                break;
-        }
-        return statusLabel;
     }
 }
