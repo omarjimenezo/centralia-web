@@ -5,7 +5,8 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { ICatalog, IOrder } from '../../../common/models/catalog.model';
+import { IOrder } from 'src/app/common/models/order.model';
+import { ICatalog } from '../../../common/models/catalog.model';
 import { NavBarService } from '../../services/nav-bar.service';
 import { OrderService } from '../../services/order.service';
 import { OrderDialogComponent } from './order-dialog/order-dialog.component';
@@ -34,7 +35,7 @@ export class CatalogComponent implements OnInit, OnDestroy {
         private _route: ActivatedRoute,
         private _orderService: OrderService,
         private _navBarService: NavBarService,
-        public dialog: MatDialog
+        public _matDialog: MatDialog
     ) {}
 
     public ngOnInit(): void {
@@ -78,7 +79,7 @@ export class CatalogComponent implements OnInit, OnDestroy {
     }
 
     public openOrderDialog(): void {
-        const dialogRef = this.dialog.open(OrderDialogComponent, {
+        const dialogRef = this._matDialog.open(OrderDialogComponent, {
             width: '99%',
         });
 

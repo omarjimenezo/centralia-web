@@ -1,8 +1,15 @@
 .catalog-container {
     margin-top: 140px;
 }
+
 .products-container {
     display: flex;
+}
+
+.client-data {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
 }
 
 .table-container {

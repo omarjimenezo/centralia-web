@@ -28,13 +28,22 @@ import { ClientRoutingModule } from './client-routing.module';
 import { ClientComponent } from './client.component';
 import { CatalogTableComponent } from './components/catalog/catalog-table/catalog-table.component';
 import { CatalogComponent } from './components/catalog/catalog.component';
+import { OrderDialogComponent } from './components/catalog/order-dialog/order-dialog.component';
 import { OrderTableComponent } from './components/catalog/order-table/order-table.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
-import { OrderDialogComponent } from './components/catalog/order-dialog/order-dialog.component';
 import { NavBarComponent } from './navigation/nav-bar/nav-bar.component';
 
 @NgModule({
     declarations: [
+        ClientComponent,
+        DashboardComponent,
+        CatalogComponent,
+        CatalogTableComponent,
+        NavBarComponent,
+        OrderTableComponent,
+        OrderDialogComponent,
+    ],
+    exports: [
         ClientComponent,
         DashboardComponent,
         CatalogComponent,
@@ -71,15 +80,6 @@ import { NavBarComponent } from './navigation/nav-bar/nav-bar.component';
         MatDialogModule,
         MatListModule,
         MatGridListModule,
-    ],
-    exports: [
-        ClientComponent,
-        DashboardComponent,
-        CatalogComponent,
-        CatalogTableComponent,
-        NavBarComponent,
-        OrderTableComponent,
-        OrderDialogComponent,
     ],
     providers: [
         {

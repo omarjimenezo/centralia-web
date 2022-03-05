@@ -1,0 +1,26 @@
+<h2 mat-dialog-title>Detalles del Pedido</h2>
+
+<mat-divider></mat-divider>
+
+<mat-dialog-content class="mat-typography"> 
+    <div class="order-detail-tile">
+        <h2>{{ data.client_name }} </h2>
+    <h2>{{ data.date }} </h2>
+    </div>
+    <div class="order-status-tile">
+        <h3>Estatus: {{ _orderService.getStatus(data.status) }} </h3>
+        <h3>Total: {{ data.total | currency }}</h3>
+    </div>
+    
+    
+    <mat-divider></mat-divider>
+    <order-detail-table></order-detail-table>
+</mat-dialog-content>
+
+<mat-divider></mat-divider>
+
+<mat-dialog-actions align="center">
+    <button mat-raised-button mat-dialog-close>Cerrar</button>
+    <button mat-raised-button color="primary">Atender Pedido</button>
+    <button mat-raised-button color="accent">Terminar Pedido</button>
+</mat-dialog-actions>

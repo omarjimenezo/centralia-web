@@ -7,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class OrderComponent implements OnInit {
 
+    public loading: boolean = false;
+
     constructor() {}
 
     ngOnInit(): void {}

@@ -1,8 +1,8 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { ICategory } from '../../../common/models/catalog.model';
 import { OrderDialogComponent } from '../../components/catalog/order-dialog/order-dialog.component';
-import { ICategory, IOrder } from '../../../common/models/catalog.model';
 import { CatalogSearchService } from '../../services/catalog-search.service';
 import { CatalogService } from '../../services/catalog.service';
 import { NavBarService } from '../../services/nav-bar.service';

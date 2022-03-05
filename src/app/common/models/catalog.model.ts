@@ -13,10 +13,3 @@ export interface ICatalog {
     image: string;
     selected?: boolean;
 }
-
-export interface IOrder {
-    sku: string;
-    description: string;
-    price: string;
-    quantity: number;
-}

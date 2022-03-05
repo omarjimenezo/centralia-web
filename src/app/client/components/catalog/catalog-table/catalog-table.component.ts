@@ -13,8 +13,9 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Subscription } from 'rxjs';
 import { CatalogSearchService } from 'src/app/client/services/catalog-search.service';
 import { OrderService } from 'src/app/client/services/order.service';
+import { IOrder } from 'src/app/common/models/order.model';
 import { AlertService } from 'src/app/common/services/alert.service';
-import { ICatalog, IOrder } from '../../../../common/models/catalog.model';
+import { ICatalog } from '../../../../common/models/catalog.model';
 import { CatalogService } from '../../../services/catalog.service';
 
 @Component({

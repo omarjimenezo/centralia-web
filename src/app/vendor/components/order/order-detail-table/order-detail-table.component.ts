@@ -7,11 +7,11 @@ import { ICatalog } from 'src/app/common/models/catalog.model';
 import { IOrder } from 'src/app/common/models/order.model';
 
 @Component({
-    selector: 'order-table',
-    templateUrl: './order-table.component.html',
-    styleUrls: ['./order-table.component.scss'],
+    selector: 'order-detail-table',
+    templateUrl: './order-detail-table.component.html',
+    styleUrls: ['./order-detail-table.component.scss'],
 })
-export class OrderTableComponent implements OnInit, OnDestroy {
+export class OrderDetailTableComponent implements OnInit, OnDestroy {
     public order: IOrder[] = [];
     public catalog: ICatalog[] = [];
     public loading: boolean;

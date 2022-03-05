@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { IOrder } from 'src/app/common/models/order.model';
 import { AlertService } from 'src/app/common/services/alert.service';
+import { ICatalog } from '../../common/models/catalog.model';
 import { IAlertInfo } from '../models/alert.model';
-import { ICatalog, IOrder } from '../../common/models/catalog.model';
 
 @Injectable({
     providedIn: 'root',
@@ -82,7 +83,7 @@ export class OrderService {
             alertInfo
         );
 
-        if(order.length <= 0) {
+        if (order.length <= 0) {
             const alertInfo: IAlertInfo = { screen: 'catalog', type: 'info' };
             setTimeout(() => {
                 this._alertService.openAlert(
@@ -91,5 +92,21 @@ export class OrderService {
                 );
             }, 3100);
         }
+    }
+
+    public getStatus(status: number): string {
+        let statusLabel: string = '';
+        switch (status) {
+            case 0:
+                statusLabel = 'Finalizado';
+                break;
+            case 1:
+                statusLabel = 'En Progreso';
+                break;
+            case 2:
+                statusLabel = 'Nuevo';
+                break;
+        }
+        return statusLabel;
     }
 }
