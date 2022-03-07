@@ -1,5 +1,9 @@
-import { Injectable } from '@angular/core';
-import { MatSnackBar, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
+import { Inject, Injectable } from '@angular/core';
+import {
+    MatSnackBar,
+    MatSnackBarRef,
+    MatSnackBarVerticalPosition,
+} from '@angular/material/snack-bar';
 import { IAlertInfo } from 'src/app/client/models/alert.model';
 
 @Injectable({
@@ -8,9 +12,13 @@ import { IAlertInfo } from 'src/app/client/models/alert.model';
 export class AlertService {
     constructor(private _snackBar: MatSnackBar) {}
 
-    public openAlert(message: string, alertInfo: IAlertInfo, duration: number = 300000) {
+    public openAlert(
+        message: string,
+        alertInfo: IAlertInfo,
+        duration: number = 3000
+    ) {
         let panelClass: string = '';
-        let position: MatSnackBarVerticalPosition  = 'top';
+        let position: MatSnackBarVerticalPosition = 'top';
         switch (alertInfo.type) {
             case 'success':
                 panelClass = 'mat-snackbar-sucess';
@@ -26,9 +34,9 @@ export class AlertService {
                 break;
         }
 
-        switch(alertInfo.screen) {
+        switch (alertInfo.screen) {
             case 'catalog':
-                position = 'bottom'
+                position = 'bottom';
         }
 
         this._snackBar.open(message, 'X', {
@@ -36,6 +44,6 @@ export class AlertService {
             panelClass: [panelClass],
             horizontalPosition: 'center',
             verticalPosition: position,
-          });
+        });
     }
 }

@@ -10,7 +10,8 @@ import { OrderService } from '../../../../common/services/order.service';
     styleUrls: ['./order-dialog.component.scss'],
 })
 export class OrderDialogComponent implements OnInit, OnDestroy {
-    public order: IOrder[];
+    public orderList: IOrderList[];
+    public order: IOrder;
     public loading: boolean = false;
     public orderTotal: number = 0;
     public client_address: string = '';
@@ -20,7 +21,7 @@ export class OrderDialogComponent implements OnInit, OnDestroy {
     private sub_total: Subscription;
 
     public displayedColumns: string[] = ['product', 'quantity', 'actions'];
-    public dataSource: MatTableDataSource<IOrder>;
+    public dataSource: MatTableDataSource<IOrderList>;
 
     constructor(private _orderService: OrderService) {}
 
@@ -37,9 +38,9 @@ export class OrderDialogComponent implements OnInit, OnDestroy {
     public getOrder(): void {
         this.loading = true;
         this._orderService.getOrder.subscribe(
-            (order: IOrder[]) => {
+            (order: IOrder) => {
                 this.order = order;
-                this.dataSource = new MatTableDataSource<IOrder>(order);
+                this.dataSource = new MatTableDataSource<IOrderList>(this.order.order_list);
             },
             (error: any) => {
                 console.error(error);
@@ -49,22 +50,25 @@ export class OrderDialogComponent implements OnInit, OnDestroy {
     }
 
     public saveOrder(): void {
-        let saveOrder: IOrderList = {
+        let saveOrder: IOrder = {
             id: 1,
             status: 0,
             total: this.orderTotal,
             client_address: this.client_address,
             client_name: this.client_name,
             vendor_id: 1,
+            order_list: this.order.order_list
         };
 
-        this._orderService.setOrderList(saveOrder);
+        this._orderService.setOrder(saveOrder);
     }
 
     public deleteProduct(sku: string): void {
-        this.order = this.order.filter((product) => {
+        const orderList = this.order.order_list.filter((product) => {
             return product.sku !== sku;
         });
+
+        this.order.order_list = orderList;
 
         this._orderService.setOrder(this.order);
     }

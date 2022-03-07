@@ -1,6 +1,6 @@
 <table mat-table [dataSource]="dataSource">
     <!-- Product and Price Column -->
-    <ng-container matColumnDef="product">
+    <ng-container matColumnDef="productPrice">
         <th mat-header-cell *matHeaderCellDef>Producto</th>
         <td mat-cell *matCellDef="let element">
             {{ element.description }} <br />
@@ -8,25 +8,27 @@
         </td>
     </ng-container>
 
+    <!-- Product Column -->
+    <ng-container matColumnDef="product">
+        <th mat-header-cell *matHeaderCellDef>Producto</th>
+        <td mat-cell *matCellDef="let element">
+            {{ element.description }}
+        </td>
+    </ng-container>
+    
+    <!-- Price Column -->
+    <ng-container matColumnDef="price">
+        <th mat-header-cell *matHeaderCellDef>Precio</th>
+        <td mat-cell *matCellDef="let element">
+            {{ element.price }}
+        </td>
+    </ng-container>
+    
     <!-- Quantity Column -->
     <ng-container matColumnDef="quantity">
         <th mat-header-cell *matHeaderCellDef>Cantidad</th>
         <td mat-cell *matCellDef="let element">
             {{ element.quantity }}
-        </td>
-    </ng-container>
-
-    <!-- Actions Column -->
-    <ng-container matColumnDef="actions">
-        <th mat-header-cell *matHeaderCellDef></th>
-        <td mat-cell *matCellDef="let element">
-            <button
-                mat-mini-fab
-                color="warn"
-                (click)="removeProduct(element.sku)"
-            >
-                <mat-icon>delete</mat-icon>
-            </button>
         </td>
     </ng-container>
 

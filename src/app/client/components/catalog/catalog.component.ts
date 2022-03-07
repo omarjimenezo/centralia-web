@@ -17,7 +17,7 @@ import { OrderDialogComponent } from './order-dialog/order-dialog.component';
     styleUrls: ['./catalog.component.scss'],
 })
 export class CatalogComponent implements OnInit, OnDestroy {
-    public order: IOrder[];
+    public order: IOrder;
     public dataSource: MatTableDataSource<ICatalog>;
     public loading: boolean = false;
     public buttonFadeOut: boolean = false;
@@ -54,11 +54,11 @@ export class CatalogComponent implements OnInit, OnDestroy {
 
     public getOrder(): void {
         this._orderService.getOrder.subscribe(
-            (order: IOrder[]) => {
+            (order: IOrder) => {
                 this.elementFadeout();
                 this.order = order;
                 this.productsAdded = 0;
-                order.forEach((product) => {
+                order.order_list.forEach((product) => {
                     this.productsAdded += product.quantity;
                 });
             },
@@ -70,16 +70,17 @@ export class CatalogComponent implements OnInit, OnDestroy {
     }
 
     public saveOrder(): void {
-        let saveOrder: IOrderList = {
+        let saveOrder: IOrder = {
             id: 1,
             status: 0,
             total: this.orderTotal,
             client_address: this.client_address,
             client_name: this.client_name,
             vendor_id: 1,
+            order_list: this.order.order_list
         };
 
-        this._orderService.setOrderList(saveOrder);
+        this._orderService.setOrder(saveOrder);
     }
 
     public setProviderId(): void {

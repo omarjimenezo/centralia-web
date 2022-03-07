@@ -4,7 +4,7 @@ import { Subscription } from 'rxjs';
 import { CatalogService } from 'src/app/client/services/catalog.service';
 import { OrderService } from 'src/app/common/services/order.service';
 import { ICatalog } from 'src/app/common/models/catalog.model';
-import { IOrder } from 'src/app/common/models/order.model';
+import { IOrder, IOrderList } from 'src/app/common/models/order.model';
 
 @Component({
     selector: 'order-table',
@@ -12,7 +12,7 @@ import { IOrder } from 'src/app/common/models/order.model';
     styleUrls: ['./order-table.component.scss'],
 })
 export class OrderTableComponent implements OnInit, OnDestroy {
-    public order: IOrder[] = [];
+    public orderList: IOrderList[] = [];
     public catalog: ICatalog[] = [];
     public loading: boolean;
 
@@ -20,7 +20,7 @@ export class OrderTableComponent implements OnInit, OnDestroy {
     private sub_catalog: Subscription;
 
     public displayedColumns: string[] = ['product', 'quantity', 'actions'];
-    public dataSource: MatTableDataSource<IOrder>;
+    public dataSource: MatTableDataSource<IOrderList>;
 
     constructor(
         private _orderService: OrderService,
@@ -40,9 +40,9 @@ export class OrderTableComponent implements OnInit, OnDestroy {
     public getOrder(): void {
         this.loading = true;
         this._orderService.getOrder.subscribe(
-            (order: IOrder[]) => {
-                this.order = order;
-                this.dataSource = new MatTableDataSource<IOrder>(order);
+            (order: IOrder) => {
+                this.orderList = order.order_list;
+                this.dataSource = new MatTableDataSource<IOrderList>(this.orderList);
             },
             (error: any) => {
                 console.error(error);

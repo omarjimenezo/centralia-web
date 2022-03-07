@@ -4,17 +4,18 @@
 
 <mat-dialog-content class="mat-typography"> 
     <div class="order-detail-tile">
-        <h2>{{ data.client_name }} </h2>
-    <h2>{{ data.date }} </h2>
+        <h2>{{ order.client_name }} </h2>
+    <h2>{{ order.date | date: 'dd/MM/yyyy'}} </h2>
     </div>
     <div class="order-status-tile">
-        <h3>Estatus: {{ _orderService.getStatus(data.status) }} </h3>
-        <h3>Total: {{ data.total | currency }}</h3>
+        <h3>Estatus: {{ _orderService.getStatus(order.status) }} </h3>
+        <h3>Total: {{ order.total | currency }}</h3>
     </div>
     
     
     <mat-divider></mat-divider>
-    <order-detail-table></order-detail-table>
+
+    <order-detail-table [orderList]="order.order_list"></order-detail-table>
 </mat-dialog-content>
 
 <mat-divider></mat-divider>

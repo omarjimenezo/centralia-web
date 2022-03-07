@@ -1,5 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { IOrder } from 'src/app/common/models/order.model';
 import { OrderService } from 'src/app/common/services/order.service';
 
 @Component({
@@ -13,7 +14,7 @@ export class OrderDetailComponent implements OnInit {
     constructor(
         public _orderService: OrderService,
         public dialogRef: MatDialogRef<OrderDetailComponent>,
-        @Inject(MAT_DIALOG_DATA) public data: any
+        @Inject(MAT_DIALOG_DATA) public order: IOrder
     ) {}
 
     ngOnInit(): void {}

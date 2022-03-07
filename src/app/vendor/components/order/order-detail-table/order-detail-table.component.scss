@@ -9,3 +9,18 @@ table {
 .mat-column-actions {
     text-align: right;
 }
+
+.mat-column-productPrice {
+    display: none;
+}
+
+@media (max-width: 700px) {
+    .mat-column-product,
+    .mat-column-price {
+        display: none;
+    }
+
+    .mat-column-productPrice {
+        display: table-cell;
+    }
+}

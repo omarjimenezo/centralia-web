@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, EMPTY, Observable } from 'rxjs';
 import { IOrder, IOrderList } from 'src/app/common/models/order.model';
 import { AlertService } from 'src/app/common/services/alert.service';
 import { ICatalog } from '../models/catalog.model';
@@ -9,29 +9,24 @@ import { IAlertInfo } from '../../client/models/alert.model';
     providedIn: 'root',
 })
 export class OrderService {
-    private _order = new BehaviorSubject<IOrder[]>([]);
-    private _orderList = new BehaviorSubject<IOrderList[]>([]);
+    private _order = new BehaviorSubject<IOrder>({
+        id: 0,
+        status: 0,
+        total: 0,
+        vendor_id: 0,
+        order_list: [],
+    });
     private _total = new BehaviorSubject<number>(0);
 
     constructor(private _alertService: AlertService) {}
 
     // Order
-    public setOrder(order: IOrder[]) {
+    public setOrder(order: IOrder) {
         this._order.next(order);
     }
 
-    get getOrder(): Observable<IOrder[]> {
+    get getOrder(): Observable<IOrder> {
         return this._order.asObservable();
-    }
-
-    public setOrderList(order: IOrderList) {
-        let orderList: IOrderList[] = this._orderList.value;
-        orderList.push(order);
-        this._orderList.next(orderList);
-    }
-
-    get getOrderList(): Observable<IOrderList[]> {
-        return this._orderList.asObservable();
     }
 
     public getStatus(status: number): string {
@@ -53,9 +48,10 @@ export class OrderService {
     // Total
 
     public calcTotal(): void {
+        const order: IOrder = this._order.value;
         let total = 0;
-        this._order.value.forEach((product) => {
-            total += parseFloat(product.price) * product.quantity;
+        order.order_list.forEach((product: IOrderList) => {
+            total += parseFloat(product.price!) * product.quantity;
         });
         this.setTotal(total);
     }
@@ -72,7 +68,7 @@ export class OrderService {
 
     public addProduct(quantity: number, element: ICatalog): void {
         const order = this._order.value;
-        const productFound = order.find(
+        const productFound = order.order_list.find(
             (product) => product.sku === element.sku
         );
         const alertInfo: IAlertInfo = { screen: 'catalog', type: 'success' };
@@ -82,9 +78,10 @@ export class OrderService {
         } else {
             element.selected = true;
 
-            order.push({
-                sku: element.sku,
+            order.order_list.push({
+                id: element.id,
                 description: element.description,
+                sku: element.sku,
                 price: element.price,
                 quantity: quantity,
             });
@@ -99,15 +96,17 @@ export class OrderService {
     }
 
     public removeProduct(sku: string) {
+        let order: IOrder = this._order.value;
         const alertInfo: IAlertInfo = { screen: 'catalog', type: 'success' };
-
-        const producto = this._order.value.find(
+        const producto = order.order_list.find(
             (product) => product.sku === sku
         );
 
-        const order = this._order.value.filter(
+        const orderList = order.order_list.filter(
             (product) => product.sku !== sku
         );
+
+        order.order_list = orderList;
 
         this.setOrder(order);
         this.calcTotal();
@@ -116,7 +115,7 @@ export class OrderService {
             alertInfo
         );
 
-        if (order.length <= 0) {
+        if (order.order_list.length <= 0) {
             const alertInfo: IAlertInfo = { screen: 'catalog', type: 'info' };
             setTimeout(() => {
                 this._alertService.openAlert(

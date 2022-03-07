@@ -13,7 +13,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Subscription } from 'rxjs';
 import { CatalogSearchService } from 'src/app/client/services/catalog-search.service';
 import { OrderService } from 'src/app/common/services/order.service';
-import { IOrder } from 'src/app/common/models/order.model';
+import { IOrder, IOrderList } from 'src/app/common/models/order.model';
 import { AlertService } from 'src/app/common/services/alert.service';
 import { ICatalog } from '../../../../common/models/catalog.model';
 import { CatalogService } from '../../../services/catalog.service';
@@ -24,7 +24,7 @@ import { CatalogService } from '../../../services/catalog.service';
     styleUrls: ['./catalog-table.component.scss'],
 })
 export class CatalogTableComponent implements AfterViewInit, OnDestroy, OnInit {
-    public order: IOrder[] = [];
+    public order: IOrder;
     public quantities: number[] = [];
     public catalog: ICatalog[] = [];
     public tableFadeOut: boolean = false;
@@ -47,7 +47,7 @@ export class CatalogTableComponent implements AfterViewInit, OnDestroy, OnInit {
         private _orderService: OrderService,
         private _catalogSearchService: CatalogSearchService,
         private _alertService: AlertService,
-        private _cp: ChangeDetectorRef
+        private _cp: ChangeDetectorRef,
     ) {}
 
     public ngOnInit(): void {
@@ -170,7 +170,7 @@ export class CatalogTableComponent implements AfterViewInit, OnDestroy, OnInit {
         this.dataSource.data.forEach((row: ICatalog) =>
             this.quantities.push(0)
         );
-        this.order.forEach((product: IOrder) => {
+        this.order.order_list.forEach((product: IOrderList) => {
             if (product.quantity > 0) {
                 const rowIndex: number = this.dataSource.filteredData.findIndex(
                     (row: ICatalog) => product.sku === row.sku

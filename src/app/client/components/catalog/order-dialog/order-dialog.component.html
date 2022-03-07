@@ -30,7 +30,7 @@
         color="primary"
         [mat-dialog-close]="order"
         cdkFocusInitial
-        [disabled]="order.length < 1 || (client_name.length < 3 || client_address.length < 3)"
+        [disabled]="order.order_list.length < 1 || (client_name.length < 3 || client_address.length < 3)"
         (click)="saveOrder()"
     >
         Hacer Pedido

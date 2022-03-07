@@ -7,6 +7,7 @@ import { CatalogSearchService } from '../../services/catalog-search.service';
 import { CatalogService } from '../../services/catalog.service';
 import { NavBarService } from '../../services/nav-bar.service';
 import { OrderService } from '../../../common/services/order.service';
+import { IOrder } from 'src/app/common/models/order.model';
 
 @Component({
     selector: 'nav-bar',
@@ -71,9 +72,9 @@ export class NavBarComponent implements OnInit {
     }
 
     public getOrder(): void {
-        this._orderService.getOrder.subscribe((order) => {
+        this._orderService.getOrder.subscribe((order: IOrder) => {
             this.productsAdded = 0;
-            order.forEach((product) => {
+            order.order_list.forEach((product) => {
                 this.productsAdded += product.quantity;
             });
         });
