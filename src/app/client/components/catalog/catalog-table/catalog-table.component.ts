@@ -5,7 +5,7 @@ import {
     Input,
     OnDestroy,
     OnInit,
-    ViewChild
+    ViewChild,
 } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -17,6 +17,8 @@ import { IOrder, IOrderList } from 'src/app/common/models/order.model';
 import { AlertService } from 'src/app/common/services/alert.service';
 import { ICatalog } from '../../../../common/models/catalog.model';
 import { CatalogService } from '../../../services/catalog.service';
+import { ActivatedRoute } from '@angular/router';
+import { NavBarService } from 'src/app/client/services/nav-bar.service';
 
 @Component({
     selector: 'catalog-table',
@@ -47,7 +49,7 @@ export class CatalogTableComponent implements AfterViewInit, OnDestroy, OnInit {
         private _orderService: OrderService,
         private _catalogSearchService: CatalogSearchService,
         private _alertService: AlertService,
-        private _cp: ChangeDetectorRef,
+        private _cp: ChangeDetectorRef
     ) {}
 
     public ngOnInit(): void {
@@ -70,7 +72,7 @@ export class CatalogTableComponent implements AfterViewInit, OnDestroy, OnInit {
 
     public getCatalog(): void {
         this.loading = true;
-        this.sub_order = this._catalogService.getCatalog.subscribe(
+        this.sub_catalog = this._catalogService.getCatalog.subscribe(
             (catalog: ICatalog[]) => {
                 this.quantities = [];
                 if (catalog.length > 0) {
@@ -92,6 +94,10 @@ export class CatalogTableComponent implements AfterViewInit, OnDestroy, OnInit {
     public getOrder(): void {
         this.sub_order = this._orderService.getOrder.subscribe((order) => {
             this.order = order;
+            if (this.order.order_list.length <= 0) {
+                this.resetCatalog();
+                this.resetQuantity();
+            }
         });
     }
 
@@ -165,11 +171,23 @@ export class CatalogTableComponent implements AfterViewInit, OnDestroy, OnInit {
         this._catalogService.setCatalog(this.catalog);
     }
 
+    public resetCatalog(): void {
+        if (this.dataSource && this.dataSource.data.length > 0) {
+            this.dataSource.data.forEach((row: ICatalog) => {
+                // this.quantities.push(0);
+                row.selected = false;
+            });
+        }
+    }
+
     public resetQuantity(): void {
         this.quantities = [];
-        this.dataSource.data.forEach((row: ICatalog) =>
-            this.quantities.push(0)
-        );
+        if (this.dataSource && this.dataSource.data.length > 0) {
+            this.dataSource.data.forEach((row: ICatalog) => {
+                this.quantities.push(0);
+            });
+        }
+
         this.order.order_list.forEach((product: IOrderList) => {
             if (product.quantity > 0) {
                 const rowIndex: number = this.dataSource.filteredData.findIndex(

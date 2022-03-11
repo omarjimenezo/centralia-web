@@ -11,6 +11,7 @@ export class CatalogService {
     private baseURL: string = 'https://centralia.app/api';
     private _catalog = new BehaviorSubject<ICatalog[]>([]);
     private _category = new BehaviorSubject<ICategory[]>([]);
+    private _resetCatalog = new BehaviorSubject('');
 
     constructor(
         private _http: HttpClient,
@@ -37,7 +38,7 @@ export class CatalogService {
         }
     }
 
-    public setCatalog(catalog: ICatalog[]) {
+    public setCatalog(catalog: ICatalog[]): void {
         this._catalog.next(catalog);
     }
 

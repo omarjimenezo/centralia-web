@@ -19,6 +19,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatGridListModule } from '@angular/material/grid-list';
 import { OrderDetailTableComponent } from './components/order/order-detail-table/order-detail-table.component';
 import { OrderDetailComponent } from './components/order/order-detail/order-detail.component';
 import { OrderTableComponent } from './components/order/order-table/order-table.component';
@@ -66,6 +67,7 @@ import { VendorComponent } from './vendor.component';
         MatBadgeModule,
         MatSelectModule,
         MatDialogModule,
+        MatGridListModule,
     ],
     providers: [DatePipe, MatSortModule],
 })

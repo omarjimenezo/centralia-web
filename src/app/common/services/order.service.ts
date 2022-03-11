@@ -29,6 +29,28 @@ export class OrderService {
         return this._order.asObservable();
     }
 
+    public setOrders(order: IOrder) {
+        let orders: IOrder[] = [];
+        if(localStorage.getItem('order')) {
+            orders = <IOrder[]>JSON.parse(localStorage.getItem('order')!)
+        } 
+        orders.push(order)
+        localStorage.setItem('order', JSON.stringify(orders));
+    }
+
+    public getOrders(userId: number): IOrder[] {
+        let orders: IOrder[] = [];
+        if (localStorage.getItem('order')) {
+            orders = <IOrder[]>JSON.parse(localStorage.getItem('order')!)
+        }
+
+        if (userId !== 1) {
+            return orders.filter((order: IOrder) => order.vendor_id == userId)
+        } else {
+            return orders
+        }
+    }
+
     public getStatus(status: number): string {
         let statusLabel: string = '';
         switch (status) {
@@ -43,6 +65,18 @@ export class OrderService {
                 break;
         }
         return statusLabel;
+    }
+
+    public resetOrder(): void {
+        let order: IOrder = {
+            id: 0,
+            status: 0,
+            total: 0,
+            vendor_id: 0,
+            order_list: [],
+        }
+        this.setOrder(order);
+        this.calcTotal();
     }
 
     // Total

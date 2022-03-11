@@ -44,8 +44,9 @@
                         mat-raised-button
                         color="primary"
                         [disabled]="order.order_list.length < 1 || (client_name.length < 3 || client_address.length < 3)"
+                        (click)="saveOrder()"
                     >
-                        Hacer Pedido
+                        Enviar Pedido
                     </button>
                 </mat-card-actions>
             </mat-card>

@@ -7,10 +7,9 @@ import { ClientComponent } from './client/client.component';
 import { VendorComponent } from './vendor/vendor.component';
 
 const routes: Routes = [
-    { path: '', redirectTo: 'cliente', pathMatch: 'full' },
+    { path: '', redirectTo: 'login', pathMatch: 'full' },
 
-    // Login desactivado en la primera etapa
-    // { path: 'login', component: LoginComponent },
+    { path: 'login', component: LoginComponent },
 
     {
       path: 'cliente',

@@ -5,10 +5,15 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { IOrder, IOrderList } from 'src/app/common/models/order.model';
+import { IOrder } from 'src/app/common/models/order.model';
+import { IClient } from 'src/app/common/models/user.model';
+import { AlertService } from 'src/app/common/services/alert.service';
+import { AuthService } from 'src/app/common/services/auth.service';
 import { ICatalog } from '../../../common/models/catalog.model';
-import { NavBarService } from '../../services/nav-bar.service';
 import { OrderService } from '../../../common/services/order.service';
+import { IAlertInfo } from '../../models/alert.model';
+import { CatalogService } from '../../services/catalog.service';
+import { NavBarService } from '../../services/nav-bar.service';
 import { OrderDialogComponent } from './order-dialog/order-dialog.component';
 
 @Component({
@@ -26,6 +31,8 @@ export class CatalogComponent implements OnInit, OnDestroy {
     public productsAdded: number = 0;
     public client_address: string = '';
     public client_name: string = '';
+    public providerId: number;
+    public clientInfo: IClient;
 
     private sub_order: Subscription;
     private sub_total: Subscription;
@@ -34,16 +41,20 @@ export class CatalogComponent implements OnInit, OnDestroy {
     @ViewChild(MatSort) sort: MatSort;
 
     constructor(
-        private _route: ActivatedRoute,
+        private _activatedRoute: ActivatedRoute,
+        private _authService: AuthService,
         private _orderService: OrderService,
+        private _catalogService: CatalogService,
         private _navBarService: NavBarService,
-        public _matDialog: MatDialog
+        public _alertService: AlertService,
+        public _matDialog: MatDialog,
     ) {}
 
     public ngOnInit(): void {
         this.getOrder();
-        this.setProviderId();
         this.getTotal();
+        this.setProviderId();
+        this.getClient();
     }
 
     public ngOnDestroy(): void {
@@ -51,9 +62,12 @@ export class CatalogComponent implements OnInit, OnDestroy {
         (this.sub_total) ? this.sub_total.unsubscribe() : null;
     }
 
+    public setProviderId(): void {
+        this._navBarService.setProviderId(this._activatedRoute.snapshot.paramMap.get('id')!);
+    }
 
     public getOrder(): void {
-        this._orderService.getOrder.subscribe(
+        this.sub_order = this._orderService.getOrder.subscribe(
             (order: IOrder) => {
                 this.elementFadeout();
                 this.order = order;
@@ -68,28 +82,37 @@ export class CatalogComponent implements OnInit, OnDestroy {
             }
         );
     }
+    
+    public getClient(): void {
+        this.clientInfo = this._authService.getClient
+    }
 
     public saveOrder(): void {
+        const alertInfo: IAlertInfo = { screen: 'catalog', type: 'success' };
+        
         let saveOrder: IOrder = {
             id: 1,
-            status: 0,
+            status: 2,
+            date: new Date(),
             total: this.orderTotal,
             client_address: this.client_address,
             client_name: this.client_name,
-            vendor_id: 1,
+            vendor_id: this.clientInfo.vendorId,
             order_list: this.order.order_list
         };
 
-        this._orderService.setOrder(saveOrder);
+        this._orderService.setOrders(saveOrder);
+        this._alertService.openAlert('Pedido Enviado', alertInfo);
+        this.resetOrder();
     }
-
-    public setProviderId(): void {
-        const urlParam: string = this._route.snapshot.paramMap.get('id')!;
-        this._navBarService.setProviderId(urlParam);
+    public resetOrder(): void {
+        this._orderService.resetOrder();
+        this.client_name = '';
+        this.client_address = '';
     }
 
     public getTotal(): void {
-        this._orderService.getTotal.subscribe(
+        this.sub_total = this._orderService.getTotal.subscribe(
             (total) => (this.orderTotal = total)
         );
     }

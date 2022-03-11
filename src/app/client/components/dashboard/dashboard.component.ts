@@ -12,15 +12,15 @@ export class DashboardComponent implements OnInit {
   public providers: IProvider[] = [
     {
       id: 2,
+      name: 'Abarrotera el Pinar',
       address: 'Col. Americana, CP. 45130 Zapopan, Jalisco',
       img: './assets/img/providers/empty_provider.png',
-      name: 'Abastecedora "La Cima"',
       rating: 4.5,
       description: 'Productos en General'
     },
     {
       id: 3,
-      name: 'Surtidora "Los Lopez"',
+      name: 'Abastecedora "Sanchez"',
       address: 'Col. Centro, CP. 45145 Guadalajara, Jalisco',
       img: './assets/img/providers/empty_provider.png',
       rating: 3.5,
@@ -29,7 +29,7 @@ export class DashboardComponent implements OnInit {
     {
       id: 3,
       name: 'Surtidora "Los Lopez"',
-      address: 'Col. Centro, CP. 45145 Guadalajara, Jalisco',
+      address: 'Ramon corona 5126, CP. 45120 Guadalajara, Jalisco',
       img: './assets/img/providers/empty_provider.png',
       rating: 3.5,
       description: 'Productos en General'
@@ -50,7 +50,7 @@ export class DashboardComponent implements OnInit {
   }
 
   public onProviderCardClick(id: number) {
-    this._router.navigate([`/cliente/catalogo/${id}`])
+    this._router.navigate([`/cliente/catalogo`, id])
   }
 
 }

@@ -2,17 +2,18 @@
 
 <mat-divider></mat-divider>
 
-<mat-dialog-content class="mat-typography"> 
+<mat-dialog-content class="mat-typography">
     <div class="order-detail-tile">
-        <h2>{{ order.client_name }} </h2>
-    <h2>{{ order.date | date: 'dd/MM/yyyy'}} </h2>
+        <h2>{{ order.client_name }}</h2>
+        <h2>{{ order.date | date: "dd/MM/yyyy" }}</h2>
     </div>
     <div class="order-status-tile">
-        <h3>Estatus: {{ _orderService.getStatus(order.status) }} </h3>
-        <h3>Total: {{ order.total | currency }}</h3>
+        <h3>{{ order.client_address }}</h3>
+        <h3>Estatus: {{ _orderService.getStatus(order.status) }}</h3>
+        
     </div>
-    
-    
+    <h2>Total: {{ order.total | currency }}</h2>
+
     <mat-divider></mat-divider>
 
     <order-detail-table [orderList]="order.order_list"></order-detail-table>
@@ -20,8 +21,7 @@
 
 <mat-divider></mat-divider>
 
-<mat-dialog-actions align="center">
+<mat-dialog-actions align="end">
     <button mat-raised-button mat-dialog-close>Cerrar</button>
     <button mat-raised-button color="primary">Atender Pedido</button>
-    <button mat-raised-button color="accent">Terminar Pedido</button>
 </mat-dialog-actions>

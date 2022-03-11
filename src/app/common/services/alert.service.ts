@@ -36,6 +36,7 @@ export class AlertService {
 
         switch (alertInfo.screen) {
             case 'catalog':
+            default:
                 position = 'bottom';
         }
 

@@ -1,13 +1,13 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { IOrder } from 'src/app/common/models/order.model';
 import { ICategory } from '../../../common/models/catalog.model';
+import { OrderService } from '../../../common/services/order.service';
 import { OrderDialogComponent } from '../../components/catalog/order-dialog/order-dialog.component';
 import { CatalogSearchService } from '../../services/catalog-search.service';
 import { CatalogService } from '../../services/catalog.service';
 import { NavBarService } from '../../services/nav-bar.service';
-import { OrderService } from '../../../common/services/order.service';
-import { IOrder } from 'src/app/common/models/order.model';
 
 @Component({
     selector: 'nav-bar',
@@ -43,15 +43,18 @@ export class NavBarComponent implements OnInit {
     }
 
     public ngOnInit(): void {
-        this.setProviderId();
+        this.getUrlParams();
         this.getCategories();
         this.getOrder();
         this.getTotal();
     }
 
-    public setProviderId(): void {
-        this.providerId = this._route.snapshot.paramMap.get('id')!;
-        this._navBarService.setProviderId(this.providerId);
+    public getUrlParams(): void {
+        this._route.queryParams.subscribe((urlParams: any) => {
+            if(urlParams.vendorId) {
+                this._navBarService.setVendorId(urlParams.vendorId);
+            }
+        });
     }
 
     public getCategories(): void {

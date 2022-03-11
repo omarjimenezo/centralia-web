@@ -3,7 +3,10 @@
         <span>Centralia</span>
 
         <span class="nav-spacer"></span>
-
-       
+        <label>{{ userInfo.name }}</label>
+        <img
+        class="avatar mat-elevation-z4"
+        [src]="userInfo.picture"
+    />
     </mat-toolbar-row>
 </mat-toolbar>
