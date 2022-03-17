@@ -1,14 +1,22 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, EMPTY, Observable } from 'rxjs';
-import { IOrder, IOrderList } from 'src/app/common/models/order.model';
+import { IOrder, IOrderList, IStatus } from 'src/app/common/models/order.model';
 import { AlertService } from 'src/app/common/services/alert.service';
 import { ICatalog } from '../models/catalog.model';
 import { IAlertInfo } from '../../client/models/alert.model';
+import { IUser } from '../models/user.model';
 
 @Injectable({
     providedIn: 'root',
 })
 export class OrderService {
+    public _status: IStatus[] = [
+        { id: 0, label: 'Finalizado', color: '#000' },
+        { id: 1, label: 'Nuevo', color: '#5b9765' },
+        { id: 2, label: 'Proceso', color: '#6aaaff' },
+        { id: 3, label: 'Cancelado', color: '#ff3838' },
+    ];
+    private _total = new BehaviorSubject<number>(0);
     private _order = new BehaviorSubject<IOrder>({
         id: 0,
         status: 0,
@@ -16,7 +24,6 @@ export class OrderService {
         vendor_id: 0,
         order_list: [],
     });
-    private _total = new BehaviorSubject<number>(0);
 
     constructor(private _alertService: AlertService) {}
 
@@ -31,40 +38,34 @@ export class OrderService {
 
     public setOrders(order: IOrder) {
         let orders: IOrder[] = [];
-        if(localStorage.getItem('order')) {
-            orders = <IOrder[]>JSON.parse(localStorage.getItem('order')!)
-        } 
-        orders.push(order)
+        if (localStorage.getItem('order')) {
+            orders = <IOrder[]>JSON.parse(localStorage.getItem('order')!);
+        }
+        orders.push(order);
         localStorage.setItem('order', JSON.stringify(orders));
     }
 
-    public getOrders(userId: number): IOrder[] {
+    public getOrders(user: IUser): IOrder[] {
         let orders: IOrder[] = [];
         if (localStorage.getItem('order')) {
-            orders = <IOrder[]>JSON.parse(localStorage.getItem('order')!)
+            orders = <IOrder[]>JSON.parse(localStorage.getItem('order')!);
         }
 
-        if (userId !== 1) {
-            return orders.filter((order: IOrder) => order.vendor_id == userId)
+        if (user.type !== 0) {
+            return orders.filter((order: IOrder) => order.vendor_id == user.id);
         } else {
-            return orders
+            return orders;
         }
     }
 
-    public getStatus(status: number): string {
-        let statusLabel: string = '';
-        switch (status) {
-            case 0:
-                statusLabel = 'Finalizado';
-                break;
-            case 1:
-                statusLabel = 'En Progreso';
-                break;
-            case 2:
-                statusLabel = 'Nuevo';
-                break;
-        }
-        return statusLabel;
+    public getStatus(id: number): string {
+        let status: IStatus = this._status.find((status) => status.id === id)!
+        return status.label;
+    }
+
+    public getStatusColor(id: number): string {
+        let status: IStatus = this._status.find((status) => status.id === id)!
+        return status.color;
     }
 
     public resetOrder(): void {
@@ -74,7 +75,7 @@ export class OrderService {
             total: 0,
             vendor_id: 0,
             order_list: [],
-        }
+        };
         this.setOrder(order);
         this.calcTotal();
     }

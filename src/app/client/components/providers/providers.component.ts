@@ -3,35 +3,19 @@ import { Router } from '@angular/router';
 import { IProvider } from 'src/app/common/models/provider.model';
 
 @Component({
-  selector: 'app-dashboard',
-  templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.scss']
+  selector: 'app-providers',
+  templateUrl: './providers.component.html',
+  styleUrls: ['./providers.component.scss']
 })
-export class DashboardComponent implements OnInit {
+export class ProvidersComponent implements OnInit {
 
   public providers: IProvider[] = [
     {
       id: 2,
       name: 'Abarrotera el Pinar',
       address: 'Col. Americana, CP. 45130 Zapopan, Jalisco',
-      img: './assets/img/providers/empty_provider.png',
+      img: './assets/img/providers/abarrotera_el_pinar.jpg',
       rating: 4.5,
-      description: 'Productos en General'
-    },
-    {
-      id: 3,
-      name: 'Abastecedora "Sanchez"',
-      address: 'Col. Centro, CP. 45145 Guadalajara, Jalisco',
-      img: './assets/img/providers/empty_provider.png',
-      rating: 3.5,
-      description: 'Productos en General'
-    },
-    {
-      id: 3,
-      name: 'Surtidora "Los Lopez"',
-      address: 'Ramon corona 5126, CP. 45120 Guadalajara, Jalisco',
-      img: './assets/img/providers/empty_provider.png',
-      rating: 3.5,
       description: 'Productos en General'
     },
   ];

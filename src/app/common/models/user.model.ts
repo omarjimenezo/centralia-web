@@ -1,7 +1,9 @@
 export interface IUser {
     id: number;
     name: string;
-    picture: string;
+    type: number;
+    address: string;
+    img: string;
 }
 
 export interface IClient {

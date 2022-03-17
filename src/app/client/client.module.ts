@@ -30,13 +30,13 @@ import { CatalogTableComponent } from './components/catalog/catalog-table/catalo
 import { CatalogComponent } from './components/catalog/catalog.component';
 import { OrderDialogComponent } from './components/catalog/order-dialog/order-dialog.component';
 import { OrderTableComponent } from './components/catalog/order-table/order-table.component';
-import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { ProvidersComponent } from './components/providers/providers.component';
 import { NavBarComponent } from './navigation/nav-bar/nav-bar.component';
 
 @NgModule({
     declarations: [
         ClientComponent,
-        DashboardComponent,
+        ProvidersComponent,
         CatalogComponent,
         CatalogTableComponent,
         NavBarComponent,
@@ -45,7 +45,7 @@ import { NavBarComponent } from './navigation/nav-bar/nav-bar.component';
     ],
     exports: [
         ClientComponent,
-        DashboardComponent,
+        ProvidersComponent,
         CatalogComponent,
         CatalogTableComponent,
         NavBarComponent,

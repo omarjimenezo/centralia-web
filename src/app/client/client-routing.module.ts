@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ClientComponent } from './client.component';
-import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { ProvidersComponent } from './components/providers/providers.component';
 import { CatalogComponent } from './components/catalog/catalog.component';
 
 const routes: Routes = [
@@ -9,8 +9,8 @@ const routes: Routes = [
     path: '',
     component: ClientComponent,
     children: [
-      { path: '', component: DashboardComponent },
-      { path: 'proveedores', component: DashboardComponent },
+      { path: '', component: ProvidersComponent },
+      { path: 'proveedores', component: ProvidersComponent },
       { path: 'catalogo/:id', component: CatalogComponent },
     ],
   },

@@ -17,3 +17,9 @@ export interface IOrder{
     vendor_id: number;
     order_list: IOrderList[]
 }
+
+export interface IStatus {
+    id: number;
+    label: string;
+    color: string;
+}
