@@ -21,7 +21,7 @@ export class OrderService {
         id: 0,
         status: 0,
         total: 0,
-        vendor_id: 0,
+        provider_id: '0',
         order_list: [],
     });
 
@@ -51,8 +51,8 @@ export class OrderService {
             orders = <IOrder[]>JSON.parse(localStorage.getItem('order')!);
         }
 
-        if (user.type !== 0) {
-            return orders.filter((order: IOrder) => order.vendor_id == user.id);
+        if (user.type !== 'abarrotera') {
+            return orders.filter((order: IOrder) => order.provider_id == user.id);
         } else {
             return orders;
         }
@@ -73,7 +73,7 @@ export class OrderService {
             id: 0,
             status: 0,
             total: 0,
-            vendor_id: 0,
+            provider_id: '0',
             order_list: [],
         };
         this.setOrder(order);

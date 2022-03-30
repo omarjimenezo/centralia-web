@@ -1,12 +1,12 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
-import { ActivatedRoute, Route, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { AuthService } from 'src/app/auth/components/services/auth.service';
 import { IAlertInfo } from 'src/app/client/models/alert.model';
 import { IOrder, IOrderList } from 'src/app/common/models/order.model';
-import { IClient } from 'src/app/common/models/user.model';
+import { IUser } from 'src/app/common/models/user.model';
 import { AlertService } from 'src/app/common/services/alert.service';
-import { AuthService } from 'src/app/common/services/auth.service';
 import { OrderService } from '../../../../common/services/order.service';
 
 @Component({
@@ -22,7 +22,7 @@ export class OrderDialogComponent implements OnInit, OnDestroy {
     public client_address: string = '';
     public client_name: string = '';
     public providerId: number;
-    public clientInfo: IClient;
+    public userInfo: IUser;
 
     private sub_order: Subscription;
     private sub_total: Subscription;
@@ -70,7 +70,7 @@ export class OrderDialogComponent implements OnInit, OnDestroy {
     }
 
     public getClient(): void {
-        this.clientInfo = this._authService.getClient;
+        this.userInfo = this._authService.getUserInfo();
     }
 
     public saveOrder(): void {
@@ -83,7 +83,7 @@ export class OrderDialogComponent implements OnInit, OnDestroy {
             date: new Date(),
             client_address: this.client_address,
             client_name: this.client_name,
-            vendor_id: this.clientInfo.vendorId,
+            provider_id: this.userInfo.provider_id,
             order_list: this.order.order_list,
         };
 

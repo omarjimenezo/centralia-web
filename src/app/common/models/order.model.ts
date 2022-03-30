@@ -14,7 +14,7 @@ export interface IOrder{
     client_name?: string;
     client_id?: number;
     client_address?: string;
-    vendor_id: number;
+    provider_id: string;
     order_list: IOrderList[]
 }
 

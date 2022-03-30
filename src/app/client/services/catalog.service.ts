@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { GlobalConstants } from 'src/app/common/models/global.constants';
 import { ICatalog, ICategory } from '../../common/models/catalog.model';
 import { NavBarService } from './nav-bar.service';
 
@@ -8,18 +9,18 @@ import { NavBarService } from './nav-bar.service';
     providedIn: 'root',
 })
 export class CatalogService {
-    private baseURL: string = 'https://centralia.app/api';
     private _catalog = new BehaviorSubject<ICatalog[]>([]);
     private _category = new BehaviorSubject<ICategory[]>([]);
     private _resetCatalog = new BehaviorSubject('');
 
     constructor(
         private _http: HttpClient,
-        private _navBarService: NavBarService
+        private _navBarService: NavBarService,
+        private _global: GlobalConstants
     ) {
         this._navBarService.getProviderId.subscribe((providerId) => {
             this.initCatalog(providerId);
-            this.initCategory(providerId);
+            this.initCategories(providerId);
         });
     }
 
@@ -27,7 +28,9 @@ export class CatalogService {
     public initCatalog(providerId: string): void {
         if (providerId) {
             this._http
-                .get<ICatalog[]>(`${this.baseURL}/catalog/user/${providerId}`)
+                .get<ICatalog[]>(
+                    `${this._global.ENDPOINTS.CATALOG.GET_CATALOG}/${providerId}`
+                )
                 .subscribe((catalog: ICatalog[]) => {
                     catalog.map(
                         (product) =>
@@ -47,11 +50,11 @@ export class CatalogService {
     }
 
     //  Category
-    public initCategory(providerId: string): void {
+    public initCategories(providerId: string): void {
         if (providerId) {
             this._http
                 .get<ICategory[]>(
-                    `${this.baseURL}/categories/user/${providerId}`
+                    `${this._global.ENDPOINTS.CATALOG.GET_CATEGORIES}/${providerId}`
                 )
                 .subscribe((category: ICategory[]) => {
                     this.setCategory(category);

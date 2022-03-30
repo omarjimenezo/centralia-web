@@ -1,13 +1,31 @@
+export interface IUserResponse {
+    data: IUser;
+}
 export interface IUser {
-    id: number;
+    id: string;
+    provider_id: string;
+    type: string;
+    email: string;
     name: string;
-    type: number;
-    address: string;
-    img: string;
+    middlename: string;
+    lastname: string;
+    phone: number;
+    mobile: number;
+    img_profile: string;
+    business: IBusiness;
 }
 
-export interface IClient {
-    id?: number,
-    name?: string,
-    vendorId: number,
+export interface IBusiness {
+    business_rfc: string;
+    business_name: string;
+    business_brief: string;
+    address_street: string;
+    address_number: string;
+    address_suburb: string;
+    address_zip: string;
+    address_reference: string;
+    address_city: string;
+    address_state: string;
+    address_country: string;
+    img_logo: string;
 }

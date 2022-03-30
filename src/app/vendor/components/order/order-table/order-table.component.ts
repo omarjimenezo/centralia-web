@@ -14,7 +14,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { OrderService } from 'src/app/common/services/order.service';
 import { IOrderList, IOrder } from 'src/app/common/models/order.model';
 import { OrderDetailComponent } from '../order-detail/order-detail.component';
-import { AuthService } from 'src/app/common/services/auth.service';
+import { AuthService } from 'src/app/auth/components/services/auth.service';
 import { IUser } from 'src/app/common/models/user.model';
 
 @Component({
@@ -47,7 +47,7 @@ export class OrderTableComponent implements OnInit {
         public _authService: AuthService,
         public _matDialog: MatDialog
     ) {
-        this.userInfo = this._authService.getUser();
+        this.userInfo = this._authService.getUserInfo();
     }
 
     public ngOnInit(): void {

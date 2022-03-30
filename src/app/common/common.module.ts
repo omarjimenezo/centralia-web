@@ -1,10 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { AlertComponent } from './components/alert/alert.component';
 import {
-    MatSnackBarModule,
-    MAT_SNACK_BAR_DEFAULT_OPTIONS,
+    MatSnackBarModule
 } from '@angular/material/snack-bar';
+import { CookieService } from 'ngx-cookie-service';
+import { AlertComponent } from './components/alert/alert.component';
 
 @NgModule({
     declarations: [AlertComponent],
@@ -15,6 +15,6 @@ import {
         MatSnackBarModule,
     ],
     exports: [AlertComponent],
-    providers: [],
+    providers: [CookieService],
 })
 export class CommonComponentsModule {}

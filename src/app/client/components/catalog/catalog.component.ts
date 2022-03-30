@@ -5,10 +5,10 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { AuthService } from 'src/app/auth/components/services/auth.service';
 import { IOrder } from 'src/app/common/models/order.model';
-import { IClient } from 'src/app/common/models/user.model';
+import { IUser } from 'src/app/common/models/user.model';
 import { AlertService } from 'src/app/common/services/alert.service';
-import { AuthService } from 'src/app/common/services/auth.service';
 import { ICatalog } from '../../../common/models/catalog.model';
 import { OrderService } from '../../../common/services/order.service';
 import { IAlertInfo } from '../../models/alert.model';
@@ -32,7 +32,7 @@ export class CatalogComponent implements OnInit, OnDestroy {
     public client_address: string = '';
     public client_name: string = '';
     public providerId: number;
-    public clientInfo: IClient;
+    public userInfo: IUser;
 
     private sub_order: Subscription;
     private sub_total: Subscription;
@@ -84,7 +84,7 @@ export class CatalogComponent implements OnInit, OnDestroy {
     }
     
     public getClient(): void {
-        this.clientInfo = this._authService.getClient
+        this.userInfo = this._authService.getUserInfo()
     }
 
     public saveOrder(): void {
@@ -97,7 +97,7 @@ export class CatalogComponent implements OnInit, OnDestroy {
             total: this.orderTotal,
             client_address: this.client_address,
             client_name: this.client_name,
-            vendor_id: this.clientInfo.vendorId,
+            provider_id: this.userInfo.provider_id,
             order_list: this.order.order_list
         };
 

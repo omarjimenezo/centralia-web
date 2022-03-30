@@ -52,14 +52,14 @@ export class NavBarComponent implements OnInit {
     public getUrlParams(): void {
         this._route.queryParams.subscribe((urlParams: any) => {
             if(urlParams.vendorId) {
-                this._navBarService.setVendorId(urlParams.vendorId);
+                this._navBarService.setProviderId(urlParams.vendorId);
             }
         });
     }
 
     public getCategories(): void {
         this.loading = true;
-        this._catalogService.initCategory(this.providerId);
+        this._catalogService.initCategories(this.providerId);
         this._catalogService.getCategory.subscribe(
             (category: ICategory[]) => {
                 if (category.length > 0) {
