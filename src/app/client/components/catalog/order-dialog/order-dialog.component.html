@@ -3,7 +3,7 @@
 <mat-divider></mat-divider>
 
 <mat-dialog-content class="mat-typography">
-    <div class="client-data">
+    <!-- <div class="client-data">
         <mat-form-field appearance="outline">
             <mat-label>Nombre/Negocio</mat-label>
             <input matInput placeholder="Placeholder" [(ngModel)]="client_name">
@@ -15,7 +15,7 @@
             <input matInput placeholder="Placeholder" [(ngModel)]="client_address">
             <mat-hint>Ingrese su direccción completa (calle, numero, CP)</mat-hint>
           </mat-form-field>
-    </div>
+    </div> -->
 
     <order-table></order-table>
 </mat-dialog-content>
@@ -30,7 +30,6 @@
         color="primary"
         [mat-dialog-close]="order"
         cdkFocusInitial
-        [disabled]="order.order_list.length < 1 || (client_name.length < 3 || client_address.length < 3)"
         (click)="saveOrder()"
     >
         Enviar Pedido

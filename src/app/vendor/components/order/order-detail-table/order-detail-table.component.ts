@@ -62,15 +62,15 @@ export class OrderDetailTableComponent implements OnInit, OnDestroy {
         });
     }
 
-    public removeProduct(sku: string): void {
+    public removeProduct(id: number): void {
         this.catalog.map((product) => {
-            if (product.sku === sku) {
+            if (product.id === id) {
                 product.selected = false;
                 product.quantity = 0;
             }
         });
 
-        this._orderService.removeProduct(sku);
+        this._orderService.removeProduct(id);
         this._catalogService.setCatalog(this.catalog);
     }
 }

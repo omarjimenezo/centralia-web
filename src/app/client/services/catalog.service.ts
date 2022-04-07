@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { GlobalConstants } from 'src/app/common/models/global.constants';
-import { ICatalog, ICategory } from '../../common/models/catalog.model';
+import { ICatalog, ICatalogResponse, ICategory } from '../../common/models/catalog.model';
 import { NavBarService } from './nav-bar.service';
 
 @Injectable({
@@ -28,15 +28,20 @@ export class CatalogService {
     public initCatalog(providerId: string): void {
         if (providerId) {
             this._http
-                .get<ICatalog[]>(
+                .get<ICatalogResponse>(
                     `${this._global.ENDPOINTS.CATALOG.GET_CATALOG}/${providerId}`
                 )
-                .subscribe((catalog: ICatalog[]) => {
-                    catalog.map(
-                        (product) =>
-                            (product.price = product.price.replace(',', '.'))
-                    );
-                    this.setCatalog(catalog);
+                .subscribe((catalog: ICatalogResponse) => {
+                    if (catalog && catalog.data) {
+                        catalog.data.map(
+                            (product) =>
+                                (product.price = product.price.replace(
+                                    ',',
+                                    '.'
+                                ))
+                        );
+                        this.setCatalog(catalog.data);
+                    }
                 });
         }
     }

@@ -1,10 +1,10 @@
 <div class="login-container">
-    <mat-spinner *ngIf="loading"></mat-spinner>
+    
 
     <mat-card
         color="primary"
         class="login-wrapper mat-elevation-z8"
-        *ngIf="!loading"
+        
     >
         <mat-card-title>Iniciar Sesión</mat-card-title>
 
@@ -50,15 +50,17 @@
                 mat-raised-button
                 color="primary"
                 (click)="login()"
-                [disabled]="form.invalid"
+                [disabled]="form.invalid || loading"
             >
                 Entrar
             </button>
+            <mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
             <br />
             <br />
             <button mat-button (click)="forgotPassword()">
                 Olvide mi contraseña
             </button>
         </mat-card-actions>
+        
     </mat-card>
 </div>

@@ -94,7 +94,7 @@ export class CatalogTableComponent implements AfterViewInit, OnDestroy, OnInit {
     public getOrder(): void {
         this.sub_order = this._orderService.getOrder.subscribe((order) => {
             this.order = order;
-            if (this.order.order_list.length <= 0) {
+            if (this.order.description.length <= 0) {
                 this.resetCatalog();
                 this.resetQuantity();
             }
@@ -114,6 +114,7 @@ export class CatalogTableComponent implements AfterViewInit, OnDestroy, OnInit {
     }
 
     public getFilter(): void {
+        this.loading = true;
         this.sub_catalogFilter = this._catalogSearchService.getFilter.subscribe(
             (data: string) => {
                 if (data !== '') {
@@ -121,6 +122,7 @@ export class CatalogTableComponent implements AfterViewInit, OnDestroy, OnInit {
                     this.elementFadeout();
                     this.applyFilter(data);
                 }
+                this.loading = false;
             }
         );
     }
@@ -136,6 +138,7 @@ export class CatalogTableComponent implements AfterViewInit, OnDestroy, OnInit {
     }
 
     public applyFilter(data: string) {
+        this.loading = true;
         if (data !== 'N') {
             this.sub_catalog = this._catalogService.getCatalog.subscribe(
                 (catalog: ICatalog[]) => {
@@ -160,14 +163,14 @@ export class CatalogTableComponent implements AfterViewInit, OnDestroy, OnInit {
         this._orderService.addProduct(quantity, element);
     }
 
-    public removeProduct(sku: string) {
+    public removeProduct(id: number) {
         this.catalog.map((product) => {
-            if (product.sku === sku) {
+            if (product.id === id) {
                 product.selected = false;
                 product.quantity = 0;
             }
         });
-        this._orderService.removeProduct(sku);
+        this._orderService.removeProduct(id);
         this._catalogService.setCatalog(this.catalog);
     }
 
@@ -188,13 +191,13 @@ export class CatalogTableComponent implements AfterViewInit, OnDestroy, OnInit {
             });
         }
 
-        this.order.order_list.forEach((product: IOrderList) => {
-            if (product.quantity > 0) {
+        this.order.description.forEach((order: IOrderList) => {
+            if (order.quantity > 0) {
                 const rowIndex: number = this.dataSource.filteredData.findIndex(
-                    (row: ICatalog) => product.sku === row.sku
+                    (row: ICatalog) => order.product.id === row.id
                 );
                 if (rowIndex !== -1) {
-                    this.quantities[rowIndex] = product.quantity;
+                    this.quantities[rowIndex] = order.quantity;
                 }
             }
         });

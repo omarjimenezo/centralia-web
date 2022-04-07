@@ -41,8 +41,9 @@ export class OrderTableComponent implements OnInit, OnDestroy {
         this.loading = true;
         this._orderService.getOrder.subscribe(
             (order: IOrder) => {
-                this.orderList = order.order_list;
+                this.orderList = order.description;
                 this.dataSource = new MatTableDataSource<IOrderList>(this.orderList);
+                this.loading = false;
             },
             (error: any) => {
                 console.error(error);
@@ -54,18 +55,19 @@ export class OrderTableComponent implements OnInit, OnDestroy {
     public getCatalog(): void {
         this._catalogService.getCatalog.subscribe((catalog) => {
             this.catalog = catalog;
+            this.loading = false;
         });
     }
 
-    public removeProduct(sku: string): void {
+    public removeProduct(id: number): void {
         this.catalog.map((product) => {
-            if (product.sku === sku) {
+            if (product.id === id) {
                 product.selected = false;
                 product.quantity = 0;
             }
         });
 
-        this._orderService.removeProduct(sku);
+        this._orderService.removeProduct(id);
         this._catalogService.setCatalog(this.catalog);
     }
 }

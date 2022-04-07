@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 @Injectable({
-    providedIn: 'root'
+    providedIn: 'root',
 })
 export class GlobalConstants {
     private API_BASE = 'https://centralia.app/api';
@@ -16,21 +16,45 @@ export class GlobalConstants {
             GET_CATALOG: `${this.API_BASE}${this.API_VERSION}/catalog/provider`,
             GET_CATEGORIES: `${this.API_BASE}${this.API_VERSION}/categories/provider`,
         },
-        ORDER: {}
+        ORDER: {
+            POST_ORDER: `${this.API_BASE}${this.API_VERSION}/order`,
+            GET_ORDERS: `${this.API_BASE}${this.API_VERSION}/orders`,
+        },
+    };
+
+    public ROUTES = {
+        AUTH: {
+            LOGIN: 'login',
+            NOT_FOUND: '404'
+        },
+        PROVIDER: {
+            ORDERS: 'vendedor/pedidos',
+        },
+        CLIENT: {
+            PROVIDERS: 'cliente/proveedores',
+            CATALOG: 'cliente/catalogo',
+        }
     }
 
     public API_MESSAGES = {
         SUCCESS: 'Success',
-        UNAUTHORIZED: 'Unauthorized'
-    }
-    
+        UNAUTHORIZED: 'Unauthorized',
+    };
+
     public ERROR_MESSAGES = {
         WRONG_USER_PASS: 'Usuario y/o Contraseña incorrectos',
-        CONNECTION_ERROR: 'Error en conexión al servidor'
-    }
+        USER_UNAUTHORIZED: 'Acceso no autorizado',
+        CONNECTION_ERROR: 'Error en conexión al servidor',
+
+        ORDER_ERROR: 'Ocurrio un error al procesar el pedido',
+    };
+
+    public SUCCESS_MESSAGES = {
+        ORDER_SAVED: 'Pedido enviado',
+    };
 
     public USER_TYPES = {
         PROVIDER: 'provider',
-        USER: 'USER'
-    }
- }
+        USER: 'user',
+    };
+}

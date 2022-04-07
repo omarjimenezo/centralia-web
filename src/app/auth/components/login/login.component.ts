@@ -4,7 +4,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { IUser, IUserResponse } from 'src/app/common/models/user.model';
-import { AuthService } from 'src/app/auth/components/services/auth.service';
+import { AuthService } from 'src/app/auth/services/auth.service';
 import { ILoginRequest, ILoginResponse } from '../../models/auth.model';
 import { AlertService } from 'src/app/common/services/alert.service';
 import { IAlertInfo } from 'src/app/client/models/alert.model';
@@ -19,11 +19,6 @@ export class LoginComponent implements OnInit {
     public form: FormGroup;
     public loading: boolean = false;
     public hidePassword: boolean = true;
-
-    private alertInfo: IAlertInfo = {
-        screen: 'auth',
-        type: 'error',
-    };
 
     constructor(
         private _fb: FormBuilder,
@@ -40,6 +35,10 @@ export class LoginComponent implements OnInit {
             email: ['', [Validators.required, Validators.email]],
             password: ['', Validators.required],
         });
+
+        if(this._authService.isAuthenticated()) {
+            this._authService.landingPage(this._authService.getUserRole())
+        }
     }
 
     public login(): void {
@@ -54,23 +53,32 @@ export class LoginComponent implements OnInit {
 
             this._authService.login(loginRequest).subscribe(
                 (response: ILoginResponse) => {
-                    if (
-                        response &&
-                        response.message === this._global.API_MESSAGES.SUCCESS
-                    ) {
-                        this._cookieService.set('tokenAuth', response.token);
-                        this.confirmLogin(response.user_id);
+                    if (response && response.message) {
+                        switch (response.message) {
+                            case this._global.API_MESSAGES.SUCCESS:
+                                this._authService.setToken(response.token);
+                                this.confirmLogin(response.user_id);
+                                break;
+                            case this._global.API_MESSAGES.UNAUTHORIZED:
+                                this._alertService.openAlert(
+                                    this._global.ERROR_MESSAGES.WRONG_USER_PASS,
+                                    1
+                                );
+                                this.loading = false;
+                                break;
+                        }
                     } else {
                         this._alertService.openAlert(
                             this._global.ERROR_MESSAGES.WRONG_USER_PASS,
-                            this.alertInfo
+                            1
                         );
+                        this.loading = false;
                     }
                 },
                 (error) => {
                     this._alertService.openAlert(
                         this._global.ERROR_MESSAGES.CONNECTION_ERROR,
-                        this.alertInfo
+                        1
                     );
                     console.error(error);
                 }
@@ -83,30 +91,19 @@ export class LoginComponent implements OnInit {
             (user: IUserResponse) => {
                 if (user && user.data) {
                     this._authService.setUser(user.data);
-                    this.nextPage(user.data.type);
+                    this._authService.landingPage(user.data.type);
                 }
                 this.loading = false;
             },
             (error) => {
                 this._alertService.openAlert(
                     this._global.ERROR_MESSAGES.CONNECTION_ERROR,
-                    this.alertInfo
+                    1
                 );
                 console.error(error);
                 this.loading = false;
             }
         );
-    }
-
-    public nextPage(userType: string): void {
-        switch (userType) {
-            case this._global.USER_TYPES.PROVIDER:
-                this._routerService.navigate(['vendedor/pedidos']);
-                break;
-            case this._global.USER_TYPES.USER:
-                this._routerService.navigate(['cliente/proveedores']);
-                break;
-        }
     }
 
     public forgotPassword(): void {

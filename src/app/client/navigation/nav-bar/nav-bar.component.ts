@@ -64,8 +64,8 @@ export class NavBarComponent implements OnInit {
             (category: ICategory[]) => {
                 if (category.length > 0) {
                     this.categories = category;
-                    this.loading = false;
                 }
+                this.loading = false;
             },
             (error: any) => {
                 console.error(error);
@@ -77,7 +77,7 @@ export class NavBarComponent implements OnInit {
     public getOrder(): void {
         this._orderService.getOrder.subscribe((order: IOrder) => {
             this.productsAdded = 0;
-            order.order_list.forEach((product) => {
+            order.description.forEach((product) => {
                 this.productsAdded += product.quantity;
             });
         });

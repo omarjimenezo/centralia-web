@@ -1,23 +1,28 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AuthGuardService as AuthGuard } from '../auth/services/guard.service';
 import { ClientComponent } from './client.component';
-import { ProvidersComponent } from './components/providers/providers.component';
 import { CatalogComponent } from './components/catalog/catalog.component';
+import { ProvidersComponent } from './components/providers/providers.component';
 
 const routes: Routes = [
-  {
-    path: '',
-    component: ClientComponent,
-    children: [
-      { path: '', component: ProvidersComponent },
-      { path: 'proveedores', component: ProvidersComponent },
-      { path: 'catalogo/:id', component: CatalogComponent },
-    ],
-  },
+    {
+        path: '',
+        canActivate: [AuthGuard],
+        data: {
+            expectedRole: 'user',
+        },
+        component: ClientComponent,
+        children: [
+            { path: '', component: ProvidersComponent },
+            { path: 'proveedores', component: ProvidersComponent },
+            { path: 'catalogo/:id', component: CatalogComponent },
+        ],
+    },
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule],
+    imports: [RouterModule.forChild(routes)],
+    exports: [RouterModule],
 })
 export class ClientRoutingModule {}

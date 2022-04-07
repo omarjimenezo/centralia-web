@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { AuthService } from 'src/app/auth/components/services/auth.service';
+import { AuthService } from 'src/app/auth/services/auth.service';
 import { IAlertInfo } from 'src/app/client/models/alert.model';
 import { IOrder, IOrderList } from 'src/app/common/models/order.model';
 import { IUser } from 'src/app/common/models/user.model';
@@ -34,7 +34,7 @@ export class OrderDialogComponent implements OnInit, OnDestroy {
         private _orderService: OrderService,
         private _alertService: AlertService,
         private _authService: AuthService,
-        private _route: ActivatedRoute,
+        private _route: ActivatedRoute
     ) {}
 
     public ngOnInit(): void {
@@ -55,7 +55,7 @@ export class OrderDialogComponent implements OnInit, OnDestroy {
             (order: IOrder) => {
                 this.order = order;
                 this.dataSource = new MatTableDataSource<IOrderList>(
-                    this.order.order_list
+                    this.order.description
                 );
             },
             (error: any) => {
@@ -74,21 +74,19 @@ export class OrderDialogComponent implements OnInit, OnDestroy {
     }
 
     public saveOrder(): void {
-        const alertInfo: IAlertInfo = { screen: 'catalog', type: 'success' };
 
         let saveOrder: IOrder = {
             id: 1,
             status: 2,
-            total: this.orderTotal,
+            amount: this.orderTotal,
             date: new Date(),
-            client_address: this.client_address,
-            client_name: this.client_name,
-            provider_id: this.userInfo.provider_id,
-            order_list: this.order.order_list,
+            // provider_id: this.userInfo.provider_id,
+            provider_id: 2,
+            description: this.order.description,
         };
 
-        this._orderService.setOrders(saveOrder);
-        this._alertService.openAlert('Pedido Enviado', alertInfo);
+        this._orderService.saveOrder(saveOrder);
+        this._alertService.openAlert('Pedido Enviado', 0);
         this.resetOrder();
     }
 
@@ -97,12 +95,12 @@ export class OrderDialogComponent implements OnInit, OnDestroy {
         this.client_name = '';
         this.client_address = '';
     }
-    public deleteProduct(sku: string): void {
-        const orderList = this.order.order_list.filter((product) => {
-            return product.sku !== sku;
+    public deleteProduct(id: number): void {
+        const orderList = this.order.description.filter((product) => {
+            return product.product.id !== id;
         });
 
-        this.order.order_list = orderList;
+        this.order.description = orderList;
 
         this._orderService.setOrder(this.order);
     }

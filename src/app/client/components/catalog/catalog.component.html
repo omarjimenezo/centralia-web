@@ -1,6 +1,8 @@
-<div
-    class="section-container catalog-container"
->
+<div class="float-total-button">
+    <button mat-raised-button color="primary" (click)="openOrderDialog()">Total: {{ orderTotal | currency }}</button>
+</div>
+
+<div class="section-container catalog-container">
     <div class="title-container">
         <h2>Catalogo</h2>
 
@@ -20,19 +22,6 @@
 
                     <mat-divider></mat-divider>
 
-                    <div class="client-data">
-                        <mat-form-field appearance="outline">
-                            <mat-label>Nombre/Negocio</mat-label>
-                            <input matInput placeholder="Placeholder" [(ngModel)]="client_name">
-                            <mat-hint>Inngrese el nombre con el que el vendedor lo identifica</mat-hint>
-                          </mat-form-field>
-                          <mat-form-field appearance="outline">
-                            <mat-label>Dirección</mat-label>
-                            <input matInput placeholder="Placeholder" [(ngModel)]="client_address">
-                            <mat-hint>Ingrese su direccción completa (calle, numero, CP)</mat-hint>
-                          </mat-form-field>
-                    </div>
-
                     <order-table></order-table>
 
                     <mat-divider></mat-divider>
@@ -43,7 +32,6 @@
                     <button
                         mat-raised-button
                         color="primary"
-                        [disabled]="order.order_list.length < 1 || (client_name.length < 3 || client_address.length < 3)"
                         (click)="saveOrder()"
                     >
                         Enviar Pedido
@@ -54,9 +42,7 @@
     </div>
 </div>
 
-<div
-    class="float-order-button"
->
+<div class="float-order-button">
     <a
         mat-mini-fab
         color="primary"

@@ -14,30 +14,24 @@ export class AlertService {
 
     public openAlert(
         message: string,
-        alertInfo: IAlertInfo,
-        duration: number = 3000
+        type: number = 0,
+        duration: number = 3000,
+        position: MatSnackBarVerticalPosition = 'bottom'
     ) {
         let panelClass: string = '';
-        let position: MatSnackBarVerticalPosition = 'top';
-        switch (alertInfo.type) {
-            case 'success':
+        switch (type) {
+            case 0:
                 panelClass = 'mat-snackbar-sucess';
                 break;
-            case 'error':
+            case 1:
                 panelClass = 'mat-snackbar-error';
                 break;
-            case 'alert':
+            case 2:
                 panelClass = 'mat-snackbar-alert';
                 break;
-            case 'info':
+            case 3:
                 panelClass = 'mat-snackbar-info';
                 break;
-        }
-
-        switch (alertInfo.screen) {
-            case 'catalog':
-            default:
-                position = 'bottom';
         }
 
         this._snackBar.open(message, 'X', {

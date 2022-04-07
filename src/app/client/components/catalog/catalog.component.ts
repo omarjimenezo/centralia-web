@@ -5,7 +5,9 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { AuthService } from 'src/app/auth/components/services/auth.service';
+import { AuthService } from 'src/app/auth/services/auth.service';
+import { IResponse } from 'src/app/auth/models/auth.model';
+import { GlobalConstants } from 'src/app/common/models/global.constants';
 import { IOrder } from 'src/app/common/models/order.model';
 import { IUser } from 'src/app/common/models/user.model';
 import { AlertService } from 'src/app/common/services/alert.service';
@@ -44,10 +46,10 @@ export class CatalogComponent implements OnInit, OnDestroy {
         private _activatedRoute: ActivatedRoute,
         private _authService: AuthService,
         private _orderService: OrderService,
-        private _catalogService: CatalogService,
+        private _global: GlobalConstants,
         private _navBarService: NavBarService,
         public _alertService: AlertService,
-        public _matDialog: MatDialog,
+        public _matDialog: MatDialog
     ) {}
 
     public ngOnInit(): void {
@@ -58,12 +60,14 @@ export class CatalogComponent implements OnInit, OnDestroy {
     }
 
     public ngOnDestroy(): void {
-        (this.sub_order) ? this.sub_order.unsubscribe() : null;
-        (this.sub_total) ? this.sub_total.unsubscribe() : null;
+        this.sub_order ? this.sub_order.unsubscribe() : null;
+        this.sub_total ? this.sub_total.unsubscribe() : null;
     }
 
     public setProviderId(): void {
-        this._navBarService.setProviderId(this._activatedRoute.snapshot.paramMap.get('id')!);
+        this._navBarService.setProviderId(
+            this._activatedRoute.snapshot.paramMap.get('id')!
+        );
     }
 
     public getOrder(): void {
@@ -72,7 +76,7 @@ export class CatalogComponent implements OnInit, OnDestroy {
                 this.elementFadeout();
                 this.order = order;
                 this.productsAdded = 0;
-                order.order_list.forEach((product) => {
+                order.description.forEach((product) => {
                     this.productsAdded += product.quantity;
                 });
             },
@@ -82,28 +86,45 @@ export class CatalogComponent implements OnInit, OnDestroy {
             }
         );
     }
-    
+
     public getClient(): void {
-        this.userInfo = this._authService.getUserInfo()
+        this.userInfo = this._authService.getUserInfo();
     }
 
     public saveOrder(): void {
-        const alertInfo: IAlertInfo = { screen: 'catalog', type: 'success' };
-        
         let saveOrder: IOrder = {
-            id: 1,
-            status: 2,
-            date: new Date(),
-            total: this.orderTotal,
-            client_address: this.client_address,
-            client_name: this.client_name,
-            provider_id: this.userInfo.provider_id,
-            order_list: this.order.order_list
+            amount: this.orderTotal,
+            provider_id: 2,
+            description: this.order.description,
         };
 
-        this._orderService.setOrders(saveOrder);
-        this._alertService.openAlert('Pedido Enviado', alertInfo);
-        this.resetOrder();
+        this._orderService.saveOrder(saveOrder).subscribe(
+            (response: IResponse) => {
+                if (
+                    response &&
+                    response.message &&
+                    response.message === this._global.API_MESSAGES.SUCCESS
+                ) {
+                    this._alertService.openAlert(
+                        this._global.SUCCESS_MESSAGES.ORDER_SAVED,
+                        0
+                    );
+                    this.resetOrder();
+                } else {
+                    this._alertService.openAlert(
+                        this._global.ERROR_MESSAGES.ORDER_ERROR,
+                        1
+                    );
+                }
+            },
+            (error) => {
+                console.error(error);
+                this._alertService.openAlert(
+                    this._global.ERROR_MESSAGES.ORDER_ERROR,
+                    1
+                );
+            }
+        );
     }
     public resetOrder(): void {
         this._orderService.resetOrder();

@@ -34,6 +34,10 @@
     visibility: hidden;
 }
 
+.float-total-button {
+    visibility: hidden;
+}
+
 @media (max-width: 1008px) {
     .table-container {
         width: 100%;
@@ -42,6 +46,13 @@
 
     .cart-container {
         display: none;
+    }
+
+    .float-total-button {
+        visibility: visible;
+        z-index: 5;
+        position: fixed;
+        margin-left: 76%;
     }
 
     .float-order-button {

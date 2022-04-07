@@ -1,10 +1,13 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, EMPTY, Observable } from 'rxjs';
-import { IOrder, IOrderList, IStatus } from 'src/app/common/models/order.model';
+import { IOrder, IOrderList, IOrderResponse, IStatus } from 'src/app/common/models/order.model';
 import { AlertService } from 'src/app/common/services/alert.service';
 import { ICatalog } from '../models/catalog.model';
 import { IAlertInfo } from '../../client/models/alert.model';
 import { IUser } from '../models/user.model';
+import { HttpClient } from '@angular/common/http';
+import { GlobalConstants } from '../models/global.constants';
+import { IResponse } from 'src/app/auth/models/auth.model';
 
 @Injectable({
     providedIn: 'root',
@@ -20,12 +23,16 @@ export class OrderService {
     private _order = new BehaviorSubject<IOrder>({
         id: 0,
         status: 0,
-        total: 0,
-        provider_id: '0',
-        order_list: [],
+        amount: 0,
+        provider_id: 0,
+        description: [],
     });
 
-    constructor(private _alertService: AlertService) {}
+    constructor(
+        private _alertService: AlertService,
+        private _http: HttpClient,
+        private _global: GlobalConstants
+    ) {}
 
     // Order
     public setOrder(order: IOrder) {
@@ -36,35 +43,44 @@ export class OrderService {
         return this._order.asObservable();
     }
 
-    public setOrders(order: IOrder) {
-        let orders: IOrder[] = [];
-        if (localStorage.getItem('order')) {
-            orders = <IOrder[]>JSON.parse(localStorage.getItem('order')!);
-        }
-        orders.push(order);
-        localStorage.setItem('order', JSON.stringify(orders));
+    public saveOrder(order: IOrder): Observable<any> {
+        return this._http.post<IOrder>(
+            `${this._global.ENDPOINTS.ORDER.POST_ORDER}`,
+            order
+        );
+        // let orders: IOrder[] = [];
+        // if (localStorage.getItem('order')) {
+        //     orders = <IOrder[]>JSON.parse(localStorage.getItem('order')!);
+        // }
+        // orders.push(order);
+        // localStorage.setItem('order', JSON.stringify(orders));
     }
 
-    public getOrders(user: IUser): IOrder[] {
-        let orders: IOrder[] = [];
-        if (localStorage.getItem('order')) {
-            orders = <IOrder[]>JSON.parse(localStorage.getItem('order')!);
-        }
+    public getOrders(): Observable<IOrderResponse>{
+        return this._http.get<IOrderResponse>(
+            `${this._global.ENDPOINTS.ORDER.GET_ORDERS}`
+        );
+        // let orders: IOrder[] = [];
+        // if (localStorage.getItem('order')) {
+        //     orders = <IOrder[]>JSON.parse(localStorage.getItem('order')!);
+        // }
 
-        if (user.type !== 'abarrotera') {
-            return orders.filter((order: IOrder) => order.provider_id == user.id);
-        } else {
-            return orders;
-        }
+        // if (user.type !== 'abarrotera') {
+        //     return orders.filter(
+        //         (order: IOrder) => order.provider_id == user.id
+        //     );
+        // } else {
+        //     return orders;
+        // }
     }
 
     public getStatus(id: number): string {
-        let status: IStatus = this._status.find((status) => status.id === id)!
+        let status: IStatus = this._status.find((status) => status.id === id)!;
         return status.label;
     }
 
     public getStatusColor(id: number): string {
-        let status: IStatus = this._status.find((status) => status.id === id)!
+        let status: IStatus = this._status.find((status) => status.id === id)!;
         return status.color;
     }
 
@@ -72,9 +88,9 @@ export class OrderService {
         let order: IOrder = {
             id: 0,
             status: 0,
-            total: 0,
-            provider_id: '0',
-            order_list: [],
+            amount: 0,
+            provider_id: 0,
+            description: [],
         };
         this.setOrder(order);
         this.calcTotal();
@@ -85,8 +101,8 @@ export class OrderService {
     public calcTotal(): void {
         const order: IOrder = this._order.value;
         let total = 0;
-        order.order_list.forEach((product: IOrderList) => {
-            total += parseFloat(product.price!) * product.quantity;
+        order.description.forEach((product: IOrderList) => {
+            total += parseFloat(product.product.price!) * product.quantity;
         });
         this.setTotal(total);
     }
@@ -103,8 +119,8 @@ export class OrderService {
 
     public addProduct(quantity: number, element: ICatalog): void {
         const order = this._order.value;
-        const productFound = order.order_list.find(
-            (product) => product.sku === element.sku
+        const productFound = order.description.find(
+            (product) => product.product.id === element.id
         );
         const alertInfo: IAlertInfo = { screen: 'catalog', type: 'success' };
 
@@ -113,50 +129,45 @@ export class OrderService {
         } else {
             element.selected = true;
 
-            order.order_list.push({
-                id: element.id,
-                description: element.description,
-                sku: element.sku,
-                price: element.price,
+            order.description.push({
+                product: {
+                    id: element.id,
+                    name: element.description,
+                    price: element.price,
+                },
                 quantity: quantity,
             });
         }
         console.log('Order: ', order);
         this.setOrder(order);
         this.calcTotal();
-        this._alertService.openAlert(
-            `Se agregaron ${quantity} productos`,
-            alertInfo
-        );
+        this._alertService.openAlert(`Se agregaron ${quantity} productos`, 0);
     }
 
-    public removeProduct(sku: string) {
+    public removeProduct(id: number) {
         let order: IOrder = this._order.value;
         const alertInfo: IAlertInfo = { screen: 'catalog', type: 'success' };
-        const producto = order.order_list.find(
-            (product) => product.sku === sku
+        const producto = order.description.find(
+            (product) => product.product.id === id
         );
 
-        const orderList = order.order_list.filter(
-            (product) => product.sku !== sku
+        const orderList = order.description.filter(
+            (product) => product.product.id !== id
         );
 
-        order.order_list = orderList;
+        order.description = orderList;
 
         this.setOrder(order);
         this.calcTotal();
         this._alertService.openAlert(
             `Se quitaron ${producto?.quantity} productos`,
-            alertInfo
+            0
         );
 
-        if (order.order_list.length <= 0) {
+        if (order.description.length <= 0) {
             const alertInfo: IAlertInfo = { screen: 'catalog', type: 'info' };
             setTimeout(() => {
-                this._alertService.openAlert(
-                    `0 productos en su orden`,
-                    alertInfo
-                );
+                this._alertService.openAlert(`0 productos en su orden`, 3);
             }, 3100);
         }
     }

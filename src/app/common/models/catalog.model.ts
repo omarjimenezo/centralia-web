@@ -3,6 +3,10 @@ export interface ICategory {
     name: string;
 }
 
+export interface ICatalogResponse {
+    data: ICatalog[]
+}
+
 export interface ICatalog {
     id: number;
     category: string;

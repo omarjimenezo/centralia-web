@@ -1,6 +1,7 @@
+<mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
+
 <mat-table
     matSort
-    *ngIf="!loading"
     [dataSource]="dataSource"
     class="mat-elevation-z5"
     [class.element-fadeout]="tableFadeOut"
@@ -46,7 +47,7 @@ lete                            *ngIf="!element.selected"
                         <button
                             mat-mini-fab
                             color="warn"
-                            (click)="removeProduct(element.sku)"
+                            (click)="removeProduct(element.id)"
                             *ngIf="element.selected"
                         >
                             <mat-icon>remove</mat-icon>
@@ -65,9 +66,9 @@ lete                            *ngIf="!element.selected"
     </tr>
 </mat-table>
 
-<mat-card class="table-loading" *ngIf="loading">
+<!-- <mat-card class="table-loading" *ngIf="loading">
     <mat-spinner></mat-spinner>
-</mat-card>
+</mat-card> -->
 
 <mat-paginator
     [pageSizeOptions]="[10, 20, 30]"

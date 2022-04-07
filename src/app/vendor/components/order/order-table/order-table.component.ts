@@ -12,9 +12,9 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { OrderService } from 'src/app/common/services/order.service';
-import { IOrderList, IOrder } from 'src/app/common/models/order.model';
+import { IOrderList, IOrder, IOrderResponse } from 'src/app/common/models/order.model';
 import { OrderDetailComponent } from '../order-detail/order-detail.component';
-import { AuthService } from 'src/app/auth/components/services/auth.service';
+import { AuthService } from 'src/app/auth/services/auth.service';
 import { IUser } from 'src/app/common/models/user.model';
 
 @Component({
@@ -38,6 +38,7 @@ export class OrderTableComponent implements OnInit {
         'actions',
         'mobile',
     ];
+
     public dataSource: MatTableDataSource<IOrder>;
 
     constructor(
@@ -52,18 +53,20 @@ export class OrderTableComponent implements OnInit {
 
     public ngOnInit(): void {
         this.getOrders();
-        this.dataSource.sort = this.sort;
-        this.dataSource.paginator = this.paginator;
     }
 
     public getOrders(): void {
         this.loading = true;
-        this.dataSource = new MatTableDataSource<IOrder>(
-            this._orderService.getOrders(this.userInfo)
-        );
-        this.dataSource.sort = this.sort;
-        this.dataSource.paginator = this.paginator;
-        this.loading = false;
+        this._orderService.getOrders().subscribe((orders: IOrderResponse) => {
+            
+                this.dataSource = new MatTableDataSource<IOrder>(orders.data);
+                if(this.dataSource){
+                    this.dataSource.sort = this.sort;
+                    this.dataSource.paginator = this.paginator;
+                }
+                this.loading = false;
+            
+        });
 
         // setTimeout(() => {
         //     this.getOrders();
