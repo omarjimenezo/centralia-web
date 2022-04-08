@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { Observable } from 'rxjs';
-import { IAlertInfo } from 'src/app/client/models/alert.model';
 import { GlobalConstants } from 'src/app/common/models/global.constants';
 import { IUser, IUserResponse } from '../../common/models/user.model';
 import { AlertService } from '../../common/services/alert.service';
@@ -13,11 +12,6 @@ import { ILoginRequest, ILoginResponse } from '../models/auth.model';
     providedIn: 'root',
 })
 export class AuthService {
-    private alertInfo: IAlertInfo = {
-        screen: 'auth',
-        type: 'error',
-    };
-
     public user: IUser;
 
     constructor(
@@ -33,13 +27,16 @@ export class AuthService {
     }
 
     public setToken(token: string): void {
-        this._cookieService.delete('tokenAuth','/');
-        this._cookieService.set('tokenAuth', token);
+        // this._cookieService.delete('tokenAuth', '/', 'localhost');
+        // this._cookieService.set('tokenAuth', token, undefined, '/');
+        sessionStorage.setItem('tokenAuth', token);
     }
 
     public getToken(): string {
-        if (this._cookieService.get('tokenAuth')) {
-            return this._cookieService.get('tokenAuth');
+        // if (this._cookieService.get('tokenAuth')) {
+        if (sessionStorage.getItem('tokenAuth')) {
+            // return this._cookieService.get('tokenAuth');
+            return sessionStorage.getItem('tokenAuth')!;
         } else {
             return '';
         }
@@ -53,14 +50,22 @@ export class AuthService {
     }
 
     public logout(): void {
-        this._cookieService.delete('tokenAuth', '/');
-        this._cookieService.delete('userInfo', '/');
+        // this._cookieService.delete('tokenAuth', '/');
+        // this._cookieService.delete('userInfo', '/', 'localhost');
+        sessionStorage.removeItem('tokenAuth');
+        sessionStorage.removeItem('userInfo');
         this._routerService.navigate([this._global.ROUTES.AUTH.LOGIN]);
     }
 
     public setUser(user: IUser): void {
-        this._cookieService.delete('userInfo', '/');
-        this._cookieService.set('userInfo', JSON.stringify(user));
+        // this._cookieService.delete('userInfo', '/', 'localhost');
+        // this._cookieService.set(
+        //     'userInfo',
+        //     JSON.stringify(user),
+        //     undefined,
+        //     '/'
+        // );
+        sessionStorage.setItem('userInfo', JSON.stringify(user));
     }
 
     public getUser(id: string): Observable<IUserResponse> {
@@ -70,10 +75,12 @@ export class AuthService {
     }
 
     public getUserRole(): string {
-        if (this._cookieService.get('userInfo')) {
-            const userInfo: IUser = JSON.parse(
-                this._cookieService.get('userInfo')
-            );
+        // if (this._cookieService.get('userInfo')) {
+        if (sessionStorage.getItem('userInfo')) {
+            // const userInfo: IUser = JSON.parse(
+            //     this._cookieService.get('userInfo')
+            // );
+            const userInfo: IUser = this.getUserInfo();
             return userInfo.type;
         } else {
             return '';
@@ -81,7 +88,8 @@ export class AuthService {
     }
 
     public getUserInfo(): IUser {
-        return JSON.parse(this._cookieService.get('userInfo'));
+        // return JSON.parse(this._cookieService.get('userInfo'));
+        return JSON.parse(sessionStorage.getItem('userInfo')!);
     }
 
     public landingPage(userType: string): void {

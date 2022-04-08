@@ -1,13 +1,17 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { AuthService } from 'src/app/auth/services/auth.service';
 import { IOrder } from 'src/app/common/models/order.model';
+import { IUser } from 'src/app/common/models/user.model';
 import { ICategory } from '../../../common/models/catalog.model';
 import { OrderService } from '../../../common/services/order.service';
 import { OrderDialogComponent } from '../../components/catalog/order-dialog/order-dialog.component';
 import { CatalogSearchService } from '../../services/catalog-search.service';
 import { CatalogService } from '../../services/catalog.service';
 import { NavBarService } from '../../services/nav-bar.service';
+import { UserActionsDialogComponent } from '../user-actions-dialog/user-actions-dialog.component';
 
 @Component({
     selector: 'nav-bar',
@@ -25,6 +29,7 @@ export class NavBarComponent implements OnInit {
     public orderTotal: number;
     public catalogToolbar: boolean = false;
     public searchKey: string = '';
+    public userInfo: IUser;
 
     constructor(
         private _route: ActivatedRoute,
@@ -33,6 +38,8 @@ export class NavBarComponent implements OnInit {
         private _orderService: OrderService,
         private _navBarService: NavBarService,
         private _catalogSearchService: CatalogSearchService,
+        private _bottomSheet: MatBottomSheet,
+        private _authService: AuthService,
         public dialog: MatDialog
     ) {
         this._router.events.subscribe((val) => {
@@ -43,10 +50,15 @@ export class NavBarComponent implements OnInit {
     }
 
     public ngOnInit(): void {
+        this.getUserInfo();
         this.getUrlParams();
         this.getCategories();
         this.getOrder();
         this.getTotal();
+    }
+
+    public getUserInfo(): void {
+        this.userInfo = this._authService.getUserInfo();
     }
 
     public getUrlParams(): void {
@@ -109,6 +121,10 @@ export class NavBarComponent implements OnInit {
         dialogRef.afterClosed().subscribe((result) => {
             console.log(`Dialog closed: ${result}`);
         });
+    }
+
+    public openUserActionsDialog(): void {
+        this._bottomSheet.open(UserActionsDialogComponent);
     }
 
     public elementFadeout(): void {

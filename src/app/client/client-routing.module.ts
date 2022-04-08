@@ -14,9 +14,30 @@ const routes: Routes = [
         },
         component: ClientComponent,
         children: [
-            { path: '', component: ProvidersComponent },
-            { path: 'proveedores', component: ProvidersComponent },
-            { path: 'catalogo/:id', component: CatalogComponent },
+            {
+                path: '',
+                canActivate: [AuthGuard],
+                data: {
+                    expectedRole: 'user',
+                },
+                component: ProvidersComponent,
+            },
+            {
+                path: 'proveedores',
+                canActivate: [AuthGuard],
+                data: {
+                    expectedRole: 'user',
+                },
+                component: ProvidersComponent,
+            },
+            {
+                path: 'catalogo/:id',
+                canActivate: [AuthGuard],
+                data: {
+                    expectedRole: 'user',
+                },
+                component: CatalogComponent,
+            },
         ],
     },
 ];

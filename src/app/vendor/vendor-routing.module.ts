@@ -13,8 +13,22 @@ const routes: Routes = [
         },
         component: VendorComponent,
         children: [
-            { path: '', component: OrderComponent },
-            { path: 'pedidos', component: OrderComponent },
+            {
+                path: '',
+                canActivate: [AuthGuard],
+                data: {
+                    expectedRole: 'provider',
+                },
+                component: OrderComponent,
+            },
+            {
+                path: 'pedidos',
+                canActivate: [AuthGuard],
+                data: {
+                    expectedRole: 'provider',
+                },
+                component: OrderComponent,
+            },
         ],
     },
 ];

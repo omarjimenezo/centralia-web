@@ -7,6 +7,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatGridListModule } from '@angular/material/grid-list';
@@ -33,6 +34,7 @@ import { OrderDialogComponent } from './components/catalog/order-dialog/order-di
 import { OrderTableComponent } from './components/catalog/order-table/order-table.component';
 import { ProvidersComponent } from './components/providers/providers.component';
 import { NavBarComponent } from './navigation/nav-bar/nav-bar.component';
+import { UserActionsDialogComponent } from './navigation/user-actions-dialog/user-actions-dialog.component';
 
 @NgModule({
     declarations: [
@@ -43,6 +45,7 @@ import { NavBarComponent } from './navigation/nav-bar/nav-bar.component';
         NavBarComponent,
         OrderTableComponent,
         OrderDialogComponent,
+        UserActionsDialogComponent,
     ],
     exports: [
         ClientComponent,
@@ -52,6 +55,7 @@ import { NavBarComponent } from './navigation/nav-bar/nav-bar.component';
         NavBarComponent,
         OrderTableComponent,
         OrderDialogComponent,
+        UserActionsDialogComponent,
     ],
     imports: [
         CommonModule,
@@ -82,6 +86,7 @@ import { NavBarComponent } from './navigation/nav-bar/nav-bar.component';
         MatListModule,
         MatGridListModule,
         MatProgressBarModule,
+        MatBottomSheetModule,
     ],
     providers: [
         {
