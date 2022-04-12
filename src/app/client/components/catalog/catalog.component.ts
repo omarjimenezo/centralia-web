@@ -56,7 +56,7 @@ export class CatalogComponent implements OnInit, OnDestroy {
         this.getOrder();
         this.getTotal();
         this.setProviderId();
-        this.getClient();
+        // this.getClient();
     }
 
     public ngOnDestroy(): void {
@@ -90,42 +90,7 @@ export class CatalogComponent implements OnInit, OnDestroy {
     public getClient(): void {
         this.userInfo = this._authService.getUserInfo();
     }
-
-    public saveOrder(): void {
-        let saveOrder: IOrder = {
-            amount: this.orderTotal,
-            provider_id: 2,
-            description: this.order.description,
-        };
-
-        this._orderService.saveOrder(saveOrder).subscribe(
-            (response: IResponse) => {
-                if (
-                    response &&
-                    response.message &&
-                    response.message === this._global.API_MESSAGES.SUCCESS
-                ) {
-                    this._alertService.openAlert(
-                        this._global.SUCCESS_MESSAGES.ORDER_SAVED,
-                        0
-                    );
-                    this.resetOrder();
-                } else {
-                    this._alertService.openAlert(
-                        this._global.ERROR_MESSAGES.ORDER_ERROR,
-                        1
-                    );
-                }
-            },
-            (error) => {
-                console.error(error);
-                this._alertService.openAlert(
-                    this._global.ERROR_MESSAGES.ORDER_ERROR,
-                    1
-                );
-            }
-        );
-    }
+    
     public resetOrder(): void {
         this._orderService.resetOrder();
         this.client_name = '';
@@ -140,6 +105,7 @@ export class CatalogComponent implements OnInit, OnDestroy {
 
     public openOrderDialog(): void {
         const dialogRef = this._matDialog.open(OrderDialogComponent, {
+            data: { dialogMode: true },
             width: '99%',
         });
 

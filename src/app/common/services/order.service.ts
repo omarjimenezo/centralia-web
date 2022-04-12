@@ -1,6 +1,11 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, EMPTY, Observable } from 'rxjs';
-import { IOrder, IOrderList, IOrderResponse, IStatus } from 'src/app/common/models/order.model';
+import {
+    IOrder,
+    IOrderList,
+    IOrderResponse,
+    IStatus,
+} from 'src/app/common/models/order.model';
 import { AlertService } from 'src/app/common/services/alert.service';
 import { ICatalog } from '../models/catalog.model';
 import { IAlertInfo } from '../../client/models/alert.model';
@@ -13,16 +18,10 @@ import { IResponse } from 'src/app/auth/models/auth.model';
     providedIn: 'root',
 })
 export class OrderService {
-    public _status: IStatus[] = [
-        { id: 0, label: 'Finalizado', color: '#000' },
-        { id: 1, label: 'Nuevo', color: '#5b9765' },
-        { id: 2, label: 'Proceso', color: '#6aaaff' },
-        { id: 3, label: 'Cancelado', color: '#ff3838' },
-    ];
     private _total = new BehaviorSubject<number>(0);
     private _order = new BehaviorSubject<IOrder>({
         id: 0,
-        status: 0,
+        status: '',
         amount: 0,
         provider_id: 0,
         description: [],
@@ -56,7 +55,7 @@ export class OrderService {
         // localStorage.setItem('order', JSON.stringify(orders));
     }
 
-    public getOrders(): Observable<IOrderResponse>{
+    public getOrders(): Observable<IOrderResponse> {
         return this._http.get<IOrderResponse>(
             `${this._global.ENDPOINTS.ORDER.GET_ORDERS}`
         );
@@ -74,20 +73,22 @@ export class OrderService {
         // }
     }
 
-    public getStatus(id: number): string {
-        let status: IStatus = this._status.find((status) => status.id === id)!;
+    public getStatus(orderStatus: string): string {
+        const _status: IStatus[] = this._global.orderStatusData;
+        let status: IStatus = _status.find((status) => status.label === orderStatus)!;
         return status.label;
     }
 
-    public getStatusColor(id: number): string {
-        let status: IStatus = this._status.find((status) => status.id === id)!;
+    public getStatusColor(orderStatus: string): string {
+        const _status: IStatus[] = this._global.orderStatusData;
+        let status: IStatus = _status.find((status) => status.label === orderStatus)!;
         return status.color;
     }
 
     public resetOrder(): void {
         let order: IOrder = {
             id: 0,
-            status: 0,
+            status: '',
             amount: 0,
             provider_id: 0,
             description: [],

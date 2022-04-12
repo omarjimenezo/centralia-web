@@ -1,9 +1,9 @@
-<h2 mat-dialog-title>Resumen de Pedido</h2>
+<!-- <h2 mat-dialog-title>Resumen de Pedido</h2>
 
 <mat-divider></mat-divider>
 
-<mat-dialog-content class="mat-typography">
-    <!-- <div class="client-data">
+<mat-dialog-content class="mat-typography"> -->
+<!-- <div class="client-data">
         <mat-form-field appearance="outline">
             <mat-label>Nombre/Negocio</mat-label>
             <input matInput placeholder="Placeholder" [(ngModel)]="client_name">
@@ -17,7 +17,7 @@
           </mat-form-field>
     </div> -->
 
-    <order-table></order-table>
+<!-- <order-table></order-table>
 </mat-dialog-content>
 
 <mat-divider></mat-divider>
@@ -34,4 +34,38 @@
     >
         Enviar Pedido
     </button>
-</mat-dialog-actions>
+</mat-dialog-actions> -->
+
+<mat-card-content>
+    <h2 mat-dialog-title>Resumen de Pedido</h2>
+
+    <mat-divider></mat-divider>
+
+    <order-table></order-table>
+</mat-card-content>
+
+<h1 class="order-total">Total: {{ orderTotal | currency }}</h1>
+
+<mat-card-actions align="end">
+    <button mat-raised-button mat-dialog-close *ngIf="data.dialogMode">Cerrar {{data.dialogMode}}</button>
+
+    <button
+        *ngIf="data.dialogMode"
+        mat-raised-button
+        color="primary"
+        [mat-dialog-close]="order"
+        cdkFocusInitial
+        (click)="saveOrder()"
+    >
+        Enviar Pedido
+    </button>
+    
+    <button
+        mat-raised-button
+        color="primary"
+        cdkFocusInitial
+        (click)="saveOrder()"
+    >
+        Enviar Pedido
+    </button>
+</mat-card-actions>

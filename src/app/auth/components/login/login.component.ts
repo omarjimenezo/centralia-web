@@ -81,6 +81,7 @@ export class LoginComponent implements OnInit {
                         1
                     );
                     console.error(error);
+                    this.loading = false;
                 }
             );
         }

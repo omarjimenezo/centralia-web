@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Inject, Input, OnDestroy, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -8,6 +8,9 @@ import { IOrder, IOrderList } from 'src/app/common/models/order.model';
 import { IUser } from 'src/app/common/models/user.model';
 import { AlertService } from 'src/app/common/services/alert.service';
 import { OrderService } from '../../../../common/services/order.service';
+import {MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { IResponse } from 'src/app/auth/models/auth.model';
+import { GlobalConstants } from 'src/app/common/models/global.constants';
 
 @Component({
     selector: 'order-dialog',
@@ -16,13 +19,13 @@ import { OrderService } from '../../../../common/services/order.service';
 })
 export class OrderDialogComponent implements OnInit, OnDestroy {
     public orderList: IOrderList[];
+    public userInfo: IUser;
     public order: IOrder;
-    public loading: boolean = false;
     public orderTotal: number = 0;
+    public loading: boolean = false;
     public client_address: string = '';
     public client_name: string = '';
     public providerId: number;
-    public userInfo: IUser;
 
     private sub_order: Subscription;
     private sub_total: Subscription;
@@ -31,6 +34,8 @@ export class OrderDialogComponent implements OnInit, OnDestroy {
     public dataSource: MatTableDataSource<IOrderList>;
 
     constructor(
+        @Inject(MAT_DIALOG_DATA) public data: {dialogMode: string, orderTotal: number},
+        private _global: GlobalConstants,
         private _orderService: OrderService,
         private _alertService: AlertService,
         private _authService: AuthService,
@@ -76,18 +81,38 @@ export class OrderDialogComponent implements OnInit, OnDestroy {
     public saveOrder(): void {
 
         let saveOrder: IOrder = {
-            id: 1,
-            status: 2,
             amount: this.orderTotal,
-            date: new Date(),
-            // provider_id: this.userInfo.provider_id,
-            provider_id: 2,
+            provider_id: 3,
             description: this.order.description,
         };
 
-        this._orderService.saveOrder(saveOrder);
-        this._alertService.openAlert('Pedido Enviado', 0);
-        this.resetOrder();
+        this._orderService.saveOrder(saveOrder).subscribe(
+            (response: IResponse) => {
+                if (
+                    response &&
+                    response.message &&
+                    response.message === this._global.API_MESSAGES.SUCCESS
+                ) {
+                    this._alertService.openAlert(
+                        this._global.SUCCESS_MESSAGES.ORDER_SAVED,
+                        0
+                    );
+                    this.resetOrder();
+                } else {
+                    this._alertService.openAlert(
+                        this._global.ERROR_MESSAGES.ORDER_ERROR,
+                        1
+                    );
+                }
+            },
+            (error) => {
+                console.error(error);
+                this._alertService.openAlert(
+                    this._global.ERROR_MESSAGES.ORDER_ERROR,
+                    1
+                );
+            }
+        );
     }
 
     public resetOrder(): void {

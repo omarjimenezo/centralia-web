@@ -17,26 +17,7 @@
         </div>
         <div class="cart-container">
             <mat-card color="primary" class="mat-elevation-z5">
-                <mat-card-content>
-                    <h2 mat-dialog-title>Resumen de Pedido</h2>
-
-                    <mat-divider></mat-divider>
-
-                    <order-table></order-table>
-
-                    <mat-divider></mat-divider>
-                </mat-card-content>
-
-                <h1 class="order-total">Total: {{ orderTotal | currency }}</h1>
-                <mat-card-actions align="end">
-                    <button
-                        mat-raised-button
-                        color="primary"
-                        (click)="saveOrder()"
-                    >
-                        Enviar Pedido
-                    </button>
-                </mat-card-actions>
+                <order-dialog></order-dialog>
             </mat-card>
         </div>
     </div>

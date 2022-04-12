@@ -21,17 +21,18 @@ export class OrderDetailTableComponent implements OnInit, OnDestroy {
     private sub_order: Subscription;
     private sub_catalog: Subscription;
 
-    public displayedColumns: string[] = ['productPrice', 'product', 'price', 'quantity'];
+    public displayedColumns: string[] = [
+        'productPrice',
+        'product',
+        'price',
+        'quantity',
+    ];
     public dataSource: MatTableDataSource<IOrderList>;
 
     constructor(
         private _orderService: OrderService,
         private _catalogService: CatalogService
-    ) {
-        
-
-        
-    }
+    ) {}
 
     ngOnInit(): void {
         this.dataSource = new MatTableDataSource<IOrderList>(this.orderList);

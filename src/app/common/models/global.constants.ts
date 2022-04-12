@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { IStatus } from './order.model';
 
 @Injectable({
     providedIn: 'root',
@@ -18,14 +19,14 @@ export class GlobalConstants {
         },
         ORDER: {
             POST_ORDER: `${this.API_BASE}${this.API_VERSION}/order`,
-            GET_ORDERS: `${this.API_BASE}${this.API_VERSION}/orders`,
+            GET_ORDERS: `${this.API_BASE}${this.API_VERSION}/provider/orders`,
         },
     };
 
     public ROUTES = {
         AUTH: {
             LOGIN: 'login',
-            NOT_FOUND: '404'
+            NOT_FOUND: '404',
         },
         PROVIDER: {
             ORDERS: 'vendedor/pedidos',
@@ -33,8 +34,8 @@ export class GlobalConstants {
         CLIENT: {
             PROVIDERS: 'cliente/proveedores',
             CATALOG: 'cliente/catalogo',
-        }
-    }
+        },
+    };
 
     public API_MESSAGES = {
         SUCCESS: 'Success',
@@ -57,4 +58,24 @@ export class GlobalConstants {
         PROVIDER: 'provider',
         USER: 'user',
     };
+
+    public ORDER_STATUS: {
+        PENDING: 'Pending',
+        CANCELLED: 'Cancelled'
+    }
+
+    
+
+    get orderStatusData(): IStatus[] {
+        return [
+            { id: 0, label: 'Finished', color: '#000' },
+            { id: 1, label: 'Pending', color: '#6aaaff' },
+            { id: 2, label: 'Cancelled', color: '#ff3838' },
+        ];
+    }
+}
+
+export enum ORDER_STATUS {
+    PENDING,
+    CANCELLED     
 }

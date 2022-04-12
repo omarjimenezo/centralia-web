@@ -16,7 +16,6 @@ export class AuthService {
 
     constructor(
         private _routerService: Router,
-        private _alertService: AlertService,
         private _http: HttpClient,
         private _cookieService: CookieService,
         private _global: GlobalConstants
@@ -27,16 +26,13 @@ export class AuthService {
     }
 
     public setToken(token: string): void {
-        // this._cookieService.delete('tokenAuth', '/', 'localhost');
-        // this._cookieService.set('tokenAuth', token, undefined, '/');
-        sessionStorage.setItem('tokenAuth', token);
+        this._cookieService.delete('tokenAuth', '/');
+        this._cookieService.set('tokenAuth', token, undefined, '/');
     }
 
     public getToken(): string {
-        // if (this._cookieService.get('tokenAuth')) {
-        if (sessionStorage.getItem('tokenAuth')) {
-            // return this._cookieService.get('tokenAuth');
-            return sessionStorage.getItem('tokenAuth')!;
+        if (this._cookieService.get('tokenAuth')) {
+            return this._cookieService.get('tokenAuth');
         } else {
             return '';
         }
@@ -50,22 +46,19 @@ export class AuthService {
     }
 
     public logout(): void {
-        // this._cookieService.delete('tokenAuth', '/');
-        // this._cookieService.delete('userInfo', '/', 'localhost');
-        sessionStorage.removeItem('tokenAuth');
-        sessionStorage.removeItem('userInfo');
+        this._cookieService.delete('tokenAuth', '/');
+        this._cookieService.delete('userInfo', '/');
         this._routerService.navigate([this._global.ROUTES.AUTH.LOGIN]);
     }
 
     public setUser(user: IUser): void {
-        // this._cookieService.delete('userInfo', '/', 'localhost');
-        // this._cookieService.set(
-        //     'userInfo',
-        //     JSON.stringify(user),
-        //     undefined,
-        //     '/'
-        // );
-        sessionStorage.setItem('userInfo', JSON.stringify(user));
+        this._cookieService.delete('userInfo', '/');
+        this._cookieService.set(
+            'userInfo',
+            JSON.stringify(user),
+            undefined,
+            '/'
+        );
     }
 
     public getUser(id: string): Observable<IUserResponse> {
@@ -75,12 +68,10 @@ export class AuthService {
     }
 
     public getUserRole(): string {
-        // if (this._cookieService.get('userInfo')) {
-        if (sessionStorage.getItem('userInfo')) {
-            // const userInfo: IUser = JSON.parse(
-            //     this._cookieService.get('userInfo')
-            // );
-            const userInfo: IUser = this.getUserInfo();
+        if (this._cookieService.get('userInfo')) {
+            const userInfo: IUser = JSON.parse(
+                this._cookieService.get('userInfo')
+            );
             return userInfo.type;
         } else {
             return '';
@@ -88,8 +79,7 @@ export class AuthService {
     }
 
     public getUserInfo(): IUser {
-        // return JSON.parse(this._cookieService.get('userInfo'));
-        return JSON.parse(sessionStorage.getItem('userInfo')!);
+        return JSON.parse(this._cookieService.get('userInfo'));
     }
 
     public landingPage(userType: string): void {

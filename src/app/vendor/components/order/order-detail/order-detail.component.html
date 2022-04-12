@@ -23,7 +23,7 @@
 
 <mat-dialog-actions align="end">
     <button mat-raised-button mat-dialog-close [mat-dialog-close]="order">Cerrar</button>
-    <button mat-raised-button *ngIf="order.status !== 3" [mat-dialog-close]="order" color="warn">Cancelar Pedido</button>
-    <button mat-raised-button *ngIf="order.status === 1" [mat-dialog-close]="order" color="primary">Atender Pedido</button>
-    <button mat-raised-button *ngIf="order.status === 2" [mat-dialog-close]="order" color="accent">Finalizar Pedido</button>
+    <button mat-raised-button *ngIf="enableActionButton('Pending')" [mat-dialog-close]="order" color="primary">Atender Pedido</button>
+    <button mat-raised-button *ngIf="enableActionButton('Cancelled')" [mat-dialog-close]="order" color="accent">Finalizar Pedido</button>
+    <button mat-raised-button *ngIf="enableActionButton('Pending')" [mat-dialog-close]="order" color="warn">Cancelar Pedido</button>
 </mat-dialog-actions>
