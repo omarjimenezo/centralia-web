@@ -5,7 +5,8 @@ import { IStatus } from './order.model';
     providedIn: 'root',
 })
 export class GlobalConstants {
-    private API_BASE = 'https://centralia.app/api';
+    // private API_BASE = 'https://centralia.app/api';
+    private API_BASE = 'http://localhost:8000/api';
     private API_VERSION = '/v1';
 
     public ENDPOINTS = {

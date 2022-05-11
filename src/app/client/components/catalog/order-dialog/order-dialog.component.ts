@@ -82,7 +82,7 @@ export class OrderDialogComponent implements OnInit, OnDestroy {
 
         let saveOrder: IOrder = {
             amount: this.orderTotal,
-            provider_id: 3,
+            provider_id: 2,
             description: this.order.description,
         };
 

@@ -33,13 +33,16 @@ export class CatalogService {
                 )
                 .subscribe((catalog: ICatalogResponse) => {
                     if (catalog && catalog.data) {
-                        catalog.data.map(
-                            (product) =>
-                                (product.price = product.price.replace(
-                                    ',',
-                                    '.'
-                                ))
-                        );
+                        // catalog.data.map(
+                        //     (product) => {
+                        //         if (product && product.price) {
+                        //             (product.price = product.price.replace(
+                        //                 ',',
+                        //                 '.'
+                        //             ))
+                        //         }
+                        //     }
+                        // );
                         this.setCatalog(catalog.data);
                     }
                 });
