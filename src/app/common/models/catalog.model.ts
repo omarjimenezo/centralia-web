@@ -1,3 +1,7 @@
+export interface ICategoryResponse {
+    data: ICategory[];
+}
+
 export interface ICategory {
     category_id: number;
     name: string;

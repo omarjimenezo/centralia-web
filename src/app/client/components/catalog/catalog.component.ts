@@ -6,7 +6,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/auth/services/auth.service';
-import { IResponse } from 'src/app/auth/models/auth.model';
+import { IDependency, IDependencyResponse, IResponse } from 'src/app/auth/models/auth.model';
 import { GlobalConstants } from 'src/app/common/models/global.constants';
 import { IOrder } from 'src/app/common/models/order.model';
 import { IUser } from 'src/app/common/models/user.model';
@@ -17,6 +17,7 @@ import { IAlertInfo } from '../../models/alert.model';
 import { CatalogService } from '../../services/catalog.service';
 import { NavBarService } from '../../services/nav-bar.service';
 import { OrderDialogComponent } from './order-dialog/order-dialog.component';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
     selector: 'app-catalog',
@@ -48,15 +49,15 @@ export class CatalogComponent implements OnInit, OnDestroy {
         private _orderService: OrderService,
         private _global: GlobalConstants,
         private _navBarService: NavBarService,
+        private _cookieService: CookieService,
         public _alertService: AlertService,
-        public _matDialog: MatDialog
-    ) {}
+        public _matDialog: MatDialog,
+    ) { }
 
     public ngOnInit(): void {
         this.getOrder();
         this.getTotal();
-        this.setProviderId();
-        // this.getClient();
+        this.getProviderId();
     }
 
     public ngOnDestroy(): void {
@@ -64,9 +65,24 @@ export class CatalogComponent implements OnInit, OnDestroy {
         this.sub_total ? this.sub_total.unsubscribe() : null;
     }
 
-    public setProviderId(): void {
-        this._navBarService.setProviderId(
-            this._activatedRoute.snapshot.paramMap.get('id')!
+    public getProviderId(): void {
+        let userInfo: IUser = JSON.parse(this._cookieService.get('userInfo'))
+        let providerId: string = this._activatedRoute.snapshot.paramMap.get('id')!
+        this._authService.setProviderId(providerId);
+
+        this._authService.getDependencyBySubId(userInfo.id).subscribe(
+            (dependency: IDependencyResponse) => {
+                (dependency && dependency.data && dependency.data.length > 0) ? this._authService.setVendorId(dependency.data[0].sup_user_id) : this._authService.setVendorId(providerId)
+                this.loading = false;
+            },
+            (error) => {
+                this._alertService.openAlert(
+                    this._global.ERROR_MESSAGES.CONNECTION_ERROR,
+                    1
+                );
+                console.error(error);
+                this.loading = false;
+            }
         );
     }
 
@@ -90,7 +106,7 @@ export class CatalogComponent implements OnInit, OnDestroy {
     public getClient(): void {
         this.userInfo = this._authService.getUserInfo();
     }
-    
+
     public resetOrder(): void {
         this._orderService.resetOrder();
         this.client_name = '';

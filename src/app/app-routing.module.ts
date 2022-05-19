@@ -13,7 +13,7 @@ const routes: Routes = [
         path: 'cliente',
         canActivate: [AuthGuard],
         data: {
-            expectedRole: 'user',
+            expectedRole: [3],
         },
         loadChildren: () =>
             import('./client/client.module').then((m) => m.ClientModule),
@@ -22,7 +22,7 @@ const routes: Routes = [
         path: 'vendedor',
         canActivate: [AuthGuard],
         data: {
-            expectedRole: 'provider',
+            expectedRole: [1, 2],
         },
         loadChildren: () =>
             import('./vendor/vendor.module').then((m) => m.VendorModule),

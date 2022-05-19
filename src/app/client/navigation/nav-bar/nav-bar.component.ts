@@ -63,8 +63,8 @@ export class NavBarComponent implements OnInit {
 
     public getUrlParams(): void {
         this._route.queryParams.subscribe((urlParams: any) => {
-            if(urlParams.vendorId) {
-                this._navBarService.setProviderId(urlParams.vendorId);
+            if (urlParams.providerId) {
+                this._authService.setProviderId(urlParams.providerId);
             }
         });
     }
@@ -87,12 +87,14 @@ export class NavBarComponent implements OnInit {
     }
 
     public getOrder(): void {
-        this._orderService.getOrder.subscribe((order: IOrder) => {
-            this.productsAdded = 0;
-            order.description.forEach((product) => {
-                this.productsAdded += product.quantity;
-            });
-        });
+        this._orderService.getOrder.subscribe(
+            (order: IOrder) => {
+                this.productsAdded = 0;
+                order.description.forEach((product) => {
+                    this.productsAdded += product.quantity;
+                });
+            }
+        );
     }
 
     public getTotal(): void {

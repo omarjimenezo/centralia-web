@@ -92,7 +92,7 @@ export class LoginComponent implements OnInit {
             (user: IUserResponse) => {
                 if (user && user.data) {
                     this._authService.setUser(user.data);
-                    this._authService.landingPage(user.data.type);
+                    this._authService.landingPage(user.data.user_type);
                 }
                 this.loading = false;
             },

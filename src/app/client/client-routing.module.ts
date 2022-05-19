@@ -10,7 +10,7 @@ const routes: Routes = [
         path: '',
         canActivate: [AuthGuard],
         data: {
-            expectedRole: 'user',
+            expectedRole: [3],
         },
         component: ClientComponent,
         children: [
@@ -18,7 +18,7 @@ const routes: Routes = [
                 path: '',
                 canActivate: [AuthGuard],
                 data: {
-                    expectedRole: 'user',
+                    expectedRole: [3],
                 },
                 component: ProvidersComponent,
             },
@@ -26,7 +26,7 @@ const routes: Routes = [
                 path: 'proveedores',
                 canActivate: [AuthGuard],
                 data: {
-                    expectedRole: 'user',
+                    expectedRole: [3],
                 },
                 component: ProvidersComponent,
             },
@@ -34,7 +34,7 @@ const routes: Routes = [
                 path: 'catalogo/:id',
                 canActivate: [AuthGuard],
                 data: {
-                    expectedRole: 'user',
+                    expectedRole: [3],
                 },
                 component: CatalogComponent,
             },

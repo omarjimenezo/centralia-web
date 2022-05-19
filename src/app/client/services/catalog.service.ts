@@ -1,8 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { AuthService } from 'src/app/auth/services/auth.service';
 import { GlobalConstants } from 'src/app/common/models/global.constants';
-import { ICatalog, ICatalogResponse, ICategory } from '../../common/models/catalog.model';
+import { ICatalog, ICatalogResponse, ICategory, ICategoryResponse } from '../../common/models/catalog.model';
 import { NavBarService } from './nav-bar.service';
 
 @Injectable({
@@ -15,10 +16,10 @@ export class CatalogService {
 
     constructor(
         private _http: HttpClient,
-        private _navBarService: NavBarService,
+        private _authService: AuthService,
         private _global: GlobalConstants
     ) {
-        this._navBarService.getProviderId.subscribe((providerId) => {
+        this._authService.getProviderId.subscribe((providerId) => {
             this.initCatalog(providerId);
             this.initCategories(providerId);
         });
@@ -61,11 +62,13 @@ export class CatalogService {
     public initCategories(providerId: string): void {
         if (providerId) {
             this._http
-                .get<ICategory[]>(
+                .get<ICategoryResponse>(
                     `${this._global.ENDPOINTS.CATALOG.GET_CATEGORIES}/${providerId}`
                 )
-                .subscribe((category: ICategory[]) => {
-                    this.setCategory(category);
+                .subscribe((category: ICategoryResponse) => {
+                    if (category && category.data) {
+                        this.setCategory(category.data);
+                    }
                 });
         }
     }

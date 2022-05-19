@@ -16,11 +16,15 @@ export class GlobalConstants {
         },
         CATALOG: {
             GET_CATALOG: `${this.API_BASE}${this.API_VERSION}/catalog/provider`,
-            GET_CATEGORIES: `${this.API_BASE}${this.API_VERSION}/categories/provider`,
+            GET_CATEGORIES: `${this.API_BASE}${this.API_VERSION}/category/provider`,
         },
         ORDER: {
             POST_ORDER: `${this.API_BASE}${this.API_VERSION}/order`,
             GET_ORDERS: `${this.API_BASE}${this.API_VERSION}/provider/orders`,
+        },
+        DEPENDENCY: {
+            GET_SUPERIOR: `${this.API_BASE}${this.API_VERSION}/dependency/superior`,
+            GET_SUBORDINATES: `${this.API_BASE}${this.API_VERSION}/dependency/subordinates`,
         },
     };
 
@@ -56,8 +60,9 @@ export class GlobalConstants {
     };
 
     public USER_TYPES = {
-        PROVIDER: 'provider',
-        USER: 'user',
+        PROVIDER: 1,
+        AGENT: 2,
+        USER: 3,
     };
 
     public ORDER_STATUS: {
