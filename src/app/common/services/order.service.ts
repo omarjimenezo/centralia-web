@@ -4,6 +4,7 @@ import {
     IOrder,
     IOrderList,
     IOrderResponse,
+    IOrderStatusRequest,
     IStatus,
 } from 'src/app/common/models/order.model';
 import { AlertService } from 'src/app/common/services/alert.service';
@@ -12,7 +13,7 @@ import { IAlertInfo } from '../../client/models/alert.model';
 import { IUser } from '../models/user.model';
 import { HttpClient } from '@angular/common/http';
 import { GlobalConstants } from '../models/global.constants';
-import { IResponse } from 'src/app/auth/models/auth.model';
+import { IResponse } from '../models/common.model';
 
 @Injectable({
     providedIn: 'root',
@@ -21,11 +22,12 @@ export class OrderService {
     private _total = new BehaviorSubject<number>(0);
     private _order = new BehaviorSubject<IOrder>({
         id: 0,
-        status: '',
+        status: 0,
         amount: 0,
         provider_id: 0,
         description: [],
     });
+    private _orders = new BehaviorSubject<IOrder[]>([]);
 
     constructor(
         private _alertService: AlertService,
@@ -41,54 +43,58 @@ export class OrderService {
     get getOrder(): Observable<IOrder> {
         return this._order.asObservable();
     }
+    
+    // Orders
+    public setOrders(orders: IOrder[]) {
+        this._orders.next(orders);
+    }
+
+    get getStoredOrders(): Observable<IOrder[]> {
+        return this._orders.asObservable();
+    }
 
     public saveOrder(order: IOrder): Observable<any> {
         return this._http.post<IOrder>(
             `${this._global.ENDPOINTS.ORDER.POST_ORDER}`,
             order
         );
-        // let orders: IOrder[] = [];
-        // if (localStorage.getItem('order')) {
-        //     orders = <IOrder[]>JSON.parse(localStorage.getItem('order')!);
-        // }
-        // orders.push(order);
-        // localStorage.setItem('order', JSON.stringify(orders));
     }
 
     public getOrders(): Observable<IOrderResponse> {
         return this._http.get<IOrderResponse>(
             `${this._global.ENDPOINTS.ORDER.GET_ORDERS}`
         );
-        // let orders: IOrder[] = [];
-        // if (localStorage.getItem('order')) {
-        //     orders = <IOrder[]>JSON.parse(localStorage.getItem('order')!);
-        // }
-
-        // if (user.type !== 'abarrotera') {
-        //     return orders.filter(
-        //         (order: IOrder) => order.provider_id == user.id
-        //     );
-        // } else {
-        //     return orders;
-        // }
+    }
+    
+    public updateOrderStatus(request: IOrderStatusRequest): Observable<IResponse> {
+        return this._http.put<IResponse>(
+            `${this._global.ENDPOINTS.ORDER.UPDATE_ORDER_STATUS}`,
+            request
+        );
     }
 
-    public getStatus(orderStatus: string): string {
+    public getStatus(orderStatus: number): string {
+        let status: any;
         const _status: IStatus[] = this._global.orderStatusData;
-        let status: IStatus = _status.find((status) => status.label === orderStatus)!;
+        if(_status) {
+            status = _status.find((status) => status.id === orderStatus)!;
+        }
         return status.label;
     }
 
-    public getStatusColor(orderStatus: string): string {
+    public getStatusColor(orderStatus: number): string {
+        let status: any;
         const _status: IStatus[] = this._global.orderStatusData;
-        let status: IStatus = _status.find((status) => status.label === orderStatus)!;
+        if(_status) {
+            status = _status.find((status) => status.id === orderStatus)!;
+        }
         return status.color;
     }
 
     public resetOrder(): void {
         let order: IOrder = {
             id: 0,
-            status: '',
+            status: 0,
             amount: 0,
             provider_id: 0,
             description: [],

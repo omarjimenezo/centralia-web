@@ -47,7 +47,7 @@
 <h1 class="order-total">Total: {{ orderTotal | currency }}</h1>
 
 <mat-card-actions align="end">
-    <button mat-raised-button mat-dialog-close *ngIf="data.dialogMode">Cerrar {{data.dialogMode}}</button>
+    <button mat-raised-button mat-dialog-close *ngIf="data.dialogMode">Cerrar</button>
 
     <button
         *ngIf="data.dialogMode"
@@ -61,6 +61,7 @@
     </button>
     
     <button
+        *ngIf="!data.dialogMode"
         mat-raised-button
         color="primary"
         cdkFocusInitial

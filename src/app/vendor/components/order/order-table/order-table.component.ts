@@ -58,19 +58,20 @@ export class OrderTableComponent implements OnInit {
     public getOrders(): void {
         this.loading = true;
         this._orderService.getOrders().subscribe((orders: IOrderResponse) => {
-            
-                this.dataSource = new MatTableDataSource<IOrder>(orders.data);
-                if(this.dataSource){
-                    this.dataSource.sort = this.sort;
-                    this.dataSource.paginator = this.paginator;
-                }
-                this.loading = false;
+
+            this._orderService.setOrders(orders.data);
+            this.dataSource = new MatTableDataSource<IOrder>(orders.data);
+            if(this.dataSource){
+                this.dataSource.sort = this.sort;
+                this.dataSource.paginator = this.paginator;
+            }
+            this.loading = false;
             
         });
 
-        // setTimeout(() => {
-        //     this.getOrders();
-        // }, 3000);
+        setTimeout(() => {
+            this.getOrders();
+        }, 30000);
     }
 
     public openOrderDetail(element: IOrder): void {

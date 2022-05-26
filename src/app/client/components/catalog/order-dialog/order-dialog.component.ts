@@ -9,8 +9,8 @@ import { IUser } from 'src/app/common/models/user.model';
 import { AlertService } from 'src/app/common/services/alert.service';
 import { OrderService } from '../../../../common/services/order.service';
 import {MAT_DIALOG_DATA} from '@angular/material/dialog';
-import { IResponse } from 'src/app/auth/models/auth.model';
 import { GlobalConstants } from 'src/app/common/models/global.constants';
+import { IResponse } from 'src/app/common/models/common.model';
 
 @Component({
     selector: 'order-dialog',
@@ -90,18 +90,17 @@ export class OrderDialogComponent implements OnInit, OnDestroy {
             (response: IResponse) => {
                 if (
                     response &&
-                    response.message &&
-                    response.message === this._global.API_MESSAGES.SUCCESS
+                    response.code === 0
                 ) {
                     this._alertService.openAlert(
                         this._global.SUCCESS_MESSAGES.ORDER_SAVED,
-                        0
+                        response.code
                     );
                     this.resetOrder();
                 } else {
                     this._alertService.openAlert(
                         this._global.ERROR_MESSAGES.ORDER_ERROR,
-                        1
+                        response.code
                     );
                 }
             },

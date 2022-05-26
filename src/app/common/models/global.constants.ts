@@ -5,8 +5,8 @@ import { IStatus } from './order.model';
     providedIn: 'root',
 })
 export class GlobalConstants {
-    // private API_BASE = 'https://centralia.app/api';
-    private API_BASE = 'http://localhost:8000/api';
+    private API_BASE = 'https://centralia.app/api';
+    // private API_BASE = 'http://localhost:8000/api';
     private API_VERSION = '/v1';
 
     public ENDPOINTS = {
@@ -21,6 +21,7 @@ export class GlobalConstants {
         ORDER: {
             POST_ORDER: `${this.API_BASE}${this.API_VERSION}/order`,
             GET_ORDERS: `${this.API_BASE}${this.API_VERSION}/provider/orders`,
+            UPDATE_ORDER_STATUS: `${this.API_BASE}${this.API_VERSION}/provider/orders/status`,
         },
         DEPENDENCY: {
             GET_SUPERIOR: `${this.API_BASE}${this.API_VERSION}/dependency/superior`,
@@ -74,9 +75,10 @@ export class GlobalConstants {
 
     get orderStatusData(): IStatus[] {
         return [
-            { id: 0, label: 'Finished', color: '#000' },
-            { id: 1, label: 'Pending', color: '#6aaaff' },
-            { id: 2, label: 'Cancelled', color: '#ff3838' },
+            { id: 1, label: 'Pendiente', color: '#6aaaff' },
+            { id: 2, label: 'En Proceso', color: '#ffd740' },
+            { id: 3, label: 'Terminado', color: '#f44336' },
+            { id: 4, label: 'Cancelado', color: '#ff3838' },
         ];
     }
 }

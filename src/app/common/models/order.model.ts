@@ -5,7 +5,7 @@ export interface IOrderResponse {
 export interface IOrder {
     id?: number;
     date?: Date;
-    status?: string;
+    status?: number;
     // total: number;
     // client_name?: string;
     // client_id?: number;
@@ -38,4 +38,9 @@ export interface IStatus {
     id: number;
     label: string;
     color: string;
+}
+
+export interface IOrderStatusRequest {
+    order_id: number;
+    status: number;
 }

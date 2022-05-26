@@ -4,20 +4,18 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
 import { Subscription } from 'rxjs';
+import { IDependencyResponse } from 'src/app/auth/models/auth.model';
 import { AuthService } from 'src/app/auth/services/auth.service';
-import { IDependency, IDependencyResponse, IResponse } from 'src/app/auth/models/auth.model';
 import { GlobalConstants } from 'src/app/common/models/global.constants';
 import { IOrder } from 'src/app/common/models/order.model';
 import { IUser } from 'src/app/common/models/user.model';
 import { AlertService } from 'src/app/common/services/alert.service';
 import { ICatalog } from '../../../common/models/catalog.model';
 import { OrderService } from '../../../common/services/order.service';
-import { IAlertInfo } from '../../models/alert.model';
-import { CatalogService } from '../../services/catalog.service';
 import { NavBarService } from '../../services/nav-bar.service';
 import { OrderDialogComponent } from './order-dialog/order-dialog.component';
-import { CookieService } from 'ngx-cookie-service';
 
 @Component({
     selector: 'app-catalog',
