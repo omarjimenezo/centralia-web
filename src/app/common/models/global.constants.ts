@@ -12,7 +12,10 @@ export class GlobalConstants {
     public ENDPOINTS = {
         AUTH: {
             LOGIN: `${this.API_BASE}/login`,
+        },
+        DATA: {
             GET_USER: `${this.API_BASE}${this.API_VERSION}/user`,
+            GET_ORDER_STATUS_CATALOG: `${this.API_BASE}${this.API_VERSION}/data/status/catalog`,
         },
         CATALOG: {
             GET_CATALOG: `${this.API_BASE}${this.API_VERSION}/catalog/provider`,
@@ -22,6 +25,7 @@ export class GlobalConstants {
             POST_ORDER: `${this.API_BASE}${this.API_VERSION}/order`,
             GET_ORDERS: `${this.API_BASE}${this.API_VERSION}/provider/orders`,
             UPDATE_ORDER_STATUS: `${this.API_BASE}${this.API_VERSION}/provider/orders/status`,
+            
         },
         DEPENDENCY: {
             GET_SUPERIOR: `${this.API_BASE}${this.API_VERSION}/dependency/superior`,
@@ -69,17 +73,6 @@ export class GlobalConstants {
     public ORDER_STATUS: {
         PENDING: 'Pending',
         CANCELLED: 'Cancelled'
-    }
-
-    
-
-    get orderStatusData(): IStatus[] {
-        return [
-            { id: 1, label: 'Pendiente', color: '#6aaaff' },
-            { id: 2, label: 'En Proceso', color: '#ffd740' },
-            { id: 3, label: 'Terminado', color: '#f44336' },
-            { id: 4, label: 'Cancelado', color: '#ff3838' },
-        ];
     }
 }
 

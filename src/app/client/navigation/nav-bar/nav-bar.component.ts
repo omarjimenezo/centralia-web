@@ -5,6 +5,7 @@ import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { IOrder } from 'src/app/common/models/order.model';
 import { IUser } from 'src/app/common/models/user.model';
+import { DataService } from 'src/app/common/services/data.service';
 import { ICategory } from '../../../common/models/catalog.model';
 import { OrderService } from '../../../common/services/order.service';
 import { OrderDialogComponent } from '../../components/catalog/order-dialog/order-dialog.component';
@@ -39,7 +40,7 @@ export class NavBarComponent implements OnInit {
         private _navBarService: NavBarService,
         private _catalogSearchService: CatalogSearchService,
         private _bottomSheet: MatBottomSheet,
-        private _authService: AuthService,
+        private _dataService: DataService,
         public dialog: MatDialog
     ) {
         this._router.events.subscribe((val) => {
@@ -58,13 +59,13 @@ export class NavBarComponent implements OnInit {
     }
 
     public getUserInfo(): void {
-        this.userInfo = this._authService.getUserInfo();
+        this.userInfo = this._dataService.getUserInfo();
     }
 
     public getUrlParams(): void {
         this._route.queryParams.subscribe((urlParams: any) => {
             if (urlParams.providerId) {
-                this._authService.setProviderId(urlParams.providerId);
+                this._dataService.setProviderId(urlParams.providerId);
             }
         });
     }

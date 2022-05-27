@@ -1,16 +1,15 @@
-import { Component, Inject, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { AuthService } from 'src/app/auth/services/auth.service';
-import { IAlertInfo } from 'src/app/client/models/alert.model';
+import { IResponse } from 'src/app/common/models/common.model';
+import { GlobalConstants } from 'src/app/common/models/global.constants';
 import { IOrder, IOrderList } from 'src/app/common/models/order.model';
 import { IUser } from 'src/app/common/models/user.model';
 import { AlertService } from 'src/app/common/services/alert.service';
+import { DataService } from 'src/app/common/services/data.service';
 import { OrderService } from '../../../../common/services/order.service';
-import {MAT_DIALOG_DATA} from '@angular/material/dialog';
-import { GlobalConstants } from 'src/app/common/models/global.constants';
-import { IResponse } from 'src/app/common/models/common.model';
 
 @Component({
     selector: 'order-dialog',
@@ -34,13 +33,13 @@ export class OrderDialogComponent implements OnInit, OnDestroy {
     public dataSource: MatTableDataSource<IOrderList>;
 
     constructor(
-        @Inject(MAT_DIALOG_DATA) public data: {dialogMode: string, orderTotal: number},
+        @Inject(MAT_DIALOG_DATA) public data: { dialogMode: string, orderTotal: number },
         private _global: GlobalConstants,
         private _orderService: OrderService,
         private _alertService: AlertService,
-        private _authService: AuthService,
+        private _dataService: DataService,
         private _route: ActivatedRoute
-    ) {}
+    ) { }
 
     public ngOnInit(): void {
         this.getOrder();
@@ -75,7 +74,7 @@ export class OrderDialogComponent implements OnInit, OnDestroy {
     }
 
     public getClient(): void {
-        this.userInfo = this._authService.getUserInfo();
+        this.userInfo = this._dataService.getUserInfo();
     }
 
     public saveOrder(): void {
@@ -88,10 +87,7 @@ export class OrderDialogComponent implements OnInit, OnDestroy {
 
         this._orderService.saveOrder(saveOrder).subscribe(
             (response: IResponse) => {
-                if (
-                    response &&
-                    response.code === 0
-                ) {
+                if (response && response.code === 0) {
                     this._alertService.openAlert(
                         this._global.SUCCESS_MESSAGES.ORDER_SAVED,
                         response.code

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
-import { AuthService } from 'src/app/auth/services/auth.service';
 import { IUser } from 'src/app/common/models/user.model';
+import { DataService } from 'src/app/common/services/data.service';
 import { UserActionsDialogComponent } from '../user-actions-dialog/user-actions-dialog.component';
 
 @Component({
@@ -11,10 +11,10 @@ import { UserActionsDialogComponent } from '../user-actions-dialog/user-actions-
 })
 export class NavBarComponent implements OnInit {
     public userInfo: IUser;
-    constructor(private _authService: AuthService, private _bottomSheet: MatBottomSheet) {}
+    constructor(private _dataService: DataService, private _bottomSheet: MatBottomSheet) { }
 
     public ngOnInit(): void {
-        this.userInfo = this._authService.getUserInfo();
+        this.userInfo = this._dataService.getUserInfo();
     }
 
     public openUserActionsDialog(): void {

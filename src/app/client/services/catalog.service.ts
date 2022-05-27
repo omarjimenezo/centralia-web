@@ -1,10 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { AuthService } from 'src/app/auth/services/auth.service';
 import { GlobalConstants } from 'src/app/common/models/global.constants';
+import { DataService } from 'src/app/common/services/data.service';
 import { ICatalog, ICatalogResponse, ICategory, ICategoryResponse } from '../../common/models/catalog.model';
-import { NavBarService } from './nav-bar.service';
 
 @Injectable({
     providedIn: 'root',
@@ -16,10 +15,10 @@ export class CatalogService {
 
     constructor(
         private _http: HttpClient,
-        private _authService: AuthService,
+        private _dataService: DataService,
         private _global: GlobalConstants
     ) {
-        this._authService.getProviderId.subscribe((providerId) => {
+        this._dataService.getProviderId.subscribe((providerId) => {
             this.initCatalog(providerId);
             this.initCategories(providerId);
         });

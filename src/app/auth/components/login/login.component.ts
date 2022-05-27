@@ -9,6 +9,7 @@ import { ILoginRequest, ILoginResponse } from '../../models/auth.model';
 import { AlertService } from 'src/app/common/services/alert.service';
 import { IAlertInfo } from 'src/app/client/models/alert.model';
 import { GlobalConstants } from 'src/app/common/models/global.constants';
+import { DataService } from 'src/app/common/services/data.service';
 
 @Component({
     selector: 'app-login',
@@ -25,6 +26,7 @@ export class LoginComponent implements OnInit {
         private _snackBar: MatSnackBar,
         private _routerService: Router,
         private _authService: AuthService,
+        private _dataService: DataService,
         private _alertService: AlertService,
         private _cookieService: CookieService,
         private _global: GlobalConstants
@@ -37,7 +39,9 @@ export class LoginComponent implements OnInit {
         });
 
         if(this._authService.isAuthenticated()) {
-            this._authService.landingPage(this._authService.getUserRole())
+            let userInfo: IUser = this._dataService.getUserInfo();
+            this.confirmLogin(userInfo.id);
+            this._authService.landingPage(this._dataService.getUserRole())
         }
     }
 
@@ -88,10 +92,15 @@ export class LoginComponent implements OnInit {
     }
 
     public confirmLogin(userId: string): void {
-        this._authService.getUser(userId).subscribe(
+        this.getUser(userId);
+        this._dataService.getOrderStatusCatalog();
+    }
+
+    public getUser(userId: string) {
+        this._dataService.getUser(userId).subscribe(
             (user: IUserResponse) => {
                 if (user && user.data) {
-                    this._authService.setUser(user.data);
+                    this._dataService.setUser(user.data);
                     this._authService.landingPage(user.data.user_type);
                 }
                 this.loading = false;

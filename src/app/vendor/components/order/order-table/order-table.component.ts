@@ -1,21 +1,20 @@
 import { DatePipe } from '@angular/common';
 import {
-    AfterViewInit,
     ChangeDetectorRef,
     Component,
     Input,
     OnInit,
-    ViewChild,
+    ViewChild
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { OrderService } from 'src/app/common/services/order.service';
-import { IOrderList, IOrder, IOrderResponse } from 'src/app/common/models/order.model';
-import { OrderDetailComponent } from '../order-detail/order-detail.component';
-import { AuthService } from 'src/app/auth/services/auth.service';
+import { IOrder, IOrderResponse } from 'src/app/common/models/order.model';
 import { IUser } from 'src/app/common/models/user.model';
+import { DataService } from 'src/app/common/services/data.service';
+import { OrderService } from 'src/app/common/services/order.service';
+import { OrderDetailComponent } from '../order-detail/order-detail.component';
 
 @Component({
     selector: 'order-table',
@@ -45,10 +44,10 @@ export class OrderTableComponent implements OnInit {
         private datepipe: DatePipe,
         private _cp: ChangeDetectorRef,
         public _orderService: OrderService,
-        public _authService: AuthService,
+        public _dataService: DataService,
         public _matDialog: MatDialog
     ) {
-        this.userInfo = this._authService.getUserInfo();
+        this.userInfo = this._dataService.getUserInfo();
     }
 
     public ngOnInit(): void {
@@ -58,20 +57,18 @@ export class OrderTableComponent implements OnInit {
     public getOrders(): void {
         this.loading = true;
         this._orderService.getOrders().subscribe((orders: IOrderResponse) => {
-
             this._orderService.setOrders(orders.data);
             this.dataSource = new MatTableDataSource<IOrder>(orders.data);
-            if(this.dataSource){
+            if (this.dataSource) {
                 this.dataSource.sort = this.sort;
                 this.dataSource.paginator = this.paginator;
             }
             this.loading = false;
-            
         });
 
         setTimeout(() => {
             this.getOrders();
-        }, 30000);
+        }, 60000);
     }
 
     public openOrderDetail(element: IOrder): void {

@@ -35,14 +35,15 @@ export class OrderDetailComponent implements OnInit {
 
         this._orderService.updateOrderStatus(orderRequest).subscribe((res: IResponse) => {
             if (res && res.code === 0) {
-                this._orderService.getStoredOrders.subscribe((orders: IOrder[]) => {
-                    let order: IOrder = orders.find((order: IOrder) => order.id === this.order.id)!
-
-                    if (order) {
-                        order.status = status
-                        this._orderService.setOrders(orders);
-                    }
-                });
+                let orders: IOrder[] = this._orderService.getStoredOrders
+                if(orders) {
+                    orders.forEach((order: IOrder) => {
+                        if(order.id === this.order.id) {
+                            order.status = status
+                            this._orderService.setOrders(orders);
+                        }
+                    });
+                }
             }
         })
     }

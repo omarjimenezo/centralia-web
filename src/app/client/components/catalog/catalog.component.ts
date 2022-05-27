@@ -7,11 +7,11 @@ import { ActivatedRoute } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { Subscription } from 'rxjs';
 import { IDependencyResponse } from 'src/app/auth/models/auth.model';
-import { AuthService } from 'src/app/auth/services/auth.service';
 import { GlobalConstants } from 'src/app/common/models/global.constants';
 import { IOrder } from 'src/app/common/models/order.model';
 import { IUser } from 'src/app/common/models/user.model';
 import { AlertService } from 'src/app/common/services/alert.service';
+import { DataService } from 'src/app/common/services/data.service';
 import { ICatalog } from '../../../common/models/catalog.model';
 import { OrderService } from '../../../common/services/order.service';
 import { NavBarService } from '../../services/nav-bar.service';
@@ -43,7 +43,7 @@ export class CatalogComponent implements OnInit, OnDestroy {
 
     constructor(
         private _activatedRoute: ActivatedRoute,
-        private _authService: AuthService,
+        private _dataService: DataService,
         private _orderService: OrderService,
         private _global: GlobalConstants,
         private _navBarService: NavBarService,
@@ -66,11 +66,11 @@ export class CatalogComponent implements OnInit, OnDestroy {
     public getProviderId(): void {
         let userInfo: IUser = JSON.parse(this._cookieService.get('userInfo'))
         let providerId: string = this._activatedRoute.snapshot.paramMap.get('id')!
-        this._authService.setProviderId(providerId);
+        this._dataService.setProviderId(providerId);
 
-        this._authService.getDependencyBySubId(userInfo.id).subscribe(
+        this._dataService.getDependencyBySubId(userInfo.id).subscribe(
             (dependency: IDependencyResponse) => {
-                (dependency && dependency.data && dependency.data.length > 0) ? this._authService.setVendorId(dependency.data[0].sup_user_id) : this._authService.setVendorId(providerId)
+                (dependency && dependency.data && dependency.data.length > 0) ? this._dataService.setVendorId(dependency.data[0].sup_user_id) : this._dataService.setVendorId(providerId)
                 this.loading = false;
             },
             (error) => {
@@ -102,7 +102,7 @@ export class CatalogComponent implements OnInit, OnDestroy {
     }
 
     public getClient(): void {
-        this.userInfo = this._authService.getUserInfo();
+        this.userInfo = this._dataService.getUserInfo();
     }
 
     public resetOrder(): void {

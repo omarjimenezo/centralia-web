@@ -2,6 +2,10 @@ export interface IOrderResponse {
     data: IOrder[]
 }
 
+export interface IOrderStatusCatalogResponse {
+    data: IOrderStatusCatalog[]
+}
+
 export interface IOrder {
     id?: number;
     date?: Date;
@@ -44,3 +48,10 @@ export interface IOrderStatusRequest {
     order_id: number;
     status: number;
 }
+
+export interface IOrderStatusCatalog {
+    id: number;
+    description: string;
+    color: string;
+}
+

@@ -4,6 +4,7 @@ import {
     IOrder,
     IOrderList,
     IOrderResponse,
+    IOrderStatusCatalog,
     IOrderStatusRequest,
     IStatus,
 } from 'src/app/common/models/order.model';
@@ -14,6 +15,7 @@ import { IUser } from '../models/user.model';
 import { HttpClient } from '@angular/common/http';
 import { GlobalConstants } from '../models/global.constants';
 import { IResponse } from '../models/common.model';
+import { DataService } from './data.service';
 
 @Injectable({
     providedIn: 'root',
@@ -32,7 +34,8 @@ export class OrderService {
     constructor(
         private _alertService: AlertService,
         private _http: HttpClient,
-        private _global: GlobalConstants
+        private _dataService: DataService,
+        private _global: GlobalConstants,
     ) {}
 
     // Order
@@ -49,8 +52,8 @@ export class OrderService {
         this._orders.next(orders);
     }
 
-    get getStoredOrders(): Observable<IOrder[]> {
-        return this._orders.asObservable();
+    get getStoredOrders(): IOrder[] {
+        return this._orders.value;
     }
 
     public saveOrder(order: IOrder): Observable<any> {
@@ -75,16 +78,16 @@ export class OrderService {
 
     public getStatus(orderStatus: number): string {
         let status: any;
-        const _status: IStatus[] = this._global.orderStatusData;
+        const _status: IOrderStatusCatalog[] = this._dataService._getOrderStatusCatalog();
         if(_status) {
             status = _status.find((status) => status.id === orderStatus)!;
         }
-        return status.label;
+        return status.description;
     }
 
     public getStatusColor(orderStatus: number): string {
         let status: any;
-        const _status: IStatus[] = this._global.orderStatusData;
+        const _status: IOrderStatusCatalog[] = this._dataService._getOrderStatusCatalog();
         if(_status) {
             status = _status.find((status) => status.id === orderStatus)!;
         }
