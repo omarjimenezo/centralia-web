@@ -7,15 +7,14 @@ import { ActivatedRoute } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { Subscription } from 'rxjs';
 import { IDependencyResponse } from 'src/app/auth/models/auth.model';
+import { AuthService } from 'src/app/auth/services/auth.service';
 import { GlobalConstants } from 'src/app/common/models/global.constants';
 import { IOrder } from 'src/app/common/models/order.model';
 import { IUser } from 'src/app/common/models/user.model';
 import { AlertService } from 'src/app/common/services/alert.service';
-import { DataService } from 'src/app/common/services/data.service';
 import { ICatalog } from '../../../common/models/catalog.model';
 import { OrderService } from '../../../common/services/order.service';
-import { CatalogSearchService } from '../../services/catalog-search.service';
-import { CatalogService } from '../../services/catalog.service';
+import { NavBarService } from '../../services/nav-bar.service';
 import { OrderDialogComponent } from './order-dialog/order-dialog.component';
 
 @Component({
@@ -24,8 +23,6 @@ import { OrderDialogComponent } from './order-dialog/order-dialog.component';
     styleUrls: ['./catalog.component.scss'],
 })
 export class CatalogComponent implements OnInit, OnDestroy {
-    public catalog: ICatalog[] = [];
-    public displayCatalog: ICatalog[] = [];
     public order: IOrder;
     public dataSource: MatTableDataSource<ICatalog>;
     public loading: boolean = false;
@@ -38,7 +35,6 @@ export class CatalogComponent implements OnInit, OnDestroy {
     public providerId: number;
     public userInfo: IUser;
 
-    private sub_catalog: Subscription;
     private sub_order: Subscription;
     private sub_total: Subscription;
 
@@ -47,23 +43,19 @@ export class CatalogComponent implements OnInit, OnDestroy {
 
     constructor(
         private _activatedRoute: ActivatedRoute,
-        private _dataService: DataService,
+        private _authService: AuthService,
         private _orderService: OrderService,
         private _global: GlobalConstants,
-        private _catalogService: CatalogService,
-        private _catalogSearchService: CatalogSearchService,
+        private _navBarService: NavBarService,
         private _cookieService: CookieService,
         public _alertService: AlertService,
-        public _matDialog: MatDialog
+        public _matDialog: MatDialog,
     ) { }
 
     public ngOnInit(): void {
-        // this.getCatalog(); getting it on getSearch()
         this.getOrder();
         this.getTotal();
         this.getProviderId();
-        this.getFilter();
-        this.getSearch();
     }
 
     public ngOnDestroy(): void {
@@ -71,33 +63,14 @@ export class CatalogComponent implements OnInit, OnDestroy {
         this.sub_total ? this.sub_total.unsubscribe() : null;
     }
 
-    public getCatalog(): void {
-        this.loading = true;
-        this.catalog = [];
-        this.displayCatalog = [];
-        this.sub_catalog = this._catalogService.getCatalog.subscribe(
-            (catalog: ICatalog[]) => {
-                if (catalog.length > 0) {
-                    this.catalog = catalog;
-                    this.displayCatalog = catalog;
-                    this.loading = false;
-                }
-            },
-            (error: any) => {
-                console.error(error);
-                this.loading = false;
-            }
-        );
-    }
-
     public getProviderId(): void {
         let userInfo: IUser = JSON.parse(this._cookieService.get('userInfo'))
         let providerId: string = this._activatedRoute.snapshot.paramMap.get('id')!
-        this._dataService.setProviderId(providerId);
+        this._authService.setProviderId(providerId);
 
-        this._dataService.getDependencyBySubId(userInfo.id).subscribe(
+        this._authService.getDependencyBySubId(userInfo.id).subscribe(
             (dependency: IDependencyResponse) => {
-                (dependency && dependency.data && dependency.data.length > 0) ? this._dataService.setVendorId(dependency.data[0].sup_user_id) : this._dataService.setVendorId(providerId)
+                (dependency && dependency.data && dependency.data.length > 0) ? this._authService.setVendorId(dependency.data[0].sup_user_id) : this._authService.setVendorId(providerId)
                 this.loading = false;
             },
             (error) => {
@@ -112,7 +85,6 @@ export class CatalogComponent implements OnInit, OnDestroy {
     }
 
     public getOrder(): void {
-        this.loading = true;
         this.sub_order = this._orderService.getOrder.subscribe(
             (order: IOrder) => {
                 this.elementFadeout();
@@ -121,7 +93,6 @@ export class CatalogComponent implements OnInit, OnDestroy {
                 order.description.forEach((product) => {
                     this.productsAdded += product.quantity;
                 });
-                this.loading = false;
             },
             (error: any) => {
                 console.error(error);
@@ -131,43 +102,7 @@ export class CatalogComponent implements OnInit, OnDestroy {
     }
 
     public getClient(): void {
-        this.userInfo = this._dataService.getUserInfo();
-    }
-
-    public getSearch(): void {
-        this.loading = true;
-        this._catalogSearchService.getSearch.subscribe((data: string) => {
-            if (data.length > 2) {
-                window.scroll(0, 0);
-                this.displayCatalog = this.catalog.filter((product: ICatalog) =>
-                    product.description.toLowerCase().includes(data)
-                );
-                this.loading = false;
-            }
-
-            if (data === '' || data.length === 0) {
-                this.getCatalog();
-            }
-        });
-    }
-
-    public getFilter(): void {
-        this.loading = true;
-        this._catalogSearchService.getFilter.subscribe((data: string) => {
-            if (data !== '') {
-                this.loading = true;
-                window.scroll(0, 0);
-                if (data !== 'N') {
-                    this.displayCatalog = this.catalog.filter(
-                        (product: ICatalog) => product.category === data
-                    );
-                } else {
-                    this.getCatalog();
-                }
-                this.loading = false;
-            }
-            this.loading = false;
-        });
+        this.userInfo = this._authService.getUserInfo();
     }
 
     public resetOrder(): void {
