@@ -70,17 +70,6 @@ export class GlobalConstants {
         PENDING: 'Pending',
         CANCELLED: 'Cancelled'
     }
-
-    
-
-    get orderStatusData(): IStatus[] {
-        return [
-            { id: 1, label: 'Pendiente', color: '#6aaaff' },
-            { id: 2, label: 'En Proceso', color: '#ffd740' },
-            { id: 3, label: 'Terminado', color: '#f44336' },
-            { id: 4, label: 'Cancelado', color: '#ff3838' },
-        ];
-    }
 }
 
 export enum ORDER_STATUS {

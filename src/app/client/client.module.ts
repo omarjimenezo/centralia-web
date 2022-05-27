@@ -3,11 +3,11 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatBadgeModule } from '@angular/material/badge';
+import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatGridListModule } from '@angular/material/grid-list';
@@ -28,9 +28,11 @@ import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { ClientRoutingModule } from './client-routing.module';
 import { ClientComponent } from './client.component';
+import { CatalogListComponent } from './components/catalog/catalog-list/catalog-list.component';
 import { CatalogTableComponent } from './components/catalog/catalog-table/catalog-table.component';
 import { CatalogComponent } from './components/catalog/catalog.component';
 import { OrderDialogComponent } from './components/catalog/order-dialog/order-dialog.component';
+import { AddDialogComponent } from './components/catalog/add-dialog/add-dialog.component';
 import { OrderTableComponent } from './components/catalog/order-table/order-table.component';
 import { ProvidersComponent } from './components/providers/providers.component';
 import { NavBarComponent } from './navigation/nav-bar/nav-bar.component';
@@ -41,20 +43,24 @@ import { UserActionsDialogComponent } from './navigation/user-actions-dialog/use
         ClientComponent,
         ProvidersComponent,
         CatalogComponent,
+        CatalogListComponent,
         CatalogTableComponent,
         NavBarComponent,
         OrderTableComponent,
         OrderDialogComponent,
+        AddDialogComponent,
         UserActionsDialogComponent,
     ],
     exports: [
         ClientComponent,
         ProvidersComponent,
         CatalogComponent,
+        CatalogListComponent,
         CatalogTableComponent,
         NavBarComponent,
         OrderTableComponent,
         OrderDialogComponent,
+        AddDialogComponent,
         UserActionsDialogComponent,
     ],
     imports: [

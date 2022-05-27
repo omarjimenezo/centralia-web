@@ -7,16 +7,12 @@
         <span class="nav-spacer"></span>
 
         <mat-divider></mat-divider>
-
-        <mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
     </div>
 
     <div class="products-container">
         <div class="table-container">
-            <!-- <catalog-table [loading]="loading"></catalog-table> -->
-            <catalog-list *ngIf="displayCatalog" [loading]="loading" [displayCatalog]="displayCatalog"></catalog-list>
+            <catalog-table [loading]="loading"></catalog-table>
         </div>
-
         <div class="cart-container">
             <mat-card color="primary" class="mat-elevation-z5">
                 <order-dialog></order-dialog>

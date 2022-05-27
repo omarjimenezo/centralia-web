@@ -1,0 +1,14 @@
+<div class="card-container">
+    <mat-card [class.mat-product-selected]="product.selected" class="product-card" *ngFor="let product of displayCatalog" (click)="openAddDialog(product)">
+        <mat-card-title-group>
+            <img
+                mat-card-lg-image
+                [src]="(product.image) ? product.image : '/assets/img/catalog/no-image.png'"
+                alt="Provider Picture"
+            />
+            <mat-card-title>{{ product.description }}</mat-card-title>
+            <mat-card-subtitle>Precio: {{ product.price | currency}}</mat-card-subtitle>
+            <mat-card-subtitle *ngIf="product.quantity && product.quantity > 0"><strong>Cantidad: {{ product.quantity }}</strong></mat-card-subtitle>
+        </mat-card-title-group>
+    </mat-card>
+</div>

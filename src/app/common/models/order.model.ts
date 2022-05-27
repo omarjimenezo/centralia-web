@@ -31,7 +31,7 @@ export interface IOrderList {
 export interface IProduct {
     id: number;
     name: string;
-    price: string;
+    price: number;
 }
 
 export interface IStatus {

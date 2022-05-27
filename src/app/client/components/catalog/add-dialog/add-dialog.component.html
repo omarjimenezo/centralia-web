@@ -1,0 +1,27 @@
+<h1 mat-dialog-title>{{ data.description }}</h1>
+<div mat-dialog-content>
+    <p>Precio: {{ data.price | currency }}</p>
+    <mat-form-field appearance="fill">
+        <mat-label>Cantidad</mat-label>
+        <input
+            matInput
+            [(ngModel)]="data.quantity"
+            (keyup)="calculateTotal()"
+            type="number"
+        />
+    </mat-form-field>
+    <strong>Total: {{ productTotal | currency }}</strong>
+</div>
+<div mat-dialog-actions align="end">
+    <button mat-button *ngIf="!data.selected" (click)="onCancelClick()">Cancelar</button>
+    <button mat-button *ngIf="data.selected" color="warn" (click)="removeProduct()">Quitar</button>
+    <button
+        mat-button
+        color="primary"
+        [disabled]="data.quantity! < 1"
+        (click)="addProduct()"
+        cdkFocusInitial
+    >
+        {{ (data.selected) ? 'Actualizar' : 'Agregar' }}
+    </button>
+</div>

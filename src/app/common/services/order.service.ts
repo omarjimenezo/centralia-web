@@ -109,7 +109,7 @@ export class OrderService {
         const order: IOrder = this._order.value;
         let total = 0;
         order.description.forEach((product: IOrderList) => {
-            total += parseFloat(product.product.price!) * product.quantity;
+            total += product.product.price! * product.quantity;
         });
         this.setTotal(total);
     }
