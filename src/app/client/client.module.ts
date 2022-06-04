@@ -29,7 +29,6 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { ClientRoutingModule } from './client-routing.module';
 import { ClientComponent } from './client.component';
 import { CatalogListComponent } from './components/catalog/catalog-list/catalog-list.component';
-import { CatalogTableComponent } from './components/catalog/catalog-table/catalog-table.component';
 import { CatalogComponent } from './components/catalog/catalog.component';
 import { OrderDialogComponent } from './components/catalog/order-dialog/order-dialog.component';
 import { AddDialogComponent } from './components/catalog/add-dialog/add-dialog.component';
@@ -44,7 +43,6 @@ import { UserActionsDialogComponent } from './navigation/user-actions-dialog/use
         ProvidersComponent,
         CatalogComponent,
         CatalogListComponent,
-        CatalogTableComponent,
         NavBarComponent,
         OrderTableComponent,
         OrderDialogComponent,
@@ -56,7 +54,6 @@ import { UserActionsDialogComponent } from './navigation/user-actions-dialog/use
         ProvidersComponent,
         CatalogComponent,
         CatalogListComponent,
-        CatalogTableComponent,
         NavBarComponent,
         OrderTableComponent,
         OrderDialogComponent,

@@ -17,6 +17,10 @@ export class AddDialogComponent {
         @Inject(MAT_DIALOG_DATA) public data: ICatalog
     ) {}
 
+    public disableAddProductButton(): boolean {
+        return this.data.quantity! < 1 || !this.data.quantity
+    }
+
     public calculateTotal() {
         if (this.data.quantity && this.data.quantity > 0) {
             this.productTotal = this.data.quantity * this.data.price;

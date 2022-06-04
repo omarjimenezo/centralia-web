@@ -16,7 +16,7 @@ export class AlertService {
         message: string,
         type: number = 0,
         duration: number = 3000,
-        position: MatSnackBarVerticalPosition = 'bottom'
+        position: MatSnackBarVerticalPosition = 'top'
     ) {
         let panelClass: string = '';
         switch (type) {
