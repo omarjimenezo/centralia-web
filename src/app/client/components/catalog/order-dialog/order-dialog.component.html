@@ -6,10 +6,17 @@
     <order-table></order-table>
 </mat-card-content>
 
+<h1 class="order-total">Total: {{ orderTotal | currency }}</h1>
 
 <mat-card-actions align="end">
-    <h1 class="order-total">Total: {{ orderTotal | currency }}</h1>
-    <!-- <button mat-raised-button mat-dialog-close *ngIf="data.dialogMode">Cerrar</button> -->
+    <button
+        *ngIf="data.dialogMode"
+        mat-raised-button
+        color="default"
+        [mat-dialog-close]="order"
+    >
+        Seguir Comprando
+    </button>
 
     <button
         *ngIf="data.dialogMode"
@@ -26,7 +33,6 @@
         *ngIf="!data.dialogMode"
         mat-raised-button
         color="primary"
-        cdkFocusInitial
         (click)="saveOrder()"
     >
         Enviar Pedido

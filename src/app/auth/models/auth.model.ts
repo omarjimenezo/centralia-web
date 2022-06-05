@@ -8,6 +8,7 @@ export interface ILoginResponse {
     token: string;
     message: string;
     user_id: string;
+    code?: number;
 }
 
 export interface IDependencyResponse {

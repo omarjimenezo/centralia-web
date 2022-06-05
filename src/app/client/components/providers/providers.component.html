@@ -8,27 +8,6 @@
         <mat-divider></mat-divider>
     </div>
 
-    <div *ngIf="isMobile; then mobileCard; else desktopCard"></div>
-
-    <ng-template #mobileCard>
-        <mat-card class="mobile-provider-card" (click)="onProviderCardClick(provider.id)"
-        *ngFor="let provider of providers">
-            <mat-card-header>
-                <div mat-card-avatar class="header-image" [style.backgroundImage]="'url(' + provider.img + ')'"></div>
-                <mat-card-title>{{ provider.name }}</mat-card-title>
-                <mat-card-subtitle class="mat-rating"
-                    ><mat-icon>star</mat-icon
-                    >{{ provider.rating }}</mat-card-subtitle
-                >
-                <mat-card-subtitle>{{
-                    provider.description
-                }}</mat-card-subtitle>
-                <mat-card-subtitle>{{ provider.address }}</mat-card-subtitle>
-            </mat-card-header>
-        </mat-card>
-    </ng-template>
-
-    <ng-template #desktopCard>
         <div class="card-container" >
 
             <mat-card
@@ -54,5 +33,4 @@
                 </mat-card-title-group>
             </mat-card>
         </div>
-    </ng-template>
 </div>

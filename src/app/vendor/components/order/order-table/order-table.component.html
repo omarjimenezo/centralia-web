@@ -21,6 +21,13 @@
             {{ element.updated_at | date: "dd/MM/yyyy" }}
         </td>
     </ng-container>
+    
+    <ng-container matColumnDef="provider">
+        <th mat-header-cell mat-sort-header *matHeaderCellDef sortActionDescription="Ordernar por Fecha">Vendedor</th>
+        <td mat-cell *matCellDef="let element">
+            {{ ( showProviderName(element.provider_id) ) ? element.provider_name : '' }}
+        </td>
+    </ng-container>
 
     <ng-container matColumnDef="status">
         <th mat-header-cell mat-sort-header *matHeaderCellDef sortActionDescription="Ordernar por Estatus">Estatus</th>

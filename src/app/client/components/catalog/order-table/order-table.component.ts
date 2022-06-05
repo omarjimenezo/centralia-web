@@ -15,6 +15,7 @@ export class OrderTableComponent implements OnInit, OnDestroy {
     public orderList: IOrderList[] = [];
     public catalog: ICatalog[] = [];
     public loading: boolean;
+    public disableRemove: boolean;
 
     private sub_order: Subscription;
     private sub_catalog: Subscription;
@@ -60,6 +61,7 @@ export class OrderTableComponent implements OnInit, OnDestroy {
     }
 
     public removeProduct(id: number): void {
+        this.disableRemove = true;
         this.catalog.map((product) => {
             if (product.id === id) {
                 product.selected = false;
@@ -69,5 +71,6 @@ export class OrderTableComponent implements OnInit, OnDestroy {
 
         this._orderService.removeProduct(id);
         this._catalogService.setCatalog(this.catalog);
+        this.disableRemove = false;
     }
 }

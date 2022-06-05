@@ -33,16 +33,6 @@ export class CatalogService {
                 )
                 .subscribe((catalog: ICatalogResponse) => {
                     if (catalog && catalog.data) {
-                        // catalog.data.map(
-                        //     (product) => {
-                        //         if (product && product.price) {
-                        //             (product.price = product.price.replace(
-                        //                 ',',
-                        //                 '.'
-                        //             ))
-                        //         }
-                        //     }
-                        // );
                         this.setCatalog(catalog.data);
                     }
                 });
@@ -55,6 +45,14 @@ export class CatalogService {
 
     get getCatalog(): Observable<ICatalog[]> {
         return this._catalog.asObservable();
+    }
+
+    public resetQuantities(): void {
+        this._resetCatalog.next('');
+    }
+    
+    get getResetQuantities(): Observable<string> {
+        return this._resetCatalog.asObservable();
     }
 
     //  Category

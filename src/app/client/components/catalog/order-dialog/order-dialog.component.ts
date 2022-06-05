@@ -3,6 +3,7 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { CatalogService } from 'src/app/client/services/catalog.service';
 import { IResponse } from 'src/app/common/models/common.model';
 import { GlobalConstants } from 'src/app/common/models/global.constants';
 import { IOrder, IOrderList } from 'src/app/common/models/order.model';
@@ -36,6 +37,7 @@ export class OrderDialogComponent implements OnInit, OnDestroy {
         @Inject(MAT_DIALOG_DATA) public data: { dialogMode: string, orderTotal: number },
         private _global: GlobalConstants,
         private _orderService: OrderService,
+        private _catalogService: CatalogService,
         private _alertService: AlertService,
         private _dataService: DataService,
         private _route: ActivatedRoute
@@ -112,6 +114,7 @@ export class OrderDialogComponent implements OnInit, OnDestroy {
 
     public resetOrder(): void {
         this._orderService.resetOrder();
+        this._catalogService.resetQuantities();
         this.client_name = '';
         this.client_address = '';
     }

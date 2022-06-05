@@ -57,13 +57,13 @@ export class LoginComponent implements OnInit {
 
             this._authService.login(loginRequest).subscribe(
                 (response: ILoginResponse) => {
-                    if (response && response.message) {
-                        switch (response.message) {
-                            case this._global.API_MESSAGES.SUCCESS:
+                    if (response) {
+                        switch (response.code) {
+                            case 0:
                                 this._authService.setToken(response.token);
                                 this.confirmLogin(response.user_id);
                                 break;
-                            case this._global.API_MESSAGES.UNAUTHORIZED:
+                            default:
                                 this._alertService.openAlert(
                                     this._global.ERROR_MESSAGES.WRONG_USER_PASS,
                                     1

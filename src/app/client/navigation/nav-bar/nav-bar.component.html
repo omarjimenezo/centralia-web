@@ -4,14 +4,7 @@
 
         <span class="nav-spacer"></span>
 
-        <!-- <span
-            class="button-cart-big"
-            *ngIf="catalogToolbar"
-            [class.element-fadeout]="totalFadeOut"
-            [class.element-fadein]="!totalFadeOut"
-            >Total: {{ orderTotal | currency }}</span
-        >
-        <span class="nav-spacer"></span> -->
+        <label>{{ userInfo.name }}</label>
 
         <img
             *ngIf="userInfo.img_profile"
@@ -34,7 +27,7 @@
             class="catalog-category"
         >
             <mat-label>Categorias</mat-label>
-            <mat-select (selectionChange)="onCategorySelect($event.value)">
+            <mat-select (selectionChange)="onCategorySelect($event.value)" [(ngModel)]="filterKey">
                 <mat-option value="N">TODO</mat-option>
                 <mat-option
                     *ngFor="let category of categories"

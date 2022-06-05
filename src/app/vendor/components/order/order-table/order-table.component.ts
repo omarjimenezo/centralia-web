@@ -33,6 +33,7 @@ export class OrderTableComponent implements OnInit {
     public displayedColumns: string[] = [
         'client_name',
         'date',
+        'provider',
         'status',
         'actions',
         'mobile',
@@ -80,5 +81,13 @@ export class OrderTableComponent implements OnInit {
         dialogRef.afterClosed().subscribe((result) => {
             console.log(`Dialog closed: ${result}`);
         });
+    }
+
+    public showProviderColumn(): boolean {
+        return (this._dataService.getUserRole() === 1)
+    }
+    
+    public showProviderName(provider_id: string): boolean {
+        return (this._dataService.getUserInfo().id !== provider_id)
     }
 }

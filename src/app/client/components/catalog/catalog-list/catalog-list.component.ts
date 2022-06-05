@@ -10,7 +10,7 @@ import { AddDialogComponent } from '../add-dialog/add-dialog.component';
 })
 export class CatalogListComponent implements OnInit {
     @Input() displayCatalog: ICatalog[];
-    @Input() loading: boolean;
+    @Input() productFade: boolean;
 
     constructor(public dialog: MatDialog) {}
 

@@ -3,6 +3,10 @@
     flex-wrap: wrap;
 }
 
+.mat-card {
+    padding: 1px;
+}
+
 .provider-card {
     margin: 10px;
     max-width: 50%;
@@ -17,6 +21,7 @@
 
     @media (max-width: 1008px) {
         max-width: 100%;
+        width: 100%;
     }
 
 }
@@ -29,7 +34,7 @@ img {
 
 .mat-card-lg-image {
     width: 152px;
-    height: 152px;
+    height: 100%;
 }
 
 .mobile-provider-card {
@@ -76,7 +81,8 @@ img {
     flex-direction: row-reverse;
 
     @media (max-width: 700px) {
-        flex-direction: column;
+        flex-direction: column-reverse;
+        align-items: center;
     }
 }
 

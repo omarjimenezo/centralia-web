@@ -30,6 +30,7 @@ export class NavBarComponent implements OnInit {
     public orderTotal: number;
     public catalogToolbar: boolean = false;
     public searchKey: string = '';
+    public filterKey: string = '';
     public userInfo: IUser;
 
     constructor(
@@ -56,6 +57,7 @@ export class NavBarComponent implements OnInit {
         this.getCategories();
         this.getOrder();
         this.getTotal();
+        this.getFilter();
     }
 
     public getUserInfo(): void {
@@ -103,6 +105,14 @@ export class NavBarComponent implements OnInit {
             this.elementFadeout();
             this.orderTotal = total;
         });
+    }
+
+    public getFilter(): void {
+        this._catalogSearchService.getFilter.subscribe((data) => {
+            if(data === 'N') {
+                this.filterKey = data;
+            }
+        })
     }
 
     public onSearch(event: Event) {

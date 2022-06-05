@@ -30,6 +30,7 @@ export class CatalogComponent implements OnInit, OnDestroy {
     public dataSource: MatTableDataSource<ICatalog>;
     public loading: boolean = false;
     public buttonFadeOut: boolean = false;
+    public productFade: boolean = false;
     public cols: number = 2;
     public orderTotal: number = 0;
     public productsAdded: number = 0;
@@ -37,6 +38,7 @@ export class CatalogComponent implements OnInit, OnDestroy {
     public client_name: string = '';
     public providerId: number;
     public userInfo: IUser;
+
 
     private sub_catalog: Subscription;
     private sub_order: Subscription;
@@ -58,12 +60,13 @@ export class CatalogComponent implements OnInit, OnDestroy {
     ) { }
 
     public ngOnInit(): void {
-        // this.getCatalog(); getting it on getSearch()
+        this.getCatalog();
         this.getOrder();
         this.getTotal();
         this.getProviderId();
         this.getFilter();
         this.getSearch();
+        this.resetQuantities();
     }
 
     public ngOnDestroy(): void {
@@ -72,16 +75,16 @@ export class CatalogComponent implements OnInit, OnDestroy {
     }
 
     public getCatalog(): void {
-        this.loading = true;
         this.catalog = [];
         this.displayCatalog = [];
+        this.loading = true;
         this.sub_catalog = this._catalogService.getCatalog.subscribe(
             (catalog: ICatalog[]) => {
                 if (catalog.length > 0) {
                     this.catalog = catalog;
                     this.displayCatalog = catalog;
-                    this.loading = false;
                 }
+                this.loading = false;
             },
             (error: any) => {
                 console.error(error);
@@ -98,7 +101,7 @@ export class CatalogComponent implements OnInit, OnDestroy {
         this._dataService.getDependencyBySubId(userInfo.id).subscribe(
             (dependency: IDependencyResponse) => {
                 (dependency && dependency.data && dependency.data.length > 0) ? this._dataService.setVendorId(dependency.data[0].sup_user_id) : this._dataService.setVendorId(providerId)
-                this.loading = false;
+
             },
             (error) => {
                 this._alertService.openAlert(
@@ -106,13 +109,12 @@ export class CatalogComponent implements OnInit, OnDestroy {
                     1
                 );
                 console.error(error);
-                this.loading = false;
+
             }
         );
     }
 
     public getOrder(): void {
-        this.loading = true;
         this.sub_order = this._orderService.getOrder.subscribe(
             (order: IOrder) => {
                 this.elementFadeout();
@@ -121,11 +123,11 @@ export class CatalogComponent implements OnInit, OnDestroy {
                 order.description.forEach((product) => {
                     this.productsAdded += product.quantity;
                 });
-                this.loading = false;
+
             },
             (error: any) => {
                 console.error(error);
-                this.loading = false;
+
             }
         );
     }
@@ -135,45 +137,48 @@ export class CatalogComponent implements OnInit, OnDestroy {
     }
 
     public getSearch(): void {
-        this.loading = true;
         this._catalogSearchService.getSearch.subscribe((data: string) => {
             if (data.length > 2) {
+                this._catalogSearchService.setFilter('N')
                 window.scroll(0, 0);
+                this.elementFadeout();
                 this.displayCatalog = this.catalog.filter((product: ICatalog) =>
                     product.description.toLowerCase().includes(data)
                 );
-                this.loading = false;
             }
 
-            if (data === '' || data.length === 0) {
-                this.getCatalog();
+            if (data.length === 0) {
+                window.scroll(0, 0);
+                this.elementFadeout();
+                this.displayCatalog = this.catalog;
             }
         });
     }
 
     public getFilter(): void {
-        this.loading = true;
         this._catalogSearchService.getFilter.subscribe((data: string) => {
             if (data !== '') {
-                this.loading = true;
                 window.scroll(0, 0);
+                this.elementFadeout();
                 if (data !== 'N') {
                     this.displayCatalog = this.catalog.filter(
                         (product: ICatalog) => product.category === data
                     );
                 } else {
-                    this.getCatalog();
+                    this.displayCatalog = this.catalog;
                 }
-                this.loading = false;
             }
-            this.loading = false;
         });
     }
 
-    public resetOrder(): void {
-        this._orderService.resetOrder();
-        this.client_name = '';
-        this.client_address = '';
+    public resetQuantities(): void {
+        this._catalogService.getResetQuantities.subscribe(() => {
+            this.elementFadeout();
+            this.displayCatalog.map((product) => {
+                product.quantity = 0;
+                product.selected = false
+            });
+        })
     }
 
     public getTotal(): void {
@@ -194,9 +199,9 @@ export class CatalogComponent implements OnInit, OnDestroy {
     }
 
     public elementFadeout(): void {
-        this.buttonFadeOut = true;
+        this.productFade = true;
         setTimeout(() => {
-            this.buttonFadeOut = false;
-        }, 300);
+            this.productFade = false;
+        }, 500);
     }
 }

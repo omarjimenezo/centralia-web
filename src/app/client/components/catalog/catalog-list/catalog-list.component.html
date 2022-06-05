@@ -1,5 +1,5 @@
 <div class="card-container">
-    <mat-card [class.mat-product-selected]="product.selected" class="product-card" *ngFor="let product of displayCatalog" (click)="openAddDialog(product)">
+    <mat-card [class.element-fadein]="!productFade" [class.element-fadeout]="productFade" [class.mat-product-selected]="product.selected" class="product-card" *ngFor="let product of displayCatalog" (click)="openAddDialog(product)">
         <mat-card-title-group>
             <img
                 mat-card-lg-image
