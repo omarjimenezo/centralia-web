@@ -1,0 +1,70 @@
+@import "../../../../../colors.scss";
+
+.mat-table {
+    width: 100%;
+}
+
+.table-loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 650px;
+}
+
+.mat-column-mobile {
+	display: none;
+}
+
+.mat-column-status {
+    font-weight: bold;
+}
+
+.mat-mini-fab {
+    margin-right: 5px;
+}
+
+@media (max-width: 700px) {
+.mat-column-client_name,
+.mat-column-date,
+.mat-column-provider,
+.mat-column-status,
+.mat-column-actions {
+	display: none;
+}
+
+	.mat-column-mobile {
+		display: flex;
+		flex-direction: column;
+		margin: 10px;
+		align-items: baseline;
+	}
+
+	.mat-order-data {
+		display: flex;
+		align-items: flex-start;
+		width: 100%;
+		margin-top: 1em;
+	}
+
+    .mat-order-tile {
+        width: inherit;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .mat-actions-tile {
+        display: flex;
+        align-items: baseline;
+        width: inherit;
+        justify-content: flex-end;
+    }
+
+    .mat-cell:last-of-type {
+        padding-right: 0 !important;
+    }
+
+	.mat-mini-fab {
+		margin: 10px;
+	}
+}

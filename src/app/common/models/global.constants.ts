@@ -23,8 +23,9 @@ export class GlobalConstants {
         },
         ORDER: {
             POST_ORDER: `${this.API_BASE}${this.API_VERSION}/order`,
-            GET_ORDERS: `${this.API_BASE}${this.API_VERSION}/provider/orders`,
+            GET_PROVIDER_ORDERS: `${this.API_BASE}${this.API_VERSION}/provider/orders`,
             UPDATE_ORDER_STATUS: `${this.API_BASE}${this.API_VERSION}/provider/orders/status`,
+            GET_BUSINESS_ORDERS: `${this.API_BASE}${this.API_VERSION}/business/orders`,
             
         },
         DEPENDENCY: {
@@ -39,11 +40,11 @@ export class GlobalConstants {
             NOT_FOUND: '404',
         },
         PROVIDER: {
-            ORDERS: 'vendedor/pedidos',
+            ORDERS: 'proveedor/pedidos',
         },
-        CLIENT: {
-            PROVIDERS: 'cliente/proveedores',
-            CATALOG: 'cliente/catalogo',
+        BUSINESS: {
+            PROVIDERS: 'negocio/proveedores',
+            CATALOG: 'negocio/catalogo',
         },
     };
 

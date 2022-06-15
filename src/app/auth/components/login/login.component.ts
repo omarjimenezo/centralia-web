@@ -7,7 +7,7 @@ import { IUser, IUserResponse } from 'src/app/common/models/user.model';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { ILoginRequest, ILoginResponse } from '../../models/auth.model';
 import { AlertService } from 'src/app/common/services/alert.service';
-import { IAlertInfo } from 'src/app/client/models/alert.model';
+import { IAlertInfo } from 'src/app/business/models/alert.model';
 import { GlobalConstants } from 'src/app/common/models/global.constants';
 import { DataService } from 'src/app/common/services/data.service';
 

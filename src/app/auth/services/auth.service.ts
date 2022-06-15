@@ -64,7 +64,7 @@ export class AuthService {
                 break;
             case this._global.USER_TYPES.USER:
                 this._routerService.navigate([
-                    this._global.ROUTES.CLIENT.PROVIDERS,
+                    this._global.ROUTES.BUSINESS.PROVIDERS,
                 ]);
                 break;
         }

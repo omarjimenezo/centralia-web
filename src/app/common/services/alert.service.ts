@@ -4,7 +4,7 @@ import {
     MatSnackBarRef,
     MatSnackBarVerticalPosition,
 } from '@angular/material/snack-bar';
-import { IAlertInfo } from 'src/app/client/models/alert.model';
+import { IAlertInfo } from 'src/app/business/models/alert.model';
 
 @Injectable({
     providedIn: 'root',

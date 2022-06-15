@@ -10,22 +10,22 @@ const routes: Routes = [
     { path: 'login', component: LoginComponent },
 
     {
-        path: 'cliente',
+        path: 'negocio',
         canActivate: [AuthGuard],
         data: {
             expectedRole: [3],
         },
         loadChildren: () =>
-            import('./client/client.module').then((m) => m.ClientModule),
+            import('./business/business.module').then((m) => m.BusinessModule),
     },
     {
-        path: 'vendedor',
+        path: 'proveedor',
         canActivate: [AuthGuard],
         data: {
             expectedRole: [1, 2],
         },
         loadChildren: () =>
-            import('./vendor/vendor.module').then((m) => m.VendorModule),
+            import('./provider/provider.module').then((m) => m.ProviderModule),
     },
 
     { path: '**', component: NotFoundComponent }, // Wildcard route for a 404 page

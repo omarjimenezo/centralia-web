@@ -1,20 +1,18 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, EMPTY, Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import {
     IOrder,
     IOrderList,
     IOrderResponse,
     IOrderStatusCatalog,
-    IOrderStatusRequest,
-    IStatus,
+    IOrderStatusRequest
 } from 'src/app/common/models/order.model';
 import { AlertService } from 'src/app/common/services/alert.service';
+import { IAlertInfo } from '../../business/models/alert.model';
 import { ICatalog } from '../models/catalog.model';
-import { IAlertInfo } from '../../client/models/alert.model';
-import { IUser } from '../models/user.model';
-import { HttpClient } from '@angular/common/http';
-import { GlobalConstants } from '../models/global.constants';
 import { IResponse } from '../models/common.model';
+import { GlobalConstants } from '../models/global.constants';
 import { DataService } from './data.service';
 
 @Injectable({
@@ -63,9 +61,15 @@ export class OrderService {
         );
     }
 
-    public getOrders(): Observable<IOrderResponse> {
+    public getProviderOrders(): Observable<IOrderResponse> {
         return this._http.get<IOrderResponse>(
-            `${this._global.ENDPOINTS.ORDER.GET_ORDERS}`
+            `${this._global.ENDPOINTS.ORDER.GET_PROVIDER_ORDERS}`
+        );
+    }
+    
+    public getBusinessOrders(): Observable<IOrderResponse> {
+        return this._http.get<IOrderResponse>(
+            `${this._global.ENDPOINTS.ORDER.GET_BUSINESS_ORDERS}`
         );
     }
     

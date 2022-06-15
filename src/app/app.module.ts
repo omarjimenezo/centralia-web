@@ -5,9 +5,9 @@ import { AppComponent } from './app.component';
 import { AuthModule } from './auth/auth.module';
 import { AuthGuardService } from './auth/services/guard.service';
 import { TokenInterceptor } from './auth/services/interceptor.service';
-import { ClientModule } from './client/client.module';
+import { BusinessModule } from './business/business.module';
 import { CommonComponentsModule } from './common/common.module';
-import { VendorModule } from './vendor/vendor.module';
+import { ProviderModule } from './provider/provider.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -16,8 +16,8 @@ import { VendorModule } from './vendor/vendor.module';
 
     // App Modules
     AuthModule,
-    ClientModule,
-    VendorModule,
+    BusinessModule,
+    ProviderModule,
     CommonComponentsModule
   ],
   providers: [
