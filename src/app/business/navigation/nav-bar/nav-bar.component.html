@@ -1,23 +1,25 @@
 <mat-toolbar color="primary" [class.position-fixed]="catalogToolbar">
     <mat-toolbar-row>
+        <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon" (click)="toogleSideNav()">
+            <mat-icon>menu</mat-icon>
+          </button>
+          
+        <span class="nav-spacer"></span>
+        
         <span>Centralia</span>
 
         <span class="nav-spacer"></span>
-
-        <label>{{ userInfo.name }}</label>
 
         <img
             *ngIf="userInfo.img_profile"
             class="avatar mat-elevation-z4"
             [src]="userInfo.img_profile"
-            (click)="openUserActionsDialog()"
         />
         
         <img
             *ngIf="!userInfo.img_profile"
             class="avatar mat-elevation-z4"
             src="./assets/img/profile/vendedor.png"
-            (click)="openUserActionsDialog()"
         />
     </mat-toolbar-row>
     <mat-toolbar-row *ngIf="catalogToolbar">

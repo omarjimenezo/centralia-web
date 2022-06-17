@@ -3,6 +3,7 @@
 html,
 body {
     height: 100%;
+    overflow: hidden;
 }
 body {
     margin: 0;
@@ -74,4 +75,24 @@ body {
     .mat-snack-bar-handset {
         width: 300px !important; 
     }
+}
+
+// Nav Menu
+
+.mat-drawer-container {
+    height: -webkit-fill-available !important;
+}
+
+.mat-drawer {
+    width: 250px;
+}
+
+@media (max-width: 750px) {
+    .mat-drawer {
+        width: -webkit-fill-available;
+    }
+}
+
+.mat-list-item {
+    text-align: center;
 }

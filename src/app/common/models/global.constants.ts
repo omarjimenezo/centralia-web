@@ -48,6 +48,11 @@ export class GlobalConstants {
         },
     };
 
+    public MENU_ITEMS = [
+        { label: 'Proveedores', route: 'negocio/proveedores' },
+        { label: 'Mis Pedidos', route: 'negocio/pedidos' },
+    ];
+
     public API_MESSAGES = {
         SUCCESS: 'Success',
         UNAUTHORIZED: 'Unauthorized',

@@ -1,20 +1,24 @@
 <div class="login-container">
-    
+    <div>
+        
+    </div>
 
     <mat-card
         color="primary"
         class="login-wrapper mat-elevation-z8"
         
     >
-        <mat-card-title>Iniciar Sesión</mat-card-title>
+        <mat-card-title>CENTRALIA</mat-card-title>
 
         <mat-card-content>
-            <!-- <img
-                class="avatar mat-elevation-z4"
-                src="./assets/img/auth/empty_user.png"
-            /> -->
+            <img
+                class="avatar "
+                src="./assets/img/centralia/logo.png"
+            />
 
+            
             <form [formGroup]="form">
+                <mat-label>Iniciar Sesión</mat-label>
                 <mat-form-field class="example-full-width" appearance="fill">
                     <mat-label>E-mail</mat-label>
                     <input
@@ -58,7 +62,7 @@
             <br />
             <br />
             <button mat-button (click)="forgotPassword()">
-                Olvide mi contraseña
+                Olvidé mi contraseña
             </button>
         </mat-card-actions>
         

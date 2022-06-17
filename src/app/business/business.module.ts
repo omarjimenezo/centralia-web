@@ -40,6 +40,7 @@ import { OrderDetailComponent } from './components/order/order-detail/order-deta
 import { OrderDetailTableComponent } from './components/order/order-detail-table/order-detail-table.component';
 import { OrderTableComponent } from './components/order/order-table/order-table.component';
 import { UserActionsDialogComponent } from './navigation/user-actions-dialog/user-actions-dialog.component';
+import { SideNavComponent } from './navigation/side-nav/side-nav.component';
 
 @NgModule({
     declarations: [
@@ -56,6 +57,7 @@ import { UserActionsDialogComponent } from './navigation/user-actions-dialog/use
         OrderDetailComponent,
         OrderDetailTableComponent,
         OrderTableComponent,
+        SideNavComponent,
     ],
     exports: [
         BusinessComponent,
@@ -71,6 +73,7 @@ import { UserActionsDialogComponent } from './navigation/user-actions-dialog/use
         OrderDetailComponent,
         OrderDetailTableComponent,
         OrderTableComponent,
+        SideNavComponent,
     ],
     imports: [
         CommonModule,

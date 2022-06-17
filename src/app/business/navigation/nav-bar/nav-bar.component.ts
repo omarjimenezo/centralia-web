@@ -115,6 +115,10 @@ export class NavBarComponent implements OnInit {
         })
     }
 
+    public toogleSideNav(): void {
+        this.menuOpen.emit('ok');
+    }
+
     public onSearch(event: Event) {
         const filterValue = (event.target as HTMLInputElement).value;
         this._catalogSearchService.setSearch(filterValue.trim().toLowerCase());
