@@ -80,7 +80,6 @@ export class CartDialogComponent implements OnInit, OnDestroy {
     }
 
     public saveOrder(): void {
-
         let saveOrder: IOrder = {
             amount: this.orderTotal,
             provider_id: parseInt(this.userInfo.vendor_id),
@@ -118,6 +117,7 @@ export class CartDialogComponent implements OnInit, OnDestroy {
         this.client_name = '';
         this.client_address = '';
     }
+    
     public deleteProduct(id: number): void {
         const orderList = this.order.description.filter((product) => {
             return product.product.id !== id;
@@ -132,5 +132,9 @@ export class CartDialogComponent implements OnInit, OnDestroy {
         this._orderService.getTotal.subscribe(
             (total) => (this.orderTotal = total)
         );
+    }
+
+    public disableSaveOrderButton(): boolean {
+        return this.order.description.length <= 0;
     }
 }
