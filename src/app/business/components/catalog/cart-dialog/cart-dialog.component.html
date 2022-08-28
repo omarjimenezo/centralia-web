@@ -24,6 +24,7 @@
         color="primary"
         [mat-dialog-close]="order"
         cdkFocusInitial
+        [disabled]="disableSaveOrderButton()"
         (click)="saveOrder()"
     >
         Enviar Pedido
@@ -33,6 +34,7 @@
         *ngIf="!data.dialogMode"
         mat-raised-button
         color="primary"
+        [disabled]="disableSaveOrderButton()"
         (click)="saveOrder()"
     >
         Enviar Pedido
