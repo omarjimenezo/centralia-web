@@ -27,6 +27,15 @@ const routes: Routes = [
         loadChildren: () =>
             import('./provider/provider.module').then((m) => m.ProviderModule),
     },
+    {
+        path: 'invitado',
+        canActivate: [AuthGuard],
+        data: {
+            expectedRole: [0],
+        },
+        loadChildren: () =>
+            import('./provider/provider.module').then((m) => m.ProviderModule),
+    },
 
     { path: '**', component: NotFoundComponent }, // Wildcard route for a 404 page
 ];
