@@ -71,6 +71,7 @@ export class GlobalConstants {
     };
 
     public USER_TYPES = {
+        GUEST: 0, // User not logged in, but he can see providers and catalog pages
         PROVIDER: 1,
         AGENT: 2,
         USER: 3,
