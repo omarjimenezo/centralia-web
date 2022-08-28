@@ -26,6 +26,8 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { OrderDetailTableComponent } from './components/order/order-detail-table/order-detail-table.component';
 import { OrderDetailComponent } from './components/order/order-detail/order-detail.component';
 import { OrderTableComponent } from './components/order/order-table/order-table.component';
+import { UserTableComponent } from './components/users/user-table/user-table.component';
+import { UserAddComponent } from './components/users/user-add/user-add.component';
 import { OrderComponent } from './components/order/order.component';
 import { NavBarComponent } from './navigation/nav-bar/nav-bar.component';
 import { UserActionsDialogComponent } from './navigation/user-actions-dialog/user-actions-dialog.component';
@@ -41,6 +43,8 @@ import { ProviderComponent } from './provider.component';
         OrderDetailComponent,
         OrderDetailTableComponent,
         UserActionsDialogComponent,
+        UserTableComponent,
+        UserAddComponent,
     ],
     exports: [
         ProviderComponent,
@@ -50,6 +54,8 @@ import { ProviderComponent } from './provider.component';
         OrderDetailComponent,
         OrderDetailTableComponent,
         UserActionsDialogComponent,
+        UserTableComponent,             
+        UserAddComponent,
     ],
     imports: [
         CommonModule,

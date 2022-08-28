@@ -23,22 +23,22 @@ const routes: Routes = [
                 },
                 component: ProvidersComponent,
             },
-            {
-                path: 'proveedores',
-                canActivate: [AuthGuard],
-                data: {
-                    expectedRole: [3],
-                },
-                component: ProvidersComponent,
-            },
-            {
-                path: 'catalogo/:id',
-                canActivate: [AuthGuard],
-                data: {
-                    expectedRole: [3],
-                },
-                component: CatalogComponent,
-            },
+            // {
+            //     path: 'proveedores',
+            //     canActivate: [AuthGuard],
+            //     data: {
+            //         expectedRole: [3],
+            //     },
+            //     component: ProvidersComponent,
+            // },
+            // {
+            //     path: 'catalogo/:id',
+            //     canActivate: [AuthGuard],
+            //     data: {
+            //         expectedRole: [3],
+            //     },
+            //     component: CatalogComponent,
+            // },
             {
                 path: 'pedidos',
                 canActivate: [AuthGuard],
