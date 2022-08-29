@@ -24,8 +24,11 @@ export class AuthService {
     ) { }
 
     public isAuthenticated(): boolean {
-        this._dataService.getOrderStatusCatalog()
-        return this.getToken() ? true : false;
+        if (this.getToken()) {
+            this._dataService.getOrderStatusCatalog();
+            return true
+        }
+        return false;
     }
 
     public setToken(token: string): void {

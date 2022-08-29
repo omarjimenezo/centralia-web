@@ -1,6 +1,7 @@
 export interface IUserResponse {
     data: IUser;
 }
+
 export interface IUser {
     id: string;
     provider_id: string;

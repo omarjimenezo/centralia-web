@@ -39,9 +39,11 @@ export class LoginComponent implements OnInit {
         });
 
         if(this._authService.isAuthenticated()) {
-            let userInfo: IUser = this._dataService.getUserInfo();
-            this.confirmLogin(userInfo.id);
-            this._authService.landingPage(this._dataService.getUserRole())
+            if (this._dataService.getUserInfo()) {
+                let userInfo: IUser = this._dataService.getUserInfo();
+                this.confirmLogin(userInfo.id);
+                this._authService.landingPage(this._dataService.getUserRole())
+            }
         }
     }
 

@@ -3,7 +3,6 @@ import { Injectable } from "@angular/core";
 import { CookieService } from "ngx-cookie-service";
 import { BehaviorSubject, Observable } from "rxjs";
 import { IDependencyResponse } from "src/app/auth/models/auth.model";
-import { IResponse } from "../models/common.model";
 import { GlobalConstants } from "../models/global.constants";
 import { IOrderStatusCatalog, IOrderStatusCatalogResponse } from "../models/order.model";
 import { IUser, IUserResponse } from "../models/user.model";
@@ -20,8 +19,8 @@ export class DataService {
         private _http: HttpClient,
         private _global: GlobalConstants,
         private _cookieService: CookieService,
-    ) {}
-    
+    ) { }
+
     // User
     public setUser(user: IUser): void {
         this._cookieService.delete('userInfo', '/');
@@ -57,7 +56,7 @@ export class DataService {
     public setProviderId(providerId: string) {
         this._providerId.next(providerId);
     }
-    
+
     public setVendorId(vendorId: string) {
         let user: IUser;
         this._vendorId.next(vendorId);
@@ -73,14 +72,14 @@ export class DataService {
     }
 
     public getUserInfo(): IUser {
-        return JSON.parse(this._cookieService.get('userInfo'));
+        return (this._cookieService.get('userInfo')) ? JSON.parse(this._cookieService.get('userInfo')) : false;
     }
 
     public getDependencyBySubId(sub_user_id: string): Observable<IDependencyResponse> {
         return this._http.get<IDependencyResponse>(`${this._global.ENDPOINTS.DEPENDENCY.GET_SUPERIOR}/${sub_user_id}`);
     }
 
-    public getDependencyBySupId(sup_user_id: string): Observable<IDependencyResponse>  {
+    public getDependencyBySupId(sup_user_id: string): Observable<IDependencyResponse> {
         return this._http.get<IDependencyResponse>(`${this._global.ENDPOINTS.DEPENDENCY.GET_SUBORDINATES}/${sup_user_id}`);
     }
 
@@ -97,7 +96,7 @@ export class DataService {
         this._http.get<IOrderStatusCatalogResponse>(
             `${this._global.ENDPOINTS.DATA.GET_ORDER_STATUS_CATALOG}`
         ).subscribe((res: IOrderStatusCatalogResponse) => {
-            if(res && res.data) {
+            if (res && res.data) {
                 this._setOrderStatusCatalog(res.data);
             }
         });

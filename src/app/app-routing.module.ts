@@ -3,11 +3,13 @@ import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './auth/components/login/login.component';
 import { NotFoundComponent } from './auth/components/not-found/not-found.component';
 import { AuthGuardService as AuthGuard } from './auth/services/guard.service';
+import { ProvidersInfoComponent } from './guest/components/info/providers/providers-info.component';
 
 const routes: Routes = [
     { path: '', redirectTo: 'login', pathMatch: 'full' },
 
     { path: 'login', component: LoginComponent },
+    { path: 'info/proveedores', component: ProvidersInfoComponent },
 
     {
         path: 'negocio',
@@ -27,15 +29,6 @@ const routes: Routes = [
         loadChildren: () =>
             import('./provider/provider.module').then((m) => m.ProviderModule),
     },
-    {
-        path: 'invitado',
-        canActivate: [AuthGuard],
-        data: {
-            expectedRole: [0],
-        },
-        loadChildren: () =>
-            import('./provider/provider.module').then((m) => m.ProviderModule),
-    },
 
     { path: '**', component: NotFoundComponent }, // Wildcard route for a 404 page
 ];
@@ -44,4 +37,4 @@ const routes: Routes = [
     imports: [RouterModule.forRoot(routes)],
     exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

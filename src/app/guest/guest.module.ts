@@ -26,16 +26,18 @@ import {
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { GuestComponent } from './guest.component';
+import { RouterModule } from '@angular/router';
+import { ProvidersInfoComponent } from './components/info/providers/providers-info.component';
 
 @NgModule({
     declarations: [
-        GuestComponent,
+        ProvidersInfoComponent,
     ],
     exports: [
-        GuestComponent,
+        ProvidersInfoComponent,
     ],
     imports: [
+        RouterModule,
         CommonModule,
         FormsModule,
         ReactiveFormsModule,
@@ -78,4 +80,4 @@ import { GuestComponent } from './guest.component';
         },
     ],
 })
-export class BusinessModule {}
+export class GuestModule {}

@@ -117,7 +117,7 @@ export class CartDialogComponent implements OnInit, OnDestroy {
         this.client_name = '';
         this.client_address = '';
     }
-    
+
     public deleteProduct(id: number): void {
         const orderList = this.order.description.filter((product) => {
             return product.product.id !== id;

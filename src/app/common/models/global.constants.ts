@@ -26,7 +26,7 @@ export class GlobalConstants {
             GET_PROVIDER_ORDERS: `${this.API_BASE}${this.API_VERSION}/provider/orders`,
             UPDATE_ORDER_STATUS: `${this.API_BASE}${this.API_VERSION}/provider/orders/status`,
             GET_BUSINESS_ORDERS: `${this.API_BASE}${this.API_VERSION}/business/orders`,
-            
+
         },
         DEPENDENCY: {
             GET_SUPERIOR: `${this.API_BASE}${this.API_VERSION}/dependency/superior`,
@@ -43,6 +43,10 @@ export class GlobalConstants {
             ORDERS: 'proveedor/pedidos',
         },
         BUSINESS: {
+            PROVIDERS: 'negocio/proveedores',
+            CATALOG: 'negocio/catalogo',
+        },
+        GUEST: {
             PROVIDERS: 'negocio/proveedores',
             CATALOG: 'negocio/catalogo',
         },
@@ -85,5 +89,5 @@ export class GlobalConstants {
 
 export enum ORDER_STATUS {
     PENDING,
-    CANCELLED     
+    CANCELLED
 }

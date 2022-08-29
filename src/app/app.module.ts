@@ -7,6 +7,7 @@ import { AuthGuardService } from './auth/services/guard.service';
 import { TokenInterceptor } from './auth/services/interceptor.service';
 import { BusinessModule } from './business/business.module';
 import { CommonComponentsModule } from './common/common.module';
+import { GuestModule } from './guest/guest.module';
 import { ProviderModule } from './provider/provider.module';
 
 @NgModule({
@@ -16,6 +17,7 @@ import { ProviderModule } from './provider/provider.module';
 
     // App Modules
     AuthModule,
+    GuestModule,
     BusinessModule,
     ProviderModule,
     CommonComponentsModule
