@@ -3,14 +3,16 @@ import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './auth/components/login/login.component';
 import { NotFoundComponent } from './auth/components/not-found/not-found.component';
 import { AuthGuardService as AuthGuard } from './auth/services/guard.service';
-import { ProvidersInfoComponent } from './guest/components/info/providers/providers-info.component';
 
 const routes: Routes = [
     { path: '', redirectTo: 'login', pathMatch: 'full' },
 
     { path: 'login', component: LoginComponent },
-    { path: 'info/proveedores', component: ProvidersInfoComponent },
-
+    {
+        path: 'invitado',
+        loadChildren: () =>
+            import('./guest/guest.module').then((m) => m.GuestModule),
+    },
     {
         path: 'negocio',
         canActivate: [AuthGuard],

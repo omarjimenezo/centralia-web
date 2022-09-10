@@ -1,0 +1,47 @@
+<mat-toolbar color="primary" [class.position-fixed]="catalogToolbar">
+    <mat-toolbar-row>
+        <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon" (click)="toogleSideNav()">
+            <mat-icon>menu</mat-icon>
+          </button>
+          
+        <span class="nav-spacer"></span>
+        
+        <span>Centralia</span>
+
+        <span class="nav-spacer"></span>
+
+        <button mat-raised-button (click)="onLoginClick()">Iniciar Sesión</button>
+    </mat-toolbar-row>
+    <mat-toolbar-row *ngIf="catalogToolbar">
+        <mat-form-field
+            color="default"
+            appearance="standard"
+            class="catalog-category"
+        >
+            <mat-label>Categorias</mat-label>
+            <mat-select (selectionChange)="onCategorySelect($event.value)" [(ngModel)]="filterKey">
+                <mat-option value="N">TODO</mat-option>
+                <mat-option
+                    *ngFor="let category of categories"
+                    value="{{ category.category_id }}"
+                    >{{ category.name }}</mat-option
+                >
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field
+            color="primary"
+            appearance="standard"
+            class="catalog-search-field"
+        >
+            <mat-label>Buscar</mat-label>
+            <input
+                matInput
+                (keyup)="onSearch($event)"
+                placeholder=""
+                [(ngModel)]="searchKey"
+            />
+            <mat-icon matSuffix>search</mat-icon>
+        </mat-form-field>
+    </mat-toolbar-row>
+</mat-toolbar>

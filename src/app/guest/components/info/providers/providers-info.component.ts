@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
+declare var $: any;
+
 @Component({
     selector: 'providers-info',
     templateUrl: './providers-info.component.html',
@@ -7,9 +9,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProvidersInfoComponent implements OnInit {
 
-    constructor() {}
+    public title = 'Titulo'
 
     ngOnInit(): void {
-        console.log('Info page');
+        // Only trigger Application Insight tracking if we are running in production otherwise we'll get too many hits that are useless.
+        
+       
     }
 }

@@ -1,0 +1,38 @@
+.mat-dialog-title {
+    text-align: center;
+}
+
+.client-data {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+table {
+    width: 100%;
+}
+
+.mat-column-quantity {
+    text-align: center;
+}
+
+.mat-column-actions {
+    text-align: right;
+}
+
+.order-total {
+    text-align: left;
+}
+
+.mat-card-content {
+    height: 300px;
+    overflow: auto;
+}
+
+.mat-card-actions-align-end {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: row;
+    flex-wrap: wrap;
+}

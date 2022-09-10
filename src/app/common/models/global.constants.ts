@@ -47,8 +47,10 @@ export class GlobalConstants {
             CATALOG: 'negocio/catalogo',
         },
         GUEST: {
-            PROVIDERS: 'negocio/proveedores',
-            CATALOG: 'negocio/catalogo',
+            PROVIDERS: 'invitado/proveedores',
+            CATALOG: 'invitado/catalogo',
+            INFOPROVIDERS: 'invitado/info/proveedores',
+            INFOBUSINESS: 'invitado/info/negocios',
         },
     };
 

@@ -1,0 +1,42 @@
+<h2 mat-dialog-title>Resumen de Pedido</h2>
+
+<mat-divider></mat-divider>
+<mat-card-content>
+
+    <cart-table></cart-table>
+</mat-card-content>
+
+<h1 class="order-total">Total: {{ orderTotal | currency }}</h1>
+
+<mat-card-actions align="end">
+    <button
+        *ngIf="data.dialogMode"
+        mat-raised-button
+        color="default"
+        [mat-dialog-close]="order"
+    >
+        Seguir Comprando
+    </button>
+
+    <button
+        *ngIf="data.dialogMode"
+        mat-raised-button
+        color="primary"
+        [mat-dialog-close]="order"
+        cdkFocusInitial
+        [disabled]="disableSaveOrderButton()"
+        (click)="saveOrder()"
+    >
+        Enviar Pedido
+    </button>
+    
+    <button
+        *ngIf="!data.dialogMode"
+        mat-raised-button
+        color="primary"
+        [disabled]="disableSaveOrderButton()"
+        (click)="saveOrder()"
+    >
+        Enviar Pedido
+    </button>
+</mat-card-actions>

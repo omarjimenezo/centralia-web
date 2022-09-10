@@ -2,12 +2,11 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { GlobalConstants } from 'src/app/common/models/global.constants';
 import { DataService } from 'src/app/common/services/data.service';
-import { IUser, IUserResponse } from '../../common/models/user.model';
-import { AlertService } from '../../common/services/alert.service';
-import { IDependencyResponse, ILoginRequest, ILoginResponse } from '../models/auth.model';
+import { IUser } from '../../common/models/user.model';
+import { ILoginRequest, ILoginResponse } from '../models/auth.model';
 
 @Injectable({
     providedIn: 'root',

@@ -29,7 +29,7 @@ import { OrderTableComponent } from './components/order/order-table/order-table.
 import { OrderComponent } from './components/order/order.component';
 import { NavBarComponent } from './navigation/nav-bar/nav-bar.component';
 import { UserActionsDialogComponent } from './navigation/user-actions-dialog/user-actions-dialog.component';
-import { VendorRoutingModule } from './provider-routing.module';
+import { ProviderRoutingModule } from './provider-routing.module';
 import { ProviderComponent } from './provider.component';
 
 @NgModule({
@@ -53,7 +53,7 @@ import { ProviderComponent } from './provider.component';
     ],
     imports: [
         CommonModule,
-        VendorRoutingModule,
+        ProviderRoutingModule,
 
         // Angular Material
         MatCardModule,
