@@ -35,6 +35,7 @@ export class GlobalConstants {
     };
 
     public ROUTES = {
+        LANDINGPAGE: 'invitado/info/proveedores',
         AUTH: {
             LOGIN: 'login',
             NOT_FOUND: '404',
@@ -45,6 +46,7 @@ export class GlobalConstants {
         BUSINESS: {
             PROVIDERS: 'negocio/proveedores',
             CATALOG: 'negocio/catalogo',
+            ORDERS: 'negocio/pedidos',
         },
         GUEST: {
             PROVIDERS: 'invitado/proveedores',
@@ -54,10 +56,16 @@ export class GlobalConstants {
         },
     };
 
-    public MENU_ITEMS = [
-        { label: 'Proveedores', route: 'negocio/proveedores' },
-        { label: 'Mis Pedidos', route: 'negocio/pedidos' },
-    ];
+    public MENU_ITEMS = {
+        BUSINESS: [
+            { label: 'Hacer Pedido', route: 'negocio/proveedores' },
+            { label: 'Mis Pedidos', route: 'negocio/pedidos' },
+        ],
+        GUEST: [
+            { label: 'Haz tu Pedido', route: 'invitado/proveedores' },
+            { label: '¿Que es Centralia?', route: 'invitado/info/general' },
+        ]
+    };
 
     public API_MESSAGES = {
         SUCCESS: 'Success',

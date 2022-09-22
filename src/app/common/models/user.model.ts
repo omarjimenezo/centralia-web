@@ -17,6 +17,12 @@ export interface IUser {
     business: IBusiness;
 }
 
+export interface IGuestUser {
+    provider_id: string;
+    vendor_id: string;
+    user_type: number;
+}
+
 export interface IBusiness {
     business_rfc: string;
     business_name: string;

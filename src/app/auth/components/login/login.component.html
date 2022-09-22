@@ -1,4 +1,4 @@
-<div class="login-container">
+<!-- <div class="login-container">
     <div>
         
     </div>
@@ -67,4 +67,39 @@
         </mat-card-actions>
         
     </mat-card>
+</div> -->
+
+<h1 mat-dialog-title>Iniciar Sesión {{dialogData.returnURL}}</h1>
+
+<div mat-dialog-content color="primary" class="login-wrapper">
+    <img class="avatar " src="./assets/img/centralia/logo.png" />
+
+
+    <form [formGroup]="form">
+        <mat-form-field class="example-full-width" appearance="fill">
+            <mat-label>E-mail</mat-label>
+            <input matInput value="" formControlName="email" (keyup.enter)="login()" />
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Contraseña</mat-label>
+            <input matInput [type]="hidePassword ? 'password' : 'text'" formControlName="password"
+                (keyup.enter)="login()" />
+            <mat-icon mat-icon-button matSuffix (click)="hidePassword = !hidePassword">{{
+                hidePassword ? "visibility_off" : "visibility"
+                }}</mat-icon>
+        </mat-form-field>
+    </form>
+</div>
+
+<div mat-dialog-actions>
+    <button mat-raised-button color="primary" (click)="login()" [disabled]="form.invalid || loading">
+        Entrar
+    </button>
+    <mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
+    <br />
+    <br />
+    <button mat-button (click)="forgotPassword()">
+        Olvidé mi contraseña
+    </button>
 </div>

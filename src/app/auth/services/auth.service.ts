@@ -34,7 +34,7 @@ export class AuthService {
         this._cookieService.delete('tokenAuth', '/');
         this._cookieService.set('tokenAuth', token, undefined, '/');
     }
-
+    
     public getToken(): string {
         if (this._cookieService.get('tokenAuth')) {
             return this._cookieService.get('tokenAuth');
@@ -53,7 +53,7 @@ export class AuthService {
     public logout(): void {
         this._cookieService.delete('tokenAuth', '/');
         this._cookieService.delete('userInfo', '/');
-        this._routerService.navigate([this._global.ROUTES.AUTH.LOGIN]);
+        this._routerService.navigate([this._global.ROUTES.LANDINGPAGE]);
     }
 
     public landingPage(userType: number): void {

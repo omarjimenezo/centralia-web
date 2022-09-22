@@ -19,7 +19,6 @@
     </button>
 
     <button
-        *ngIf="data.dialogMode"
         mat-raised-button
         color="primary"
         [mat-dialog-close]="order"
@@ -30,7 +29,7 @@
         Enviar Pedido
     </button>
     
-    <button
+    <!-- <button
         *ngIf="!data.dialogMode"
         mat-raised-button
         color="primary"
@@ -38,5 +37,5 @@
         (click)="saveOrder()"
     >
         Enviar Pedido
-    </button>
+    </button> -->
 </mat-card-actions>

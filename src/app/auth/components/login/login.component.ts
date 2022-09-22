@@ -1,15 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { CookieService } from 'ngx-cookie-service';
-import { IUser, IUserResponse } from 'src/app/common/models/user.model';
 import { AuthService } from 'src/app/auth/services/auth.service';
-import { ILoginRequest, ILoginResponse } from '../../models/auth.model';
-import { AlertService } from 'src/app/common/services/alert.service';
-import { IAlertInfo } from 'src/app/business/models/alert.model';
 import { GlobalConstants } from 'src/app/common/models/global.constants';
+import { IUserResponse } from 'src/app/common/models/user.model';
+import { AlertService } from 'src/app/common/services/alert.service';
 import { DataService } from 'src/app/common/services/data.service';
+import { IDialogData, ILoginRequest, ILoginResponse } from '../../models/auth.model';
 
 @Component({
     selector: 'app-login',
@@ -23,14 +21,14 @@ export class LoginComponent implements OnInit {
 
     constructor(
         private _fb: FormBuilder,
-        private _snackBar: MatSnackBar,
-        private _routerService: Router,
         private _authService: AuthService,
         private _dataService: DataService,
         private _alertService: AlertService,
-        private _cookieService: CookieService,
-        private _global: GlobalConstants
-    ) {}
+        private _global: GlobalConstants,
+        private _routerService: Router,
+        public dialogRef: MatDialogRef<LoginComponent>,
+        @Inject(MAT_DIALOG_DATA) public dialogData: IDialogData,
+    ) { }
 
     public ngOnInit(): void {
         this.form = this._fb.group({
@@ -38,13 +36,17 @@ export class LoginComponent implements OnInit {
             password: ['', Validators.required],
         });
 
-        if(this._authService.isAuthenticated()) {
-            if (this._dataService.getUserInfo()) {
-                let userInfo: IUser = this._dataService.getUserInfo();
-                this.confirmLogin(userInfo.id);
-                this._authService.landingPage(this._dataService.getUserRole())
-            }
-        }
+        // if (this._authService.isAuthenticated()) {
+        //     if (this._dataService.getUserInfo()) {
+        //         let userInfo: IUser = this._dataService.getUserInfo();
+        //         this.confirmLogin(userInfo.id);
+        //         this._authService.landingPage(this._dataService.getUserRole())
+        //     }
+        // }
+    }
+
+    onNoClick(): void {
+        this.dialogRef.close();
     }
 
     public login(): void {
@@ -64,6 +66,7 @@ export class LoginComponent implements OnInit {
                             case 0:
                                 this._authService.setToken(response.token);
                                 this.confirmLogin(response.user_id);
+                                this.dialogRef.close();
                                 break;
                             default:
                                 this._alertService.openAlert(
@@ -103,6 +106,8 @@ export class LoginComponent implements OnInit {
             (user: IUserResponse) => {
                 if (user && user.data) {
                     this._dataService.setUser(user.data);
+                    (this.dialogData && this.dialogData.returnURL) ? 
+                    this._routerService.navigate([this.dialogData.returnURL]) :
                     this._authService.landingPage(user.data.user_type);
                 }
                 this.loading = false;

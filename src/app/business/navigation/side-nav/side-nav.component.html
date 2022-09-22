@@ -9,7 +9,7 @@
 <mat-divider></mat-divider>
 
 <mat-selection-list [multiple]="false">
-    <mat-list-option *ngFor="let item of _global.MENU_ITEMS" (click)="onMenuItemClick(item.route)">
+    <mat-list-option *ngFor="let item of _global.MENU_ITEMS.BUSINESS" (click)="onMenuItemClick(item.route)">
       {{item.label}}
     </mat-list-option>
 

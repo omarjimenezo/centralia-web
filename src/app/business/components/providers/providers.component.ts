@@ -15,7 +15,7 @@ export class ProvidersComponent implements OnInit {
       id: 2,
       name: 'Abarrotera el Pinar',
       address: 'Col. Americana, CP. 45130 Zapopan, Jalisco',
-      img: './assets/img/providers/abarrotera_el_pinar.jpg',
+      logo: './assets/img/providers/abarrotera_el_pinar.jpg',
       rating: 4.5,
       description: 'Productos en General'
     },

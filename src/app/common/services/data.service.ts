@@ -5,7 +5,7 @@ import { BehaviorSubject, Observable } from "rxjs";
 import { IDependencyResponse } from "src/app/auth/models/auth.model";
 import { GlobalConstants } from "../models/global.constants";
 import { IOrderStatusCatalog, IOrderStatusCatalogResponse } from "../models/order.model";
-import { IUser, IUserResponse } from "../models/user.model";
+import { IGuestUser, IUser, IUserResponse } from "../models/user.model";
 
 @Injectable({
     providedIn: 'root',
@@ -23,6 +23,21 @@ export class DataService {
 
     // User
     public setUser(user: IUser): void {
+        this._cookieService.delete('userInfo', '/');
+        this._cookieService.set(
+            'userInfo',
+            JSON.stringify(user),
+            undefined,
+            '/'
+        );
+    }
+    
+    public setGuestUser(): void {
+        const user: IGuestUser = {
+            provider_id:'0',
+            user_type: 0,
+            vendor_id: '0',
+        }
         this._cookieService.delete('userInfo', '/');
         this._cookieService.set(
             'userInfo',

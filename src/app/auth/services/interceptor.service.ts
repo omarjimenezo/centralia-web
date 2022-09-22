@@ -9,14 +9,17 @@ import { AuthService } from './auth.service';
 import { Observable } from 'rxjs';
 import { Route, Router } from '@angular/router';
 import { GlobalConstants } from 'src/app/common/models/global.constants';
+import { DataService } from 'src/app/common/services/data.service';
+import { IUser } from 'src/app/common/models/user.model';
 
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
     constructor(
         private _global: GlobalConstants,
         private _authService: AuthService,
+        private _dataService: DataService,
         private _routeService: Router
-    ) {}
+    ) { }
 
     intercept(
         request: HttpRequest<any>,
@@ -28,9 +31,10 @@ export class TokenInterceptor implements HttpInterceptor {
                     Authorization: `Bearer ${this._authService.getToken()}`,
                 },
             });
-        } else {
-            this._routeService.navigate([this._global.ROUTES.AUTH.LOGIN]);
-        }
+        } 
+        // else {
+        //     this._routeService.navigate([this._global.ROUTES.AUTH.LOGIN]);
+        // }
 
         return next.handle(request);
     }

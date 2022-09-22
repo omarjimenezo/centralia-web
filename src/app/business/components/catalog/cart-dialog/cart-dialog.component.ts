@@ -1,7 +1,7 @@
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { CatalogService } from 'src/app/business/services/catalog.service';
 import { IResponse } from 'src/app/common/models/common.model';
@@ -40,7 +40,8 @@ export class CartDialogComponent implements OnInit, OnDestroy {
         private _catalogService: CatalogService,
         private _alertService: AlertService,
         private _dataService: DataService,
-        private _route: ActivatedRoute
+        private _route: ActivatedRoute,
+        private _routerService: Router,
     ) { }
 
     public ngOnInit(): void {
@@ -93,7 +94,7 @@ export class CartDialogComponent implements OnInit, OnDestroy {
                         this._global.SUCCESS_MESSAGES.ORDER_SAVED,
                         response.code
                     );
-                    this.resetOrder();
+                    this._routerService.navigate([this._global.ROUTES.BUSINESS.ORDERS]);
                 } else {
                     this._alertService.openAlert(
                         this._global.ERROR_MESSAGES.ORDER_ERROR,

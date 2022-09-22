@@ -16,9 +16,41 @@ export class ProvidersComponent implements OnInit {
       id: 2,
       name: 'Abarrotera el Pinar',
       address: 'Col. Americana, CP. 45130 Zapopan, Jalisco',
-      img: './assets/img/providers/abarrotera_el_pinar.jpg',
+      logo: './assets/img/providers/abarrotera_el_pinar.jpg',
       rating: 4.5,
-      description: 'Productos en General'
+      description: 'Abarrotes'
+    },
+    {
+      id: 10,
+      name: 'Tortillas de Avena',
+      address: 'Col. Americana, CP. 45130 Zapopan, Jalisco',
+      logo: './assets/img/providers/tortillas.jpg',
+      rating: 4.5,
+      description: 'Tortillas'
+    },
+    {
+      id: 11,
+      name: 'Don Cacahuate',
+      address: 'Col. Americana, CP. 45130 Zapopan, Jalisco',
+      logo: './assets/img/providers/cacahuates.jpg',
+      rating: 4.5,
+      description: 'Botanas'
+    },
+    {
+      id: 12,
+      name: 'Aguas Doña Graciela',
+      address: 'Col. Americana, CP. 45130 Zapopan, Jalisco',
+      logo: './assets/img/providers/frescas.jpg',
+      rating: 4.5,
+      description: 'Aguas Frescas'
+    },
+    {
+      id: 13,
+      name: 'Panadería Bakery',
+      address: 'Col. Americana, CP. 45130 Zapopan, Jalisco',
+      logo: './assets/img/providers/panaderia.jpg',
+      rating: 4.5,
+      description: 'Panadería'
     },
   ];
 

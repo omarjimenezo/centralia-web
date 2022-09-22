@@ -1,23 +1,20 @@
 @import "../../../../colors.scss";
 
-.login-container {
+.mat-dialog-container {
     display: flex;
     justify-content: center;
-    height: 100%;
     align-items: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-color: $primary;
+    text-align: center;
+}
 
-    .login-wrapper {
-        max-width: 20em;
-        text-align: center;
+.login-wrapper {
+    max-width: 20em;
+    text-align: center;
 
-        .login-image {
-            padding: 5px;
-            width: 50%;
-            height: 50%;
-        }
+    .login-image {
+        padding: 5px;
+        width: 50%;
+        height: 50%;
     }
 }
 

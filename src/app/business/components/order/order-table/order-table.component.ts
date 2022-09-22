@@ -31,9 +31,8 @@ export class OrderTableComponent implements OnInit {
     public userInfo: IUser;
 
     public displayedColumns: string[] = [
-        'client_name',
-        'date',
         'provider',
+        'date',
         'status',
         'actions',
         'mobile',

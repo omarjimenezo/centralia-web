@@ -19,3 +19,7 @@ export interface IDependency {
     sup_user_id: string;
     sub_user_id: string;
 }
+
+export interface IDialogData {
+    returnURL: string;
+  }

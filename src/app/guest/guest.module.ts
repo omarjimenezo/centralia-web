@@ -27,10 +27,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterModule } from '@angular/router';
-import { ApplicationContentComponent } from './components/info/providers/application-content/application-content.component';
-import { ApplicationFooterComponent } from './components/info/providers/application-footer/application-footer.component';
-import { ApplicationHeaderComponent } from './components/info/providers/application-header/application-header.component';
-import { ProvidersInfoComponent } from './components/info/providers/providers-info.component';
+import { ProvidersInfoComponent } from './components/info/providers-info/providers-info.component';
 import { NavBarComponent } from './components/navigation/nav-bar/nav-bar.component';
 import { SideNavComponent } from './components/navigation/side-nav/side-nav.component';
 import { GuestRoutingModule } from './guest-routing.component';
@@ -40,18 +37,12 @@ import { GuestComponent } from './guest.component';
     declarations: [
         GuestComponent,
         ProvidersInfoComponent,
-        ApplicationHeaderComponent,
-        ApplicationContentComponent,
-        ApplicationFooterComponent,
         NavBarComponent,
         SideNavComponent,
     ],
     exports: [
         GuestComponent,
         ProvidersInfoComponent,
-        ApplicationHeaderComponent,
-        ApplicationContentComponent,
-        ApplicationFooterComponent,
         NavBarComponent,
         SideNavComponent,
     ],

@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuardService as AuthGuard } from '../auth/services/guard.service';
+import { CatalogComponent } from '../common/components/catalog/catalog.component';
+import { ProvidersComponent } from '../common/components/providers/providers.component';
 import { BusinessComponent } from './business.component';
-import { CatalogComponent } from './components/catalog/catalog.component';
 import { OrderComponent } from './components/order/order.component';
-import { ProvidersComponent } from './components/providers/providers.component';
 
 const routes: Routes = [
     {

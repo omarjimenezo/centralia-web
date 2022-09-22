@@ -1,8 +1,10 @@
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { LoginComponent } from 'src/app/auth/components/login/login.component';
+import { AuthService } from 'src/app/auth/services/auth.service';
 import { CatalogService } from 'src/app/business/services/catalog.service';
 import { IResponse } from 'src/app/common/models/common.model';
 import { GlobalConstants } from 'src/app/common/models/global.constants';
@@ -36,11 +38,14 @@ export class CartDialogComponent implements OnInit, OnDestroy {
     constructor(
         @Inject(MAT_DIALOG_DATA) public data: { dialogMode: string, orderTotal: number },
         private _global: GlobalConstants,
+        private _autService: AuthService,
         private _orderService: OrderService,
         private _catalogService: CatalogService,
         private _alertService: AlertService,
         private _dataService: DataService,
-        private _route: ActivatedRoute
+        private _route: ActivatedRoute,
+        private _routerService: Router,
+        public dialog: MatDialog,
     ) { }
 
     public ngOnInit(): void {
@@ -80,36 +85,52 @@ export class CartDialogComponent implements OnInit, OnDestroy {
     }
 
     public saveOrder(): void {
-        let saveOrder: IOrder = {
-            amount: this.orderTotal,
-            provider_id: parseInt(this.userInfo.vendor_id),
-            description: this.order.description,
-        };
-
-        this._orderService.saveOrder(saveOrder).subscribe(
-            (response: IResponse) => {
-                if (response && response.code === 0) {
-                    this._alertService.openAlert(
-                        this._global.SUCCESS_MESSAGES.ORDER_SAVED,
-                        response.code
-                    );
-                    this.resetOrder();
-                } else {
+        if (this._autService.isAuthenticated()) {
+            let saveOrder: IOrder = {
+                amount: this.orderTotal,
+                provider_id: this.providerId,
+                description: this.order.description,
+            };
+    
+            this._orderService.saveOrder(saveOrder).subscribe(
+                (response: IResponse) => {
+                    if (response && response.code === 0) {
+                        this._alertService.openAlert(
+                            this._global.SUCCESS_MESSAGES.ORDER_SAVED,
+                            response.code
+                        );
+                        this._routerService.navigate([this._global.ROUTES.BUSINESS.ORDERS]);
+                        this.resetOrder();  
+                    } else {
+                        this._alertService.openAlert(
+                            this._global.ERROR_MESSAGES.ORDER_ERROR,
+                            response.code
+                        );
+                    }
+                },
+                (error) => {
+                    console.error(error);
                     this._alertService.openAlert(
                         this._global.ERROR_MESSAGES.ORDER_ERROR,
-                        response.code
+                        1
                     );
                 }
-            },
-            (error) => {
-                console.error(error);
-                this._alertService.openAlert(
-                    this._global.ERROR_MESSAGES.ORDER_ERROR,
-                    1
-                );
-            }
-        );
+            );
+        } else {
+            this.openLoginDialog();
+        }
     }
+
+    openLoginDialog(): void {
+        const dialogRef = this.dialog.open(LoginComponent, {
+          width: '350px',
+          data: {returnURL: `${this._global.ROUTES.BUSINESS.CATALOG}/${parseInt(this._route.snapshot.paramMap.get('id')!)}`},
+        });
+    
+        dialogRef.afterClosed().subscribe(result => {
+          console.log('The dialog was closed');
+        });
+      }
 
     public resetOrder(): void {
         this._orderService.resetOrder();

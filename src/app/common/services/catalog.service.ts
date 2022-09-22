@@ -18,25 +18,20 @@ export class CatalogService {
         private _dataService: DataService,
         private _global: GlobalConstants
     ) {
-        this._dataService.getProviderId.subscribe((providerId) => {
-            this.initCatalog(providerId);
-            this.initCategories(providerId);
-        });
+        
     }
 
     // Catalog
     public initCatalog(providerId: string): void {
-        if (providerId) {
-            this._http
-                .get<ICatalogResponse>(
-                    `${this._global.ENDPOINTS.CATALOG.GET_CATALOG}/${providerId}`
-                )
-                .subscribe((catalog: ICatalogResponse) => {
-                    if (catalog && catalog.data) {
-                        this.setCatalog(catalog.data);
-                    }
-                });
-        }
+        this._http
+            .get<ICatalogResponse>(
+                `${this._global.ENDPOINTS.CATALOG.GET_CATALOG}/${providerId}`
+            )
+            .subscribe((catalog: ICatalogResponse) => {
+                if (catalog && catalog.data) {
+                    this.setCatalog(catalog.data);
+                }
+            });
     }
 
     public setCatalog(catalog: ICatalog[]): void {
@@ -50,24 +45,22 @@ export class CatalogService {
     public resetQuantities(): void {
         this._resetCatalog.next('');
     }
-    
+
     get getResetQuantities(): Observable<string> {
         return this._resetCatalog.asObservable();
     }
 
     //  Category
     public initCategories(providerId: string): void {
-        if (providerId) {
-            this._http
-                .get<ICategoryResponse>(
-                    `${this._global.ENDPOINTS.CATALOG.GET_CATEGORIES}/${providerId}`
-                )
-                .subscribe((category: ICategoryResponse) => {
-                    if (category && category.data) {
-                        this.setCategory(category.data);
-                    }
-                });
-        }
+        this._http
+            .get<ICategoryResponse>(
+                `${this._global.ENDPOINTS.CATALOG.GET_CATEGORIES}/${providerId}`
+            )
+            .subscribe((category: ICategoryResponse) => {
+                if (category && category.data) {
+                    this.setCategory(category.data);
+                }
+            });
     }
 
     public setCategory(category: ICategory[]) {

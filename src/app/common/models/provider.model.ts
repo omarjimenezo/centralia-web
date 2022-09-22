@@ -3,6 +3,6 @@ export interface IProvider {
     name: string;
     address: string;
     rating: number;
-    img: string;
+    logo: string;
     description: string;
 }

@@ -7,6 +7,7 @@ import { ActivatedRoute } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { Subscription } from 'rxjs';
 import { IDependencyResponse } from 'src/app/auth/models/auth.model';
+import { AuthService } from 'src/app/auth/services/auth.service';
 import { GlobalConstants } from 'src/app/common/models/global.constants';
 import { IOrder } from 'src/app/common/models/order.model';
 import { IUser } from 'src/app/common/models/user.model';
@@ -36,7 +37,7 @@ export class CatalogComponent implements OnInit, OnDestroy {
     public productsAdded: number = 0;
     public client_address: string = '';
     public client_name: string = '';
-    public providerId: number;
+    public providerId: string = '';
     public userInfo: IUser;
 
 
@@ -49,6 +50,7 @@ export class CatalogComponent implements OnInit, OnDestroy {
 
     constructor(
         private _activatedRoute: ActivatedRoute,
+        private _authService: AuthService,
         private _dataService: DataService,
         private _orderService: OrderService,
         private _global: GlobalConstants,
@@ -57,13 +59,22 @@ export class CatalogComponent implements OnInit, OnDestroy {
         private _cookieService: CookieService,
         public _alertService: AlertService,
         public _matDialog: MatDialog
-    ) { }
+    ) {
+        this.userInfo = JSON.parse(this._cookieService.get('userInfo'))
+        this.providerId = this._activatedRoute.snapshot.paramMap.get('id')!
+        
+        if (this.providerId) {
+            this._dataService.setProviderId(this.providerId);
+            this._catalogService.initCatalog(this.providerId);
+            this._catalogService.initCategories(this.providerId);
+        }
+    }
 
     public ngOnInit(): void {
+        this.getDependency();
         this.getCatalog();
         this.getOrder();
         this.getTotal();
-        this.getProviderId();
         this.getFilter();
         this.getSearch();
         this.resetQuantities();
@@ -78,6 +89,7 @@ export class CatalogComponent implements OnInit, OnDestroy {
         this.catalog = [];
         this.displayCatalog = [];
         this.loading = true;
+
         this.sub_catalog = this._catalogService.getCatalog.subscribe(
             (catalog: ICatalog[]) => {
                 if (catalog.length > 0) {
@@ -93,25 +105,22 @@ export class CatalogComponent implements OnInit, OnDestroy {
         );
     }
 
-    public getProviderId(): void {
-        let userInfo: IUser = JSON.parse(this._cookieService.get('userInfo'))
-        let providerId: string = this._activatedRoute.snapshot.paramMap.get('id')!
-        this._dataService.setProviderId(providerId);
+    public getDependency(): void {
+        if (this._authService.isAuthenticated()) {
+            this._dataService.getDependencyBySubId(this.userInfo.id).subscribe(
+                (dependency: IDependencyResponse) => {
+                    (dependency && dependency.data && dependency.data.length > 0) ? this._dataService.setVendorId(dependency.data[0].sup_user_id) : this._dataService.setVendorId(this.providerId)
 
-        this._dataService.getDependencyBySubId(userInfo.id).subscribe(
-            (dependency: IDependencyResponse) => {
-                (dependency && dependency.data && dependency.data.length > 0) ? this._dataService.setVendorId(dependency.data[0].sup_user_id) : this._dataService.setVendorId(providerId)
-
-            },
-            (error) => {
-                this._alertService.openAlert(
-                    this._global.ERROR_MESSAGES.CONNECTION_ERROR,
-                    1
-                );
-                console.error(error);
-
-            }
-        );
+                },
+                (error) => {
+                    this._alertService.openAlert(
+                        this._global.ERROR_MESSAGES.CONNECTION_ERROR,
+                        1
+                    );
+                    console.error(error);
+                }
+            );
+        }
     }
 
     public getOrder(): void {
