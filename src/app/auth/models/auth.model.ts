@@ -16,8 +16,8 @@ export interface IDependencyResponse {
 }
 
 export interface IDependency {
-    sup_user_id: string;
-    sub_user_id: string;
+    sup_user_id: number;
+    sub_user_id: number;
 }
 
 export interface IDialogData {

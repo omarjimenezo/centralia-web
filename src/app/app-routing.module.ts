@@ -5,7 +5,7 @@ import { NotFoundComponent } from './auth/components/not-found/not-found.compone
 import { AuthGuardService as AuthGuard } from './auth/services/guard.service';
 
 const routes: Routes = [
-    { path: '', redirectTo: 'invitado/info/proveedores', pathMatch: 'full' },
+    { path: '', redirectTo: 'invitado/info/general', pathMatch: 'full' },
 
     { path: 'login', component: LoginComponent },
     {

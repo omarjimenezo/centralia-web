@@ -1,3 +1,8 @@
+.title-container {
+    margin: 15px;
+    text-align: center;
+}
+
 .card-container {
     display: flex;
     flex-wrap: wrap;
@@ -79,6 +84,7 @@ img {
     display: flex;
     justify-content: flex-end;
     flex-direction: row-reverse;
+    align-items: center;
 
     @media (max-width: 700px) {
         flex-direction: column-reverse;

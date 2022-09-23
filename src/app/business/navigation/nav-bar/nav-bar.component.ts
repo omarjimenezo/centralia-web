@@ -26,7 +26,7 @@ export class NavBarComponent implements OnInit {
     public loading: boolean = false;
     public totalFadeOut: boolean = false;
     public categories: ICategory[];
-    public providerId: string;
+    public providerId: number;
     public orderTotal: number;
     public catalogToolbar: boolean = false;
     public searchKey: string = '';

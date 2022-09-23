@@ -77,7 +77,14 @@ export class CartDialogComponent implements OnInit, OnDestroy {
     }
 
     public getProvider(): void {
-        this.providerId = parseInt(this._route.snapshot.paramMap.get('id')!);
+        if(this._route.snapshot.paramMap.get('id')) {
+            this._dataService.setProviderId(parseInt(this._route.snapshot.paramMap.get('id')!))
+            this.providerId = parseInt(this._route.snapshot.paramMap.get('id')!);
+        }
+
+        this._dataService.getProviderId.subscribe((id) => {
+            this.providerId = id;
+        })
     }
 
     public getClient(): void {

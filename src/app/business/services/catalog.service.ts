@@ -25,7 +25,7 @@ export class CatalogService {
     }
 
     // Catalog
-    public initCatalog(providerId: string): void {
+    public initCatalog(providerId: number): void {
         if (providerId) {
             this._http
                 .get<ICatalogResponse>(
@@ -56,7 +56,7 @@ export class CatalogService {
     }
 
     //  Category
-    public initCategories(providerId: string): void {
+    public initCategories(providerId: number): void {
         if (providerId) {
             this._http
                 .get<ICategoryResponse>(

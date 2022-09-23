@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 
-declare var $: any;
-
 @Component({
     selector: 'providers-info',
     templateUrl: './providers-info.component.html',

@@ -73,7 +73,14 @@ export class CartDialogComponent implements OnInit, OnDestroy {
     }
 
     public getProvider(): void {
-        this.providerId = parseInt(this._route.snapshot.paramMap.get('id')!);
+        if(this._route.snapshot.paramMap.get('id')) {
+            this._dataService.setProviderId(parseInt(this._route.snapshot.paramMap.get('id')!))
+            this.providerId = parseInt(this._route.snapshot.paramMap.get('id')!);
+        }
+
+        this._dataService.getProviderId.subscribe((id) => {
+            this.providerId = id;
+        })
     }
 
     public getClient(): void {
@@ -83,7 +90,7 @@ export class CartDialogComponent implements OnInit, OnDestroy {
     public saveOrder(): void {
         let saveOrder: IOrder = {
             amount: this.orderTotal,
-            provider_id: parseInt(this.userInfo.vendor_id),
+            provider_id: this.userInfo.vendor_id,
             description: this.order.description,
         };
 

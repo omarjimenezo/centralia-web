@@ -38,6 +38,17 @@
     cursor: pointer;
 }
 
+.centralia-title {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+}
+
+.logo {
+    width: 40px;
+    margin: 0 10px;
+}
+
 @media screen and (max-width: 1007px) {
     .button-cart-big {
         visibility: visible;

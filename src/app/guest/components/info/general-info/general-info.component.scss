@@ -1,0 +1,78 @@
+@import "../../../../../colors.scss";
+
+.header {
+    position: relative;
+    height: 420px;
+    background: $primary;
+    background: linear-gradient(180deg, $dark-primary 0%, $primary 57%);
+    text-align: center;
+    color: $white;
+}
+
+.content {
+    padding: 20px;
+}
+
+.info {
+    display: flex;
+    flex-direction: row;
+    margin: 50px 0;
+    justify-content: center;
+    
+    @media (max-width: 1008px) {
+        flex-direction: column;
+        align-items: center;    
+    }
+}
+
+.info-column {
+    text-align: center;
+    display: block;
+    width: 30%;
+    margin: 20px;
+}
+
+.info-title {
+    font-size: 25px;
+    font-weight: 400;
+    margin: 0 0 16px;
+    padding: 0;
+}
+
+.info-content {
+    font-size: 15px;
+    font-weight: 250;
+    margin: 0 0 16px;
+    padding: 0;
+}
+
+.section-title {
+    text-align: center;
+    font-size: 2rem !important;
+    font-family: sans-serif !important;
+
+    @media (max-width: 1008px) {
+        font-size: 2rem !important;
+    }
+}
+
+.section-content {
+    padding: 0 10px;
+    font-size: 1rem !important;
+    font-family: sans-serif !important;
+
+    @media (max-width: 1008px) {
+        font-size: 1rem !important;
+    }
+}
+
+.logo {
+    width: 9%;
+    padding: 30px;
+    @media (max-width: 550px) {
+        width: 40%;
+    }
+    @media (max-width: 1008px) {
+        width: 20%;
+    }
+}

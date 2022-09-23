@@ -11,8 +11,8 @@ import { IGuestUser, IUser, IUserResponse } from "../models/user.model";
     providedIn: 'root',
 })
 export class DataService {
-    private _providerId = new BehaviorSubject<string>('');
-    private _vendorId = new BehaviorSubject<string>('');
+    private _providerId = new BehaviorSubject<number>(0);
+    private _vendorId = new BehaviorSubject<number>(0);
     private _orderStatusCatalog = new BehaviorSubject<IOrderStatusCatalog[]>([]);
 
     constructor(
@@ -64,15 +64,15 @@ export class DataService {
         }
     }
 
-    get getProviderId(): Observable<string> {
+    get getProviderId(): Observable<number> {
         return this._providerId.asObservable();
     }
 
-    public setProviderId(providerId: string) {
+    public setProviderId(providerId: number) {
         this._providerId.next(providerId);
     }
 
-    public setVendorId(vendorId: string) {
+    public setVendorId(vendorId: number) {
         let user: IUser;
         this._vendorId.next(vendorId);
         if (this._cookieService.get('userInfo')) {

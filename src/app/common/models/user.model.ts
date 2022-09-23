@@ -4,8 +4,8 @@ export interface IUserResponse {
 
 export interface IUser {
     id: string;
-    provider_id: string;
-    vendor_id: string;
+    provider_id: number;
+    vendor_id: number;
     user_type: number;
     email: string;
     name: string;

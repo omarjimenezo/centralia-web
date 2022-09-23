@@ -37,7 +37,7 @@ export class CatalogComponent implements OnInit, OnDestroy {
     public productsAdded: number = 0;
     public client_address: string = '';
     public client_name: string = '';
-    public providerId: string = '';
+    public providerId: number = 0;
     public userInfo: IUser;
 
 
@@ -61,7 +61,7 @@ export class CatalogComponent implements OnInit, OnDestroy {
         public _matDialog: MatDialog
     ) {
         this.userInfo = JSON.parse(this._cookieService.get('userInfo'))
-        this.providerId = this._activatedRoute.snapshot.paramMap.get('id')!
+        this.providerId = parseInt(this._activatedRoute.snapshot.paramMap.get('id')!)
         
         if (this.providerId) {
             this._dataService.setProviderId(this.providerId);
@@ -129,9 +129,10 @@ export class CatalogComponent implements OnInit, OnDestroy {
                 this.elementFadeout();
                 this.order = order;
                 this.productsAdded = 0;
-                order.description.forEach((product) => {
-                    this.productsAdded += product.quantity;
-                });
+                this.productsAdded = order.description.length;
+                // order.description.forEach((product) => {
+                //     this.productsAdded += product.quantity;
+                // });
 
             },
             (error: any) => {

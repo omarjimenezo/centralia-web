@@ -95,10 +95,10 @@ export class CatalogComponent implements OnInit, OnDestroy {
 
     public getProviderId(): void {
         let userInfo: IUser = JSON.parse(this._cookieService.get('userInfo'))
-        let providerId: string = this._activatedRoute.snapshot.paramMap.get('id')!
+        let providerId: number = parseInt(this._activatedRoute.snapshot.paramMap.get('id')!);
         this._dataService.setProviderId(providerId);
 
-        this._dataService.getDependencyBySubId(userInfo.id).subscribe(
+        this._dataService.getDependencyBySubId(userInfo.id).subscribe( 
             (dependency: IDependencyResponse) => {
                 (dependency && dependency.data && dependency.data.length > 0) ? this._dataService.setVendorId(dependency.data[0].sup_user_id) : this._dataService.setVendorId(providerId)
 

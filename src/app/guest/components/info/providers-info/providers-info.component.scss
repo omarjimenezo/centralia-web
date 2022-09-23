@@ -1,46 +1,98 @@
 @import "../../../../../colors.scss";
 
-.no-parallax {
-    background: $white;
-    height: 600px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    text-align: center;
-    color: $primary;
+.logo {
+    width: 30%;
 }
 
-.parallax {
-    padding: 7rem 0;
-    text-align: center;
-    color: $white;
-    background: url('../../../../../assets/img/centralia/purple_polygon_background.jpg')
-        center center / cover no-repeat fixed;
-    font-size: 1rem;
+.zones {
+    transition: transform .2s;
+    /* Animation */
+    width: 50%;
+}
+
+.zones:hover {
+    transform: scale(1.5);
+    /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+}
+
+
+main {
+    height: 100vh;
+    overflow-x: hidden;
+    overflow-y: auto;
+    perspective: 2px;
+}
+
+.no-parallax-title {
+    background: $primary;
+    background: linear-gradient(180deg, $dark-primary 0%, $primary 57%);
+    z-index: 999;
+}
+
+.no-parallax {
+    background: $primary;
+    background: linear-gradient(340deg, $dark-primary 0%, $primary 57%);
+    z-index: 999;
 }
 
 section {
-    padding: 2rem 20%;
+    transform-style: preserve-3d;
+    position: relative;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    color: $white;
+    flex-direction: column;
 }
 
 .section-title {
-    font-size: 2.5rem;
+    text-align: center;
+    font-size: 3rem !important;
+    font-family: sans-serif !important;
+
+    @media (max-width: 1008px) {
+        font-size: 2rem !important;
+    }
 }
 
 .section-content {
-    font-size: 1rem;
+    padding: 0 10px;
+    font-size: 2rem !important;
+    font-family: sans-serif !important;
+
+    @media (max-width: 1008px) {
+        font-size: 1rem !important;
+    }
 }
 
-section:nth-child(2) {
-    background: $primary;
-    color: $white;
-    clip-path: polygon(0 20%, 100% 0, 100% 100%, 0 100%);
-    padding: 10rem 20%;
-    width: 60%;
+.parallax::after {
+    content: " ";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    transform: translateZ(-1px) scale(1.5);
+    background-size: 100%;
+    z-index: -1;
 }
 
-body {
-    margin: 0;
-    font: 20px/2.2 system-ui;
+.list {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+ul.a {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    list-style-type: circle;
+}
+
+.bg::after {
+    background: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0)),
+        url("../../../../../assets/img/centralia/indigo_polygon_background.png");
+    background-size: cover;
 }

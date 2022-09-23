@@ -22,7 +22,7 @@ export class CatalogService {
     }
 
     // Catalog
-    public initCatalog(providerId: string): void {
+    public initCatalog(providerId: number): void {
         this._http
             .get<ICatalogResponse>(
                 `${this._global.ENDPOINTS.CATALOG.GET_CATALOG}/${providerId}`
@@ -51,7 +51,7 @@ export class CatalogService {
     }
 
     //  Category
-    public initCategories(providerId: string): void {
+    public initCategories(providerId: number): void {
         this._http
             .get<ICategoryResponse>(
                 `${this._global.ENDPOINTS.CATALOG.GET_CATEGORIES}/${providerId}`

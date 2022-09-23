@@ -1,4 +1,4 @@
-<nav-bar (menuOpen)="sidenav.toggle()"></nav-bar>
+<nav-bar class="mat-elevation-z6" (menuOpen)="sidenav.toggle()"></nav-bar>
 
 <mat-sidenav-container class="main-container" [hasBackdrop]="true">
     <mat-sidenav #sidenav mode="over" class="mat-elevation-z8" [(opened)]="opened">
@@ -6,8 +6,6 @@
     </mat-sidenav>
 
     <mat-sidenav-content>
-        <div class="content-container">
-            <router-outlet></router-outlet>
-        </div>
+        <router-outlet></router-outlet>
     </mat-sidenav-content>
-</mat-sidenav-container> 
+</mat-sidenav-container>

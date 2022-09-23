@@ -35,7 +35,7 @@ export class GlobalConstants {
     };
 
     public ROUTES = {
-        LANDINGPAGE: 'invitado/info/proveedores',
+        LANDINGPAGE: 'invitado/info/general',
         AUTH: {
             LOGIN: 'login',
             NOT_FOUND: '404',
