@@ -28,31 +28,17 @@ import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { ClientRoutingModule } from './business-routing.module';
 import { BusinessComponent } from './business.component';
-import { CatalogListComponent } from './components/catalog/catalog-list/catalog-list.component';
-import { CatalogComponent } from './components/catalog/catalog.component';
-import { CartDialogComponent } from './components/catalog/cart-dialog/cart-dialog.component';
-import { AddDialogComponent } from './components/catalog/add-dialog/add-dialog.component';
-import { CartTableComponent } from './components/catalog/cart-table/cart-table.component';
-import { ProvidersComponent } from './components/providers/providers.component';
 import { NavBarComponent } from './navigation/nav-bar/nav-bar.component';
 import { OrderComponent } from './components/order/order.component';
 import { OrderDetailComponent } from './components/order/order-detail/order-detail.component';
 import { OrderDetailTableComponent } from './components/order/order-detail-table/order-detail-table.component';
 import { OrderTableComponent } from './components/order/order-table/order-table.component';
-import { UserActionsDialogComponent } from './navigation/user-actions-dialog/user-actions-dialog.component';
 import { SideNavComponent } from './navigation/side-nav/side-nav.component';
 
 @NgModule({
     declarations: [
         BusinessComponent,
-        ProvidersComponent,
-        CatalogComponent,
-        CatalogListComponent,
         NavBarComponent,
-        CartTableComponent,
-        CartDialogComponent,
-        AddDialogComponent,
-        UserActionsDialogComponent,
         OrderComponent,
         OrderDetailComponent,
         OrderDetailTableComponent,
@@ -61,14 +47,7 @@ import { SideNavComponent } from './navigation/side-nav/side-nav.component';
     ],
     exports: [
         BusinessComponent,
-        ProvidersComponent,
-        CatalogComponent,
-        CatalogListComponent,
         NavBarComponent,
-        CartTableComponent,
-        CartDialogComponent,
-        AddDialogComponent,
-        UserActionsDialogComponent,
         OrderComponent,
         OrderDetailComponent,
         OrderDetailTableComponent,

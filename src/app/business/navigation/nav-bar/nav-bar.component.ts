@@ -2,17 +2,16 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
-import { AuthService } from 'src/app/auth/services/auth.service';
+import { CartDialogComponent } from 'src/app/common/components/catalog/cart-dialog/cart-dialog.component';
 import { IOrder } from 'src/app/common/models/order.model';
 import { IUser } from 'src/app/common/models/user.model';
 import { DataService } from 'src/app/common/services/data.service';
+import { UserActionsDialogComponent } from 'src/app/provider/navigation/user-actions-dialog/user-actions-dialog.component';
 import { ICategory } from '../../../common/models/catalog.model';
 import { OrderService } from '../../../common/services/order.service';
-import { CartDialogComponent } from '../../components/catalog/cart-dialog/cart-dialog.component';
 import { CatalogSearchService } from '../../services/catalog-search.service';
 import { CatalogService } from '../../services/catalog.service';
 import { NavBarService } from '../../services/nav-bar.service';
-import { UserActionsDialogComponent } from '../user-actions-dialog/user-actions-dialog.component';
 
 @Component({
     selector: 'nav-bar',

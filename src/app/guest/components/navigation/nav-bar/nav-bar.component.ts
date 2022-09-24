@@ -4,10 +4,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { LoginComponent } from 'src/app/auth/components/login/login.component';
 import { AuthService } from 'src/app/auth/services/auth.service';
-import { CartDialogComponent } from 'src/app/business/components/catalog/cart-dialog/cart-dialog.component';
-import { UserActionsDialogComponent } from 'src/app/business/navigation/user-actions-dialog/user-actions-dialog.component';
 import { CatalogService } from 'src/app/business/services/catalog.service';
-import { NavBarService } from 'src/app/business/services/nav-bar.service';
+import { CartDialogComponent } from 'src/app/common/components/catalog/cart-dialog/cart-dialog.component';
 import { ICategory } from 'src/app/common/models/catalog.model';
 import { IOrder } from 'src/app/common/models/order.model';
 import { IUser } from 'src/app/common/models/user.model';
@@ -158,10 +156,6 @@ export class NavBarComponent implements OnInit {
         dialogRef.afterClosed().subscribe((result) => {
             console.log(`Dialog closed: ${result}`);
         });
-    }
-
-    public openUserActionsDialog(): void {
-        this._bottomSheet.open(UserActionsDialogComponent);
     }
 
     public elementFadeout(): void {
