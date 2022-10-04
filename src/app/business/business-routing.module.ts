@@ -11,7 +11,7 @@ const routes: Routes = [
         path: '',
         canActivate: [AuthGuard],
         data: {
-            expectedRole: [3],
+            expectedRole: [2],
         },
         component: BusinessComponent,
         children: [
@@ -19,7 +19,7 @@ const routes: Routes = [
                 path: '',
                 canActivate: [AuthGuard],
                 data: {
-                    expectedRole: [3],
+                    expectedRole: [2],
                 },
                 component: ProvidersComponent,
             },
@@ -27,7 +27,7 @@ const routes: Routes = [
                 path: 'proveedores',
                 canActivate: [AuthGuard],
                 data: {
-                    expectedRole: [3],
+                    expectedRole: [2],
                 },
                 component: ProvidersComponent,
             },
@@ -35,7 +35,7 @@ const routes: Routes = [
                 path: 'catalogo/:id',
                 canActivate: [AuthGuard],
                 data: {
-                    expectedRole: [3],
+                    expectedRole: [2],
                 },
                 component: CatalogComponent,
             },
@@ -43,7 +43,7 @@ const routes: Routes = [
                 path: 'pedidos',
                 canActivate: [AuthGuard],
                 data: {
-                    expectedRole: [3],
+                    expectedRole: [2],
                 },
                 component: OrderComponent,
             },
@@ -55,4 +55,5 @@ const routes: Routes = [
     imports: [RouterModule.forChild(routes)],
     exports: [RouterModule],
 })
-export class ClientRoutingModule {}
+export class ClientRoutingModule {
+}

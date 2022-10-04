@@ -10,11 +10,11 @@ import { UserActionsDialogComponent } from '../user-actions-dialog/user-actions-
     styleUrls: ['./nav-bar.component.scss'],
 })
 export class NavBarComponent implements OnInit {
-    public userInfo: IUser;
+    public user: IUser;
     constructor(private _dataService: DataService, private _bottomSheet: MatBottomSheet) { }
 
     public ngOnInit(): void {
-        this.userInfo = this._dataService.getUserInfo();
+        this.user = this._dataService.getUserInfo();
     }
 
     public openUserActionsDialog(): void {

@@ -14,7 +14,7 @@ import { NavBarService } from "src/app/guest/services/nav-bar.service";
 export class SideNavComponent implements OnInit {
     @Output() menuOpen = new EventEmitter();
 
-    public userInfo: IUser;
+    public user: IUser;
 
     constructor(
         private _navBarService: NavBarService, 
@@ -29,7 +29,7 @@ export class SideNavComponent implements OnInit {
     }
 
     public getUserInfo(): void {
-        this.userInfo = this._dataService.getUserInfo();
+        this.user = this._dataService.getUserInfo();
     }
 
     public onMenuItemClick(route: string): void {

@@ -30,7 +30,7 @@ export class NavBarComponent implements OnInit {
     public catalogToolbar: boolean = false;
     public searchKey: string = '';
     public filterKey: string = '';
-    public userInfo: IUser;
+    public user: IUser;
 
     constructor(
         private _route: ActivatedRoute,
@@ -52,23 +52,12 @@ export class NavBarComponent implements OnInit {
 
     public ngOnInit(): void {
         this.getUserInfo();
-        this.getUrlParams();
         this.getCategories();
-        this.getOrder();
-        this.getTotal();
         this.getFilter();
     }
 
     public getUserInfo(): void {
-        this.userInfo = this._dataService.getUserInfo();
-    }
-
-    public getUrlParams(): void {
-        this._route.queryParams.subscribe((urlParams: any) => {
-            if (urlParams.providerId) {
-                this._dataService.setProviderId(urlParams.providerId);
-            }
-        });
+        this.user = this._dataService.getUserInfo();
     }
 
     public getCategories(): void {
@@ -86,24 +75,6 @@ export class NavBarComponent implements OnInit {
                 this.loading = false;
             }
         );
-    }
-
-    public getOrder(): void {
-        this._orderService.getOrder.subscribe(
-            (order: IOrder) => {
-                this.productsAdded = 0;
-                order.description.forEach((product) => {
-                    this.productsAdded += product.quantity;
-                });
-            }
-        );
-    }
-
-    public getTotal(): void {
-        this._orderService.getTotal.subscribe((total) => {
-            this.elementFadeout();
-            this.orderTotal = total;
-        });
     }
 
     public getFilter(): void {
@@ -127,20 +98,6 @@ export class NavBarComponent implements OnInit {
         this._catalogSearchService.setSearch('');
         this.searchKey = '';
         this._catalogSearchService.setFilter(event);
-    }
-
-    public openCartDialog() {
-        const dialogRef = this.dialog.open(CartDialogComponent, {
-            width: '99%',
-        });
-
-        dialogRef.afterClosed().subscribe((result) => {
-            console.log(`Dialog closed: ${result}`);
-        });
-    }
-
-    public openUserActionsDialog(): void {
-        this._bottomSheet.open(UserActionsDialogComponent);
     }
 
     public elementFadeout(): void {

@@ -34,9 +34,9 @@ export class DataService {
     
     public setGuestUser(): void {
         const user: IGuestUser = {
-            provider_id:'0',
-            user_type: 0,
-            vendor_id: '0',
+            proveedor_id:'0',
+            rol: 0,
+            agente_id: '0',
         }
         this._cookieService.delete('userInfo', '/');
         this._cookieService.set(
@@ -58,7 +58,7 @@ export class DataService {
             const userInfo: IUser = JSON.parse(
                 this._cookieService.get('userInfo')
             );
-            return userInfo.user_type;
+            return userInfo.rol;
         } else {
             return 0;
         }
@@ -78,7 +78,7 @@ export class DataService {
         if (this._cookieService.get('userInfo')) {
             user = JSON.parse(this._cookieService.get('userInfo'));
             this._cookieService.delete('userInfo', '/');
-            user.vendor_id = vendorId;
+            user.agente_id = vendorId;
             this._cookieService.set('userInfo', JSON.stringify(user));
         } else {
             const user = { vendor_id: vendorId };

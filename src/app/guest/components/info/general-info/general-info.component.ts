@@ -17,14 +17,14 @@ export class GeneralInfoComponent implements OnInit {
     }
 
     public onStartClick(): void {
-        this._routerService.navigate([this._global.ROUTES.GUEST.PROVIDERS])
+        this._routerService.navigate([this._global.ROUTES.COMMON.PROVIDERS])
     }
 
     public onProvidersClick(): void {
-        this._routerService.navigate([this._global.ROUTES.GUEST.INFOPROVIDERS])
+        this._routerService.navigate([this._global.ROUTES.COMMON.INFOPROVIDERS])
     }
 
     public onBusinessClick(): void {
-        this._routerService.navigate([this._global.ROUTES.GUEST.INFOBUSINESS])
+        this._routerService.navigate([this._global.ROUTES.COMMON.INFOBUSINESS])
     }
 }

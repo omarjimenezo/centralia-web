@@ -21,15 +21,15 @@
                         [src]="provider.logo"
                         alt="Provider Picture"
                     />
-                    <mat-card-title>{{ provider.name }}</mat-card-title>
+                    <mat-card-title>{{ provider.nombre }}</mat-card-title>
                     <mat-card-subtitle class="mat-rating"
                         ><mat-icon>star</mat-icon
-                        >{{ provider.rating }}</mat-card-subtitle
+                        >{{ provider.calificacion }}</mat-card-subtitle
                     >
                     <mat-card-subtitle>{{
-                        provider.description
+                        provider.tipo
                     }}</mat-card-subtitle>
-                    <mat-card-subtitle>{{ provider.address }}</mat-card-subtitle>
+                    <mat-card-subtitle>{{ provider.calle }}</mat-card-subtitle>
                 </mat-card-title-group>
             </mat-card>
         </div>

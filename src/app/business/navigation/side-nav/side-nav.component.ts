@@ -14,10 +14,9 @@ import { NavBarService } from "../../services/nav-bar.service";
 export class SideNavComponent implements OnInit {
     @Output() menuOpen = new EventEmitter();
 
-    public userInfo: IUser;
+    public user: IUser;
 
     constructor(
-        private _navBarService: NavBarService, 
         private _dataService: DataService, 
         private _router: Router, 
         private _authService: AuthService,
@@ -29,15 +28,14 @@ export class SideNavComponent implements OnInit {
     }
 
     public getUserInfo(): void {
-        this.userInfo = this._dataService.getUserInfo();
+        this.user = this._dataService.getUserInfo();
     }
 
     public onMenuItemClick(route: string): void {
         this._router.navigate([route]);
         this.menuOpen.emit('ok');
     }
-
-
+    
     logout(event: MouseEvent): void {
         this._authService.logout();
     }

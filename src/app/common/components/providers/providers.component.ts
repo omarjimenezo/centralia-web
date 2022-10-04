@@ -2,7 +2,8 @@ import { Component, HostListener, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { GlobalConstants } from '../../models/global.constants';
-import { IProvider } from '../../models/provider.model';
+import { IProvider, IProviderResponse } from '../../models/provider.model';
+import { ProviderService } from '../../services/providers.service';
 
 @Component({
   selector: 'app-providers',
@@ -14,43 +15,43 @@ export class ProvidersComponent implements OnInit {
   public providers: IProvider[] = [
     {
       id: 2,
-      name: 'Abarrotera el Pinar',
-      address: 'Col. Americana, CP. 45130 Zapopan, Jalisco',
+      nombre: 'Abarrotera el Pinar',
+      calle: 'Col. Americana, CP. 45130 Zapopan, Jalisco',
       logo: './assets/img/providers/abarrotera_el_pinar.jpg',
-      rating: 4.5,
-      description: 'Abarrotes'
+      calificacion: 4.5,
+      tipo: 'Abarrotes'
     },
     {
       id: 10,
-      name: 'Tortillas de Avena',
-      address: 'Col. Americana, CP. 45130 Zapopan, Jalisco',
+      nombre: 'Tortillas de Avena',
+      calle: 'Col. Americana, CP. 45130 Zapopan, Jalisco',
       logo: './assets/img/providers/tortillas.jpg',
-      rating: 4.5,
-      description: 'Tortillas'
+      calificacion: 4.5,
+      tipo: 'Tortillas'
     },
     {
       id: 11,
-      name: 'Don Cacahuate',
-      address: 'Col. Americana, CP. 45130 Zapopan, Jalisco',
+      nombre: 'Don Cacahuate',
+      calle: 'Col. Americana, CP. 45130 Zapopan, Jalisco',
       logo: './assets/img/providers/cacahuates.jpg',
-      rating: 4.5,
-      description: 'Botanas'
+      calificacion: 4.5,
+      tipo: 'Botanas'
     },
     {
       id: 12,
-      name: 'Aguas Doña Graciela',
-      address: 'Col. Americana, CP. 45130 Zapopan, Jalisco',
+      nombre: 'Aguas Doña Graciela',
+      calle: 'Col. Americana, CP. 45130 Zapopan, Jalisco',
       logo: './assets/img/providers/frescas.jpg',
-      rating: 4.5,
-      description: 'Aguas Frescas'
+      calificacion: 4.5,
+      tipo: 'Aguas Frescas'
     },
     {
       id: 13,
-      name: 'Panadería Bakery',
-      address: 'Col. Americana, CP. 45130 Zapopan, Jalisco',
+      nombre: 'Panadería Bakery',
+      calle: 'Col. Americana, CP. 45130 Zapopan, Jalisco',
       logo: './assets/img/providers/panaderia.jpg',
-      rating: 4.5,
-      description: 'Panadería'
+      calificacion: 4.5,
+      tipo: 'Panadería'
     },
   ];
 
@@ -60,16 +61,19 @@ export class ProvidersComponent implements OnInit {
     private _router: Router,
     private _global: GlobalConstants,
     private _authService: AuthService,
+    private _providerService: ProviderService,
   ) { }
 
   ngOnInit(): void {
     this.isAuthenticated = this._authService.isAuthenticated();
+    this._providerService.getProviders().subscribe(
+      (providers: IProviderResponse) => {
+        console.log(providers.data)
+      });
   }
 
   public onProviderCardClick(id: number) {
-    (this.isAuthenticated) ?
-      this._router.navigate([this._global.ROUTES.BUSINESS.CATALOG, id]) :
-      this._router.navigate([this._global.ROUTES.GUEST.CATALOG, id]);
+      this._router.navigate([this._global.ROUTES.COMMON.CATALOG, id]);
   }
 
 }

@@ -1,3 +1,5 @@
+import { IUser } from "src/app/common/models/user.model";
+
 export interface ILoginRequest {
     email: string;
     password: string;
@@ -5,12 +7,15 @@ export interface ILoginRequest {
 }
 
 export interface ILoginResponse {
-    token: string;
     message: string;
-    user_id: string;
-    code?: number;
+    code: number;
+    data: ILoginResponseData;
 }
 
+export interface ILoginResponseData {
+    token: string;
+    user: IUser;
+}
 export interface IDependencyResponse {
     data: IDependency[]
 }

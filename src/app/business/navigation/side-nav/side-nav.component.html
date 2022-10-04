@@ -1,9 +1,9 @@
 <div class="user-info">
-    <img *ngIf="userInfo.img_profile" class="avatar mat-elevation-z4" [src]="userInfo.img_profile" />
+    <img *ngIf="user.avatar" class="avatar mat-elevation-z4" [src]="user.avatar" />
     
-    <img *ngIf="!userInfo.img_profile" class="avatar mat-elevation-z4" src="./assets/img/profile/vendedor.png" />
+    <img *ngIf="!user.avatar" class="avatar mat-elevation-z4" src="./assets/img/profile/vendedor.png" />
     
-    <h3 class="name">{{ userInfo.name }} {{ userInfo.lastname }}</h3>
+    <h3 class="name">{{ user.nombre }} {{ user.apellido }}</h3>
 </div>
 
 <mat-divider></mat-divider>

@@ -17,7 +17,7 @@ const routes: Routes = [
         path: 'negocio',
         canActivate: [AuthGuard],
         data: {
-            expectedRole: [3],
+            expectedRole: [2],
         },
         loadChildren: () =>
             import('./business/business.module').then((m) => m.BusinessModule),
@@ -26,7 +26,7 @@ const routes: Routes = [
         path: 'proveedor',
         canActivate: [AuthGuard],
         data: {
-            expectedRole: [1, 2],
+            expectedRole: [1, 3],
         },
         loadChildren: () =>
             import('./provider/provider.module').then((m) => m.ProviderModule),

@@ -9,7 +9,7 @@ const routes: Routes = [
         path: '',
         canActivate: [AuthGuard],
         data: {
-            expectedRole: [1, 2],
+            expectedRole: [1, 3],
         },
         component: ProviderComponent,
         children: [
@@ -17,7 +17,7 @@ const routes: Routes = [
                 path: '',
                 canActivate: [AuthGuard],
                 data: {
-                    expectedRole: [1, 2],
+                    expectedRole: [1, 3],
                 },
                 component: OrderComponent,
             },
@@ -25,7 +25,7 @@ const routes: Routes = [
                 path: 'pedidos',
                 canActivate: [AuthGuard],
                 data: {
-                    expectedRole: [1, 2],
+                    expectedRole: [1, 3],
                 },
                 component: OrderComponent,
             },

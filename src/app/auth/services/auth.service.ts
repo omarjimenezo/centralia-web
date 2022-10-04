@@ -56,15 +56,15 @@ export class AuthService {
         this._routerService.navigate([this._global.ROUTES.LANDINGPAGE]);
     }
 
-    public landingPage(userType: number): void {
-        switch (userType) {
-            case this._global.USER_TYPES.PROVIDER:
-            case this._global.USER_TYPES.AGENT:
+    public landingPage(rol: number): void {
+        switch (rol) {
+            case this._global.ROL.PROVIDER:
+            case this._global.ROL.AGENT:
                 this._routerService.navigate([
                     this._global.ROUTES.PROVIDER.ORDERS,
                 ]);
                 break;
-            case this._global.USER_TYPES.USER:
+            case this._global.ROL.BUSINESS:
                 this._routerService.navigate([
                     this._global.ROUTES.BUSINESS.PROVIDERS,
                 ]);

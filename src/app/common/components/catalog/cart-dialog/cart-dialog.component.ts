@@ -12,7 +12,7 @@ import { IOrder, IOrderList } from 'src/app/common/models/order.model';
 import { IUser } from 'src/app/common/models/user.model';
 import { AlertService } from 'src/app/common/services/alert.service';
 import { DataService } from 'src/app/common/services/data.service';
-import { OrderService } from '../../../../common/services/order.service';
+import { OrderService } from '../../../services/order.service';
 
 @Component({
     selector: 'cart-dialog',

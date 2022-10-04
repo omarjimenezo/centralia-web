@@ -4,23 +4,20 @@ export interface IUserResponse {
 
 export interface IUser {
     id: string;
-    provider_id: number;
-    vendor_id: number;
-    user_type: number;
     email: string;
-    name: string;
-    middlename: string;
-    lastname: string;
-    phone: number;
-    mobile: number;
-    img_profile: string;
-    business: IBusiness;
+    nombre: string;
+    apellido: string;
+    telefono: number;
+    avatar: string;
+    rol: number;
+    agente_id?: number;
+    proveedor_id?: number;
 }
 
 export interface IGuestUser {
-    provider_id: string;
-    vendor_id: string;
-    user_type: number;
+    proveedor_id: string;
+    agente_id: string;
+    rol: number;
 }
 
 export interface IBusiness {

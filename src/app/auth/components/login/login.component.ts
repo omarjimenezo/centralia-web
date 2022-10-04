@@ -4,7 +4,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { GlobalConstants } from 'src/app/common/models/global.constants';
-import { IUserResponse } from 'src/app/common/models/user.model';
+import { IUser, IUserResponse } from 'src/app/common/models/user.model';
 import { AlertService } from 'src/app/common/services/alert.service';
 import { DataService } from 'src/app/common/services/data.service';
 import { IDialogData, ILoginRequest, ILoginResponse } from '../../models/auth.model';
@@ -64,8 +64,8 @@ export class LoginComponent implements OnInit {
                     if (response) {
                         switch (response.code) {
                             case 0:
-                                this._authService.setToken(response.token);
-                                this.confirmLogin(response.user_id);
+                                this._authService.setToken(response.data.token);
+                                this.setUser(response.data.user);
                                 this.dialogRef.close();
                                 break;
                             default:
@@ -96,31 +96,19 @@ export class LoginComponent implements OnInit {
         }
     }
 
-    public confirmLogin(userId: string): void {
-        this.getUser(userId);
-        this._dataService.getOrderStatusCatalog();
+    public confirmLogin(response: string): void {
+        // this.setUser(userId);
+        // this._dataService.getOrderStatusCatalog();
     }
 
-    public getUser(userId: string) {
-        this._dataService.getUser(userId).subscribe(
-            (user: IUserResponse) => {
-                if (user && user.data) {
-                    this._dataService.setUser(user.data);
+    public setUser(user: IUser) {
+                if (user) {
+                    this._dataService.setUser(user);
                     (this.dialogData && this.dialogData.returnURL) ? 
                     this._routerService.navigate([this.dialogData.returnURL]) :
-                    this._authService.landingPage(user.data.user_type);
+                    this._authService.landingPage(user.rol);
                 }
                 this.loading = false;
-            },
-            (error) => {
-                this._alertService.openAlert(
-                    this._global.ERROR_MESSAGES.CONNECTION_ERROR,
-                    1
-                );
-                console.error(error);
-                this.loading = false;
-            }
-        );
     }
 
     public forgotPassword(): void {

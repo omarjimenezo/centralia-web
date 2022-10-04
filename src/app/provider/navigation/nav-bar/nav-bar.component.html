@@ -4,16 +4,16 @@
 
         <span class="nav-spacer"></span>
 
-        <label>{{ userInfo.name }}</label>
+        <label>{{ user.nombre }}</label>
 
         <img
-            *ngIf="userInfo.img_profile"
+            *ngIf="user.avatar"
             class="avatar mat-elevation-z4"
-            [src]="userInfo.img_profile"
+            [src]="user.avatar"
             (click)="openUserActionsDialog()"
         />
         <img
-            *ngIf="!userInfo.img_profile"
+            *ngIf="!user.avatar"
             class="avatar mat-elevation-z4"
             src="./assets/img/profile/vendedor.png"
             (click)="openUserActionsDialog()"

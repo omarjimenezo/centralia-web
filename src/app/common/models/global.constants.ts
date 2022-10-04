@@ -5,13 +5,20 @@ import { IStatus } from './order.model';
     providedIn: 'root',
 })
 export class GlobalConstants {
-    private API_BASE = 'https://centralia.app/api';
-    // private API_BASE = 'http://localhost:8000/api';
-    private API_VERSION = '/v1';
-
+    // private API_BASE = 'https://centralia.app/api';
+    private API_BASE = 'http://localhost:4000/api';
+    // private API_VERSION = '/v1';
+    private API_VERSION = '';
+    
     public ENDPOINTS = {
         AUTH: {
-            LOGIN: `${this.API_BASE}/login`,
+            LOGIN: `${this.API_BASE}/auth`,
+        },
+        // AUTH: {
+        //     LOGIN: `${this.API_BASE}/login`,
+        // },
+        PROVIDER: {
+            GET_PROVIDERS: `${this.API_BASE}${this.API_VERSION}/provider`,
         },
         DATA: {
             GET_USER: `${this.API_BASE}${this.API_VERSION}/user`,
@@ -48,7 +55,7 @@ export class GlobalConstants {
             CATALOG: 'negocio/catalogo',
             ORDERS: 'negocio/pedidos',
         },
-        GUEST: {
+        COMMON: {
             PROVIDERS: 'invitado/proveedores',
             CATALOG: 'invitado/catalogo',
             INFOPROVIDERS: 'invitado/info/proveedores',
@@ -84,11 +91,11 @@ export class GlobalConstants {
         ORDER_SAVED: 'Pedido enviado',
     };
 
-    public USER_TYPES = {
+    public ROL = {
         GUEST: 0, // User not logged in, but he can see providers and catalog pages
         PROVIDER: 1,
-        AGENT: 2,
-        USER: 3,
+        BUSINESS: 2,
+        AGENT: 3,
     };
 
     public ORDER_STATUS: {
