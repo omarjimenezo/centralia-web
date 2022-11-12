@@ -6,19 +6,19 @@ import { IStatus } from './order.model';
 })
 export class GlobalConstants {
     // private API_BASE = 'https://centralia.app/api';
-    private API_BASE = 'http://localhost:4000/api';
-    // private API_VERSION = '/v1';
-    private API_VERSION = '';
-    
+    private API_BASE = 'http://localhost:8000/api';
+    private API_VERSION = '/v1';
+    // private API_VERSION = '';
+
     public ENDPOINTS = {
-        AUTH: {
-            LOGIN: `${this.API_BASE}/auth`,
-        },
         // AUTH: {
-        //     LOGIN: `${this.API_BASE}/login`,
+        //     LOGIN: `${this.API_BASE}/auth`,
         // },
+        AUTH: {
+            LOGIN: `${this.API_BASE}${this.API_VERSION}/auth`,
+        },
         PROVIDER: {
-            GET_PROVIDERS: `${this.API_BASE}${this.API_VERSION}/provider`,
+            GET_PROVIDERS: `${this.API_BASE}${this.API_VERSION}/negocios`,
         },
         DATA: {
             GET_USER: `${this.API_BASE}${this.API_VERSION}/user`,

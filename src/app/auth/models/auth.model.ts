@@ -3,18 +3,17 @@ import { IUser } from "src/app/common/models/user.model";
 export interface ILoginRequest {
     email: string;
     password: string;
-    name: string;
 }
 
 export interface ILoginResponse {
-    message: string;
-    code: number;
+    mensaje: string;
+    codigo: number;
     data: ILoginResponseData;
 }
 
 export interface ILoginResponseData {
     token: string;
-    user: IUser;
+    usuario: IUser;
 }
 export interface IDependencyResponse {
     data: IDependency[]

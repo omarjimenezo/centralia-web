@@ -35,14 +35,6 @@ export class LoginComponent implements OnInit {
             email: ['', [Validators.required, Validators.email]],
             password: ['', Validators.required],
         });
-
-        // if (this._authService.isAuthenticated()) {
-        //     if (this._dataService.getUserInfo()) {
-        //         let userInfo: IUser = this._dataService.getUserInfo();
-        //         this.confirmLogin(userInfo.id);
-        //         this._authService.landingPage(this._dataService.getUserRole())
-        //     }
-        // }
     }
 
     onNoClick(): void {
@@ -56,16 +48,15 @@ export class LoginComponent implements OnInit {
             const loginRequest: ILoginRequest = {
                 email: this.form.value.email,
                 password: this.form.value.password,
-                name: 'Chrome',
             };
 
             this._authService.login(loginRequest).subscribe(
                 (response: ILoginResponse) => {
                     if (response) {
-                        switch (response.code) {
+                        switch (response.codigo) {
                             case 0:
                                 this._authService.setToken(response.data.token);
-                                this.setUser(response.data.user);
+                                this.setUser(response.data.usuario);
                                 this.dialogRef.close();
                                 break;
                             default:
@@ -96,15 +87,10 @@ export class LoginComponent implements OnInit {
         }
     }
 
-    public confirmLogin(response: string): void {
-        // this.setUser(userId);
-        // this._dataService.getOrderStatusCatalog();
-    }
-
     public setUser(user: IUser) {
                 if (user) {
                     this._dataService.setUser(user);
-                    (this.dialogData && this.dialogData.returnURL) ? 
+                    (this.dialogData && this.dialogData.returnURL) ?
                     this._routerService.navigate([this.dialogData.returnURL]) :
                     this._authService.landingPage(user.rol);
                 }

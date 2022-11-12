@@ -14,7 +14,7 @@ export class ProviderService {
         private _http: HttpClient,
         private _global: GlobalConstants
     ) {
-        
+
     }
 
     // Catalog

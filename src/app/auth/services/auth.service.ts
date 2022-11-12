@@ -24,7 +24,6 @@ export class AuthService {
 
     public isAuthenticated(): boolean {
         if (this.getToken()) {
-            this._dataService.getOrderStatusCatalog();
             return true
         }
         return false;
@@ -34,7 +33,7 @@ export class AuthService {
         this._cookieService.delete('tokenAuth', '/');
         this._cookieService.set('tokenAuth', token, undefined, '/');
     }
-    
+
     public getToken(): string {
         if (this._cookieService.get('tokenAuth')) {
             return this._cookieService.get('tokenAuth');

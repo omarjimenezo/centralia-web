@@ -12,48 +12,50 @@ import { ProviderService } from '../../services/providers.service';
 })
 export class ProvidersComponent implements OnInit {
 
-  public providers: IProvider[] = [
-    {
-      id: 2,
-      nombre: 'Abarrotera el Pinar',
-      calle: 'Col. Americana, CP. 45130 Zapopan, Jalisco',
-      logo: './assets/img/providers/abarrotera_el_pinar.jpg',
-      calificacion: 4.5,
-      tipo: 'Abarrotes'
-    },
-    {
-      id: 10,
-      nombre: 'Tortillas de Avena',
-      calle: 'Col. Americana, CP. 45130 Zapopan, Jalisco',
-      logo: './assets/img/providers/tortillas.jpg',
-      calificacion: 4.5,
-      tipo: 'Tortillas'
-    },
-    {
-      id: 11,
-      nombre: 'Don Cacahuate',
-      calle: 'Col. Americana, CP. 45130 Zapopan, Jalisco',
-      logo: './assets/img/providers/cacahuates.jpg',
-      calificacion: 4.5,
-      tipo: 'Botanas'
-    },
-    {
-      id: 12,
-      nombre: 'Aguas Doña Graciela',
-      calle: 'Col. Americana, CP. 45130 Zapopan, Jalisco',
-      logo: './assets/img/providers/frescas.jpg',
-      calificacion: 4.5,
-      tipo: 'Aguas Frescas'
-    },
-    {
-      id: 13,
-      nombre: 'Panadería Bakery',
-      calle: 'Col. Americana, CP. 45130 Zapopan, Jalisco',
-      logo: './assets/img/providers/panaderia.jpg',
-      calificacion: 4.5,
-      tipo: 'Panadería'
-    },
-  ];
+    public providers: IProvider[];
+
+//   public providers: IProvider[] = [
+//     {
+//       id: 2,
+//       nombre: 'Abarrotera el Pinar',
+//       calle: 'Col. Americana, CP. 45130 Zapopan, Jalisco',
+//       logo: './assets/img/providers/abarrotera_el_pinar.jpg',
+//       calificacion: 4.5,
+//       tipo: 'Abarrotes'
+//     },
+//     {
+//       id: 10,
+//       nombre: 'Tortillas de Avena',
+//       calle: 'Col. Americana, CP. 45130 Zapopan, Jalisco',
+//       logo: './assets/img/providers/tortillas.jpg',
+//       calificacion: 4.5,
+//       tipo: 'Tortillas'
+//     },
+//     {
+//       id: 11,
+//       nombre: 'Don Cacahuate',
+//       calle: 'Col. Americana, CP. 45130 Zapopan, Jalisco',
+//       logo: './assets/img/providers/cacahuates.jpg',
+//       calificacion: 4.5,
+//       tipo: 'Botanas'
+//     },
+//     {
+//       id: 12,
+//       nombre: 'Aguas Doña Graciela',
+//       calle: 'Col. Americana, CP. 45130 Zapopan, Jalisco',
+//       logo: './assets/img/providers/frescas.jpg',
+//       calificacion: 4.5,
+//       tipo: 'Aguas Frescas'
+//     },
+//     {
+//       id: 13,
+//       nombre: 'Panadería Bakery',
+//       calle: 'Col. Americana, CP. 45130 Zapopan, Jalisco',
+//       logo: './assets/img/providers/panaderia.jpg',
+//       calificacion: 4.5,
+//       tipo: 'Panadería'
+//     },
+//   ];
 
   public isAuthenticated: boolean;
 
@@ -68,7 +70,7 @@ export class ProvidersComponent implements OnInit {
     this.isAuthenticated = this._authService.isAuthenticated();
     this._providerService.getProviders().subscribe(
       (providers: IProviderResponse) => {
-        console.log(providers.data)
+        this.providers = providers.data;
       });
   }
 
