@@ -27,27 +27,28 @@ import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { CookieService } from 'ngx-cookie-service';
 import { AlertComponent } from './components/alert/alert.component';
-import { AddDialogComponent } from './components/catalog/add-dialog/add-dialog.component';
-import { CartDialogComponent } from './components/catalog/cart-dialog/cart-dialog.component';
-import { CartTableComponent } from './components/catalog/cart-table/cart-table.component';
-import { CatalogListComponent } from './components/catalog/catalog-list/catalog-list.component';
-import { CatalogComponent } from './components/catalog/catalog.component';
+import { AddDialogComponent } from './components/products/add-dialog/add-dialog.component';
+import { CartDialogComponent } from './components/products/cart-dialog/cart-dialog.component';
+import { CartTableComponent } from './components/products/cart-table/cart-table.component';
+import { CatalogListComponent } from './components/products/catalog-list/catalog-list.component';
+import { ProductsComponent } from './components/products/products.component';
 import { ProvidersComponent } from './components/providers/providers.component';
 
 @NgModule({
     declarations: [
         AlertComponent,
         ProvidersComponent,
-        CatalogComponent,
+        ProductsComponent,
         AddDialogComponent,
         CartDialogComponent,
         CartTableComponent,
         CatalogListComponent,
+        ProductsComponent,
     ],
     exports: [
         AlertComponent,
         ProvidersComponent,
-        CatalogComponent,
+        ProductsComponent,
         AddDialogComponent,
         CartDialogComponent,
         CartTableComponent,
@@ -59,7 +60,7 @@ import { ProvidersComponent } from './components/providers/providers.component';
         ReactiveFormsModule,
         HttpClientModule,
         ReactiveFormsModule,
-        
+
         // Angular Material
         MatSnackBarModule,
         MatCardModule,

@@ -18,32 +18,30 @@ export class AddDialogComponent {
     ) {}
 
     public disableAddProductButton(): boolean {
-        return this.data.quantity! < 1 || !this.data.quantity
+        return this.data.cantidad! < 1 || !this.data.cantidad
     }
 
     public calculateTotal() {
-        if (this.data.quantity && this.data.quantity > 0) {
-            this.productTotal = this.data.quantity * this.data.price;
+        if (this.data.cantidad && this.data.cantidad > 0) {
+            this.productTotal = this.data.cantidad * this.data.precio;
         }
     }
 
     public addProduct(): void {
-        if (this.data.quantity && this.data.quantity > 0) {
-            this.dialogRef.close(this.data.quantity);
-            this.data.selected = true;
-            this._orderService.addProduct(this.data.quantity, this.data);
+        if (this.data.cantidad && this.data.cantidad > 0) {
+            this.dialogRef.close(this.data.cantidad);
+            this._orderService.addProduct(this.data.cantidad, this.data);
         }
     }
 
     public removeProduct() {
         this.dialogRef.close();
-        this.data.selected = false;
-        this.data.quantity = 0;
+        this.data.cantidad = 0;
         this._orderService.removeProduct(this.data.id);
     }
 
     public onCancelClick(): void {
         this.dialogRef.close();
-        this.data.quantity = 0;
+        this.data.cantidad = 0;
     }
 }

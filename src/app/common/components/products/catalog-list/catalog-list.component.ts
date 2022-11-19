@@ -23,7 +23,7 @@ export class CatalogListComponent implements OnInit {
 
         dialogRef.afterClosed().subscribe((result) => {
             if(result < 1) {
-                product.quantity = 0
+                product.cantidad = 0
             }
         });
     }

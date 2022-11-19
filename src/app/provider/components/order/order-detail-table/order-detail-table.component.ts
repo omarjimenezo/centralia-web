@@ -66,8 +66,7 @@ export class OrderDetailTableComponent implements OnInit, OnDestroy {
     public removeProduct(id: number): void {
         this.catalog.map((product) => {
             if (product.id === id) {
-                product.selected = false;
-                product.quantity = 0;
+                product.cantidad = 0;
             }
         });
 

@@ -98,7 +98,7 @@ export class CartDialogComponent implements OnInit, OnDestroy {
                 provider_id: this.providerId,
                 description: this.order.description,
             };
-    
+
             this._orderService.saveOrder(saveOrder).subscribe(
                 (response: IResponse) => {
                     if (response && response.code === 0) {
@@ -107,7 +107,7 @@ export class CartDialogComponent implements OnInit, OnDestroy {
                             response.code
                         );
                         this._routerService.navigate([this._global.ROUTES.BUSINESS.ORDERS]);
-                        this.resetOrder();  
+                        this.resetOrder();
                     } else {
                         this._alertService.openAlert(
                             this._global.ERROR_MESSAGES.ORDER_ERROR,
@@ -131,9 +131,9 @@ export class CartDialogComponent implements OnInit, OnDestroy {
     openLoginDialog(): void {
         const dialogRef = this.dialog.open(LoginComponent, {
           width: '350px',
-          data: {returnURL: `${this._global.ROUTES.BUSINESS.CATALOG}/${parseInt(this._route.snapshot.paramMap.get('id')!)}`},
+          data: {returnURL: `${this._global.ROUTES.BUSINESS.PRODUCTS}/${parseInt(this._route.snapshot.paramMap.get('id')!)}`},
         });
-    
+
         dialogRef.afterClosed().subscribe(result => {
           console.log('The dialog was closed');
         });

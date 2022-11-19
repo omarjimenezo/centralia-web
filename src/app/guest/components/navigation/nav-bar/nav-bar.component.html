@@ -18,7 +18,7 @@
             <mat-label>Categorias</mat-label>
             <mat-select (selectionChange)="onCategorySelect($event.value)" [(ngModel)]="filterKey">
                 <mat-option value="N">TODO</mat-option>
-                <mat-option *ngFor="let category of categories" value="{{ category.category_id }}">{{ category.name }}
+                <mat-option *ngFor="let category of categories" value="{{ category.id }}">{{ category.nombre }}
                 </mat-option>
             </mat-select>
         </mat-form-field>

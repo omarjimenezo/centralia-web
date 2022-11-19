@@ -52,12 +52,12 @@ export class GlobalConstants {
         },
         BUSINESS: {
             PROVIDERS: 'negocio/proveedores',
-            CATALOG: 'negocio/catalogo',
+            PRODUCTS: 'negocio/productos',
             ORDERS: 'negocio/pedidos',
         },
         COMMON: {
             PROVIDERS: 'invitado/proveedores',
-            CATALOG: 'invitado/catalogo',
+            PRODUCTS: 'invitado/productos',
             INFOPROVIDERS: 'invitado/info/proveedores',
             INFOBUSINESS: 'invitado/info/negocios',
         },

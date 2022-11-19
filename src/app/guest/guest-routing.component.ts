@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ProvidersInfoComponent } from './components/info/providers-info/providers-info.component';
+import { ProductsComponent } from '../common/components/products/products.component';
 import { ProvidersComponent } from '../common/components/providers/providers.component';
-import { GuestComponent } from './guest.component';
-import { CatalogComponent } from '../common/components/catalog/catalog.component';
-import { GeneralInfoComponent } from './components/info/general-info/general-info.component';
 import { BusinessInfoComponent } from './components/info/business-info/business-info.component';
+import { GeneralInfoComponent } from './components/info/general-info/general-info.component';
+import { ProvidersInfoComponent } from './components/info/providers-info/providers-info.component';
+import { GuestComponent } from './guest.component';
 
 const routes: Routes = [
     {
@@ -21,19 +21,19 @@ const routes: Routes = [
                 component: ProvidersComponent,
             },
             {
-                path: 'catalogo/:id',
-                component: CatalogComponent,
+                path: 'productos/:id',
+                component: ProductsComponent,
             },
             {
-                path: 'info/general', 
+                path: 'info/general',
                 component: GeneralInfoComponent
             },
             {
-                path: 'info/proveedores', 
+                path: 'info/proveedores',
                 component: ProvidersInfoComponent
             },
             {
-                path: 'info/negocios', 
+                path: 'info/negocios',
                 component: BusinessInfoComponent
             },
         ],

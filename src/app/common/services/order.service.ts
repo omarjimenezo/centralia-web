@@ -44,7 +44,7 @@ export class OrderService {
     get getOrder(): Observable<IOrder> {
         return this._order.asObservable();
     }
-    
+
     // Orders
     public setOrders(orders: IOrder[]) {
         this._orders.next(orders);
@@ -66,13 +66,13 @@ export class OrderService {
             `${this._global.ENDPOINTS.ORDER.GET_PROVIDER_ORDERS}`
         );
     }
-    
+
     public getBusinessOrders(): Observable<IOrderResponse> {
         return this._http.get<IOrderResponse>(
             `${this._global.ENDPOINTS.ORDER.GET_BUSINESS_ORDERS}`
         );
     }
-    
+
     public updateOrderStatus(request: IOrderStatusRequest): Observable<IResponse> {
         return this._http.put<IResponse>(
             `${this._global.ENDPOINTS.ORDER.UPDATE_ORDER_STATUS}`,
@@ -141,13 +141,12 @@ export class OrderService {
         if (productFound) {
             productFound.quantity = quantity;
         } else {
-            element.selected = true;
 
             order.description.push({
                 product: {
                     id: element.id,
-                    name: element.description,
-                    price: element.price,
+                    name: element.descripcion,
+                    price: element.precio,
                 },
                 quantity: quantity,
             });

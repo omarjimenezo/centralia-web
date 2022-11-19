@@ -75,7 +75,7 @@ export class ProvidersComponent implements OnInit {
   }
 
   public onProviderCardClick(id: number) {
-      this._router.navigate([this._global.ROUTES.COMMON.CATALOG, id]);
+      this._router.navigate([this._global.ROUTES.COMMON.PRODUCTS, id]);
   }
 
 }

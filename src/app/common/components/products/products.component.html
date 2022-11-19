@@ -1,6 +1,6 @@
 <div class="section-container">
     <div class="title-container">
-        <h2>Catalogo</h2>
+        <h2>Productos</h2>
 
         <span class="nav-spacer"></span>
 
@@ -12,12 +12,6 @@
     <div class="products-container">
         <div class="table-container">
             <catalog-list *ngIf="displayCatalog" [productFade]="productFade" [displayCatalog]="displayCatalog"></catalog-list>
-        </div>
-
-        <div class="cart-container">
-            <mat-card color="primary" class="mat-elevation-z5">
-                <cart-dialog></cart-dialog>
-            </mat-card>
         </div>
     </div>
 </div>

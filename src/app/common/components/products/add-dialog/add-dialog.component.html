@@ -1,12 +1,12 @@
-<h1 mat-dialog-title>{{ data.description }}</h1>
+<h1 mat-dialog-title>{{ data.descripcion }}</h1>
 <div mat-dialog-content>
-    <p>Precio unitario: {{ data.price | currency }}</p>
+    <p>Precio unitario: {{ data.precio | currency }}</p>
     <p><strong>Total: {{ productTotal | currency }}</strong></p>
     <mat-form-field appearance="fill">
         <mat-label>Cantidad</mat-label>
         <input
             matInput
-            [(ngModel)]="data.quantity"
+            [(ngModel)]="data.cantidad"
             (keyup)="calculateTotal()"
             (keyup.enter)="addProduct()"
             type="number"
@@ -16,14 +16,13 @@
     </mat-form-field>
 </div>
 <div mat-dialog-actions align="end">
-    <button mat-button *ngIf="!data.selected" (click)="onCancelClick()">Cancelar</button>
-    <button mat-button *ngIf="data.selected" color="warn" (click)="removeProduct()">Quitar</button>
+    <button mat-button color="warn" (click)="removeProduct()">Quitar</button>
     <button
         mat-button
         color="primary"
         [disabled]="disableAddProductButton()"
         (click)="addProduct()"
     >
-        {{ (data.selected) ? 'Actualizar' : 'Agregar' }}
+        Agregar
     </button>
 </div>

@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuardService as AuthGuard } from '../auth/services/guard.service';
-import { CatalogComponent } from '../common/components/catalog/catalog.component';
+import { ProductsComponent } from '../common/components/products/products.component';
 import { ProvidersComponent } from '../common/components/providers/providers.component';
 import { BusinessComponent } from './business.component';
 import { OrderComponent } from './components/order/order.component';
@@ -32,12 +32,12 @@ const routes: Routes = [
                 component: ProvidersComponent,
             },
             {
-                path: 'catalogo/:id',
+                path: 'productos/:id',
                 canActivate: [AuthGuard],
                 data: {
                     expectedRole: [2],
                 },
-                component: CatalogComponent,
+                component: ProductsComponent,
             },
             {
                 path: 'pedidos',

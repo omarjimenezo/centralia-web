@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -8,23 +8,24 @@ import { CookieService } from 'ngx-cookie-service';
 import { Subscription } from 'rxjs';
 import { IDependencyResponse } from 'src/app/auth/models/auth.model';
 import { AuthService } from 'src/app/auth/services/auth.service';
-import { GlobalConstants } from 'src/app/common/models/global.constants';
-import { IOrder } from 'src/app/common/models/order.model';
-import { IUser } from 'src/app/common/models/user.model';
-import { AlertService } from 'src/app/common/services/alert.service';
-import { DataService } from 'src/app/common/services/data.service';
 import { ICatalog } from '../../models/catalog.model';
-import { OrderService } from '../../services/order.service';
+import { GlobalConstants } from '../../models/global.constants';
+import { IOrder } from '../../models/order.model';
+import { IUser } from '../../models/user.model';
+import { AlertService } from '../../services/alert.service';
 import { CatalogSearchService } from '../../services/catalog-search.service';
 import { CatalogService } from '../../services/catalog.service';
-import { CartDialogComponent } from './cart-dialog/cart-dialog.component';
+import { DataService } from '../../services/data.service';
+import { OrderService } from '../../services/order.service';
+import { CartDialogComponent } from '../products/cart-dialog/cart-dialog.component';
 
 @Component({
-    selector: 'app-catalog',
-    templateUrl: './catalog.component.html',
-    styleUrls: ['./catalog.component.scss'],
+  selector: 'app-products',
+  templateUrl: './products.component.html',
+  styleUrls: ['./products.component.scss']
 })
-export class CatalogComponent implements OnInit, OnDestroy {
+export class ProductsComponent implements OnInit {
+
     public catalog: ICatalog[] = [];
     public displayCatalog: ICatalog[] = [];
     public order: IOrder;
@@ -62,7 +63,7 @@ export class CatalogComponent implements OnInit, OnDestroy {
     ) {
         this.userInfo = JSON.parse(this._cookieService.get('userInfo'))
         this.providerId = parseInt(this._activatedRoute.snapshot.paramMap.get('id')!)
-        
+
         if (this.providerId) {
             this._dataService.setProviderId(this.providerId);
             this._catalogService.initCatalog(this.providerId);
@@ -71,7 +72,7 @@ export class CatalogComponent implements OnInit, OnDestroy {
     }
 
     public ngOnInit(): void {
-        this.getDependency();
+        // this.getDependency();
         this.getCatalog();
         this.getOrder();
         this.getTotal();
@@ -130,9 +131,6 @@ export class CatalogComponent implements OnInit, OnDestroy {
                 this.order = order;
                 this.productsAdded = 0;
                 this.productsAdded = order.description.length;
-                // order.description.forEach((product) => {
-                //     this.productsAdded += product.quantity;
-                // });
 
             },
             (error: any) => {
@@ -153,7 +151,7 @@ export class CatalogComponent implements OnInit, OnDestroy {
                 window.scroll(0, 0);
                 this.elementFadeout();
                 this.displayCatalog = this.catalog.filter((product: ICatalog) =>
-                    product.description.toLowerCase().includes(data)
+                    product.descripcion.toLowerCase().includes(data)
                 );
             }
 
@@ -172,7 +170,7 @@ export class CatalogComponent implements OnInit, OnDestroy {
                 this.elementFadeout();
                 if (data !== 'N') {
                     this.displayCatalog = this.catalog.filter(
-                        (product: ICatalog) => product.category === data
+                        (product: ICatalog) => product.categoria.nombre === data
                     );
                 } else {
                     this.displayCatalog = this.catalog;
@@ -185,8 +183,7 @@ export class CatalogComponent implements OnInit, OnDestroy {
         this._catalogService.getResetQuantities.subscribe(() => {
             this.elementFadeout();
             this.displayCatalog.map((product) => {
-                product.quantity = 0;
-                product.selected = false
+                product.cantidad = 0;
             });
         })
     }

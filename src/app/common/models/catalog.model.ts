@@ -3,8 +3,8 @@ export interface ICategoryResponse {
 }
 
 export interface ICategory {
-    category_id: number;
-    name: string;
+    id: number;
+    nombre: string;
 }
 
 export interface ICatalogResponse {
@@ -13,11 +13,10 @@ export interface ICatalogResponse {
 
 export interface ICatalog {
     id: number;
-    category: string;
-    quantity?: number;
+    categoria: ICategory;
+    cantidad?: number;
     sku: string;
-    description: string;
-    price: number;
-    image: string;
-    selected?: boolean;
+    descripcion: string;
+    precio: number;
+    img: string;
 }

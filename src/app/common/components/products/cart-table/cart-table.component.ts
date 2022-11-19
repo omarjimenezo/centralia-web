@@ -64,8 +64,7 @@ export class CartTableComponent implements OnInit, OnDestroy {
         this.disableRemove = true;
         this.catalog.map((product) => {
             if (product.id === id) {
-                product.selected = false;
-                product.quantity = 0;
+                product.cantidad = 0;
             }
         });
 

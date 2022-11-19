@@ -5,7 +5,7 @@ import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { LoginComponent } from 'src/app/auth/components/login/login.component';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { CatalogService } from 'src/app/business/services/catalog.service';
-import { CartDialogComponent } from 'src/app/common/components/catalog/cart-dialog/cart-dialog.component';
+import { CartDialogComponent } from 'src/app/common/components/products/cart-dialog/cart-dialog.component';
 import { ICategory } from 'src/app/common/models/catalog.model';
 import { IOrder } from 'src/app/common/models/order.model';
 import { IUser } from 'src/app/common/models/user.model';
@@ -66,7 +66,7 @@ export class NavBarComponent implements OnInit {
                     // let userInfo: IUser = this._dataService.getUserInfo();
                     // this.confirmLogin(userInfo.id);
                     // this._authService.landingPage(this._dataService.getUserRole())
-                } 
+                }
             }
             this.userInfo = this._dataService.getUserInfo();
         } else {

@@ -1,10 +1,12 @@
+import { ICategory } from "./catalog.model";
+
 export interface IProviderResponse {
     data: IProvider[];
 }
 
 export interface IProvider {
-    _id: number,
-    categoria_id: string,
+    id: number,
+    categoria: ICategory,
     usuarioId: number,
     nombre: string,
     direccion: string,

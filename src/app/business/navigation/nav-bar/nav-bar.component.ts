@@ -2,7 +2,7 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
-import { CartDialogComponent } from 'src/app/common/components/catalog/cart-dialog/cart-dialog.component';
+import { CartDialogComponent } from 'src/app/common/components/products/cart-dialog/cart-dialog.component';
 import { IOrder } from 'src/app/common/models/order.model';
 import { IUser } from 'src/app/common/models/user.model';
 import { DataService } from 'src/app/common/services/data.service';
