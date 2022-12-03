@@ -115,5 +115,7 @@
       }
     }
   },
-  "defaultProject": "centralia"
+  "cli": {
+    "analytics": "46ec4bd8-2d41-4221-97bd-d775f7414333"
+  }
 }

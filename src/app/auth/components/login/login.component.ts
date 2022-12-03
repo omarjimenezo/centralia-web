@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/auth/services/auth.service';
@@ -15,12 +15,12 @@ import { IDialogData, ILoginRequest, ILoginResponse } from '../../models/auth.mo
     styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
-    public form: FormGroup;
+    public form: UntypedFormGroup;
     public loading: boolean = false;
     public hidePassword: boolean = true;
 
     constructor(
-        private _fb: FormBuilder,
+        private _fb: UntypedFormBuilder,
         private _authService: AuthService,
         private _dataService: DataService,
         private _alertService: AlertService,
