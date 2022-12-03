@@ -10,7 +10,7 @@ import {
 } from 'src/app/common/models/order.model';
 import { AlertService } from 'src/app/common/services/alert.service';
 import { IAlertInfo } from '../../business/models/alert.model';
-import { IProduct } from '../models/product.model';
+import { IBusinessProducts, IProduct } from '../models/product.model';
 import { IResponse } from '../models/common.model';
 import { GlobalConstants } from '../models/global.constants';
 import { DataService } from './data.service';
@@ -131,10 +131,10 @@ export class OrderService {
 
     // Products
 
-    public addProduct(quantity: number, element: IProduct): void {
+    public addProduct(quantity: number, element: IBusinessProducts): void {
         const order = this._order.value;
         const productFound = order.description.find(
-            (product) => product.product.id === element.id
+            (product) => product.product.id === element.producto.id
         );
         const alertInfo: IAlertInfo = { screen: 'catalog', type: 'success' };
 
@@ -144,8 +144,8 @@ export class OrderService {
 
             order.description.push({
                 product: {
-                    id: element.id,
-                    name: element.descripcion,
+                    id: element.producto.id,
+                    name: element.producto.descripcion,
                     price: element.precio,
                 },
                 quantity: quantity,

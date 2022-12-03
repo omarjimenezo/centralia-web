@@ -2,13 +2,13 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { GlobalConstants } from 'src/app/common/models/global.constants';
-import { IProduct, ICategory, IProductResponse, ICategoryResponse } from '../models/product.model';
+import { IProduct, ICategory, IProductResponse, ICategoryResponse, IBusinessProducts } from '../models/product.model';
 
 @Injectable({
     providedIn: 'root',
 })
 export class ProductService {
-    private _product = new BehaviorSubject<IProduct[]>([]);
+    private _product = new BehaviorSubject<IBusinessProducts[]>([]);
     private _category = new BehaviorSubject<ICategory[]>([]);
     private _resetProduct = new BehaviorSubject('');
 
@@ -25,18 +25,18 @@ export class ProductService {
             .get<IProductResponse>(
                 `${this._global.ENDPOINTS.PRODUCT.GET_PRODUCTS}/${businessId}`
             )
-            .subscribe((catalog: IProductResponse) => {
-                if (catalog && catalog.data) {
-                    this.setProduct(catalog.data);
+            .subscribe((product: IProductResponse) => {
+                if (product && product.data) {
+                    this.setProduct(product.data);
                 }
             });
     }
 
-    public setProduct(catalog: IProduct[]): void {
+    public setProduct(catalog: IBusinessProducts[]): void {
         this._product.next(catalog);
     }
 
-    get getCatalog(): Observable<IProduct[]> {
+    get getCatalog(): Observable<IBusinessProducts[]> {
         return this._product.asObservable();
     }
 

@@ -1,6 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { ICatalog } from 'src/app/common/models/product.model';
+import { IBusinessProducts } from 'src/app/common/models/product.model';
 import { OrderService } from 'src/app/common/services/order.service';
 
 @Component({
@@ -14,7 +14,7 @@ export class AddDialogComponent {
     constructor(
         private _orderService: OrderService,
         public dialogRef: MatDialogRef<AddDialogComponent>,
-        @Inject(MAT_DIALOG_DATA) public data: ICatalog
+        @Inject(MAT_DIALOG_DATA) public data: IBusinessProducts
     ) {}
 
     public disableAddProductButton(): boolean {
@@ -37,7 +37,7 @@ export class AddDialogComponent {
     public removeProduct() {
         this.dialogRef.close();
         this.data.cantidad = 0;
-        this._orderService.removeProduct(this.data.id);
+        this._orderService.removeProduct(this.data.producto.id);
     }
 
     public onCancelClick(): void {

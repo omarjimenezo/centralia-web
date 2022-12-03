@@ -15,12 +15,13 @@ export interface IBusinessProducts {
     precio: number;
     img: string;
     producto: IProduct;
+    cantidad?: number;
 }
 
 export interface IProduct {
     id: string;
     categoria: ICategory;
-    cantidad?: number;
-    sku: string;
+    sku?: string;
+    codigo?: string;
     descripcion: string;
 }

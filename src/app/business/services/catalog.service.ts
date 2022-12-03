@@ -3,13 +3,13 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { GlobalConstants } from 'src/app/common/models/global.constants';
 import { DataService } from 'src/app/common/services/data.service';
-import { ICatalog, ICatalogResponse, ICategory, ICategoryResponse } from '../../common/models/product.model';
+import { IBusinessProducts, IProductResponse, ICategory, ICategoryResponse } from '../../common/models/product.model';
 
 @Injectable({
     providedIn: 'root',
 })
 export class CatalogService {
-    private _catalog = new BehaviorSubject<ICatalog[]>([]);
+    private _catalog = new BehaviorSubject<IBusinessProducts[]>([]);
     private _category = new BehaviorSubject<ICategory[]>([]);
     private _resetCatalog = new BehaviorSubject('');
 
@@ -28,10 +28,10 @@ export class CatalogService {
     public initCatalog(providerId: string): void {
         if (providerId) {
             this._http
-                .get<ICatalogResponse>(
+                .get<IProductResponse>(
                     `${this._global.ENDPOINTS.CATALOG.GET_CATALOG}/${providerId}`
                 )
-                .subscribe((catalog: ICatalogResponse) => {
+                .subscribe((catalog: IProductResponse) => {
                     if (catalog && catalog.data) {
                         this.setCatalog(catalog.data);
                     }
@@ -39,11 +39,11 @@ export class CatalogService {
         }
     }
 
-    public setCatalog(catalog: ICatalog[]): void {
+    public setCatalog(catalog: IBusinessProducts[]): void {
         this._catalog.next(catalog);
     }
 
-    get getCatalog(): Observable<ICatalog[]> {
+    get getCatalog(): Observable<IBusinessProducts[]> {
         return this._catalog.asObservable();
     }
 

@@ -4,12 +4,12 @@ import { IBusinessProducts } from 'src/app/common/models/product.model';
 import { AddDialogComponent } from '../add-dialog/add-dialog.component';
 
 @Component({
-    selector: 'catalog-list',
-    templateUrl: './catalog-list.component.html',
-    styleUrls: ['./catalog-list.component.scss'],
+    selector: 'products-list',
+    templateUrl: './products-list.component.html',
+    styleUrls: ['./products-list.component.scss'],
 })
-export class CatalogListComponent implements OnInit {
-    @Input() displayCatalog: IBusinessProducts[];
+export class ProductsListComponent implements OnInit {
+    @Input() displayProducts: IBusinessProducts[];
     @Input() productFade: boolean;
 
     constructor(public dialog: MatDialog) {}

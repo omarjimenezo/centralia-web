@@ -3,7 +3,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Subscription } from 'rxjs';
 import { CatalogService } from 'src/app/business/services/catalog.service';
 import { OrderService } from 'src/app/common/services/order.service';
-import { ICatalog } from 'src/app/common/models/product.model';
+import { IBusinessProducts } from 'src/app/common/models/product.model';
 import { IOrder, IOrderList } from 'src/app/common/models/order.model';
 
 @Component({
@@ -13,7 +13,7 @@ import { IOrder, IOrderList } from 'src/app/common/models/order.model';
 })
 export class CartTableComponent implements OnInit, OnDestroy {
     public orderList: IOrderList[] = [];
-    public catalog: ICatalog[] = [];
+    public catalog: IBusinessProducts[] = [];
     public loading: boolean;
     public disableRemove: boolean;
 
@@ -63,7 +63,7 @@ export class CartTableComponent implements OnInit, OnDestroy {
     public removeProduct(id: string): void {
         this.disableRemove = true;
         this.catalog.map((product) => {
-            if (product.id === id) {
+            if (product.producto.id === id) {
                 product.cantidad = 0;
             }
         });

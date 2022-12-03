@@ -6,7 +6,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { Subscription } from 'rxjs';
-import { IProduct } from '../../models/product.model';
+import { IBusinessProducts, IProduct } from '../../models/product.model';
 import { IOrder } from '../../models/order.model';
 import { IUser } from '../../models/user.model';
 import { AlertService } from '../../services/alert.service';
@@ -17,14 +17,14 @@ import { ProductService } from '../../services/product.service';
 import { CartDialogComponent } from '../products/cart-dialog/cart-dialog.component';
 
 @Component({
-  selector: 'app-products',
-  templateUrl: './products.component.html',
-  styleUrls: ['./products.component.scss']
+    selector: 'app-products',
+    templateUrl: './products.component.html',
+    styleUrls: ['./products.component.scss']
 })
 export class ProductsComponent implements OnInit {
 
-    public catalog: IProduct[] = [];
-    public displayCatalog: IProduct[] = [];
+    public products: IBusinessProducts[] = [];
+    public displayProducts: IBusinessProducts[] = [];
     public order: IOrder;
     public dataSource: MatTableDataSource<IProduct>;
     public loading: boolean = false;
@@ -79,23 +79,38 @@ export class ProductsComponent implements OnInit {
     }
 
     public getProducts(): void {
-        this.catalog = [];
-        this.displayCatalog = [];
-        this.loading = true;
+        // this.catalog = [];
+        // this.displayProducts = [];
+        // this.loading = true;
 
-        this._productService.getCatalog.subscribe({
-            next: (catalog: IProduct[]) => {
-                if (catalog.length > 0) {
-                    this.catalog = catalog;
-                    this.displayCatalog = catalog;
-                }
-                this.loading = false;
-            },
-            error: (error: any) => {
-                console.error(error);
-                this.loading = false;
+        // this._productService.getCatalog.subscribe({
+        //     next: (catalog: IProduct[]) => {
+        //         if (catalog.length > 0) {
+        //             this.catalog = catalog;
+        //             this.displayProducts = catalog;
+        //         }
+        //         this.loading = false;
+        //     },
+        //     error: (error: any) => {
+        //         console.error(error);
+        //         this.loading = false;
+        //     }
+        // });
+
+        this.displayProducts = [
+            {
+                producto: {
+                    id: "",
+                    descripcion: "Coca-Cola 2L Retornable",
+                    categoria: { id: "1", nombre: "Refrescos" },
+                    codigo: "55223",
+                    sku: undefined,
+                },
+                img: "https://cdn.shopify.com/s/files/1/0372/4450/2149/products/bebidas_25l-retornable1-2944af12f7044a308015856940174122-1024-1024_701x700.jpg",
+                precio: 25.50,
+                cantidad: undefined
             }
-        });
+        ]
     }
 
     // public getDependency(): void {
@@ -142,15 +157,15 @@ export class ProductsComponent implements OnInit {
                 this._catalogSearchService.setFilter('N')
                 window.scroll(0, 0);
                 this.elementFadeout();
-                this.displayCatalog = this.catalog.filter((product: IProduct) =>
-                    product.descripcion.toLowerCase().includes(data)
+                this.displayProducts = this.products.filter((product: IBusinessProducts) =>
+                    product.producto.descripcion.toLowerCase().includes(data)
                 );
             }
 
             if (data.length === 0) {
                 window.scroll(0, 0);
                 this.elementFadeout();
-                this.displayCatalog = this.catalog;
+                this.displayProducts = this.products;
             }
         });
     }
@@ -161,11 +176,11 @@ export class ProductsComponent implements OnInit {
                 window.scroll(0, 0);
                 this.elementFadeout();
                 if (data !== 'N') {
-                    this.displayCatalog = this.catalog.filter(
-                        (product: IProduct) => product.categoria.nombre === data
+                    this.displayProducts = this.products.filter(
+                        (product: IBusinessProducts) => product.producto.categoria.nombre === data
                     );
                 } else {
-                    this.displayCatalog = this.catalog;
+                    this.displayProducts = this.products;
                 }
             }
         });
@@ -174,7 +189,7 @@ export class ProductsComponent implements OnInit {
     public resetQuantities(): void {
         this._productService.getResetQuantities.subscribe(() => {
             this.elementFadeout();
-            this.displayCatalog.map((product) => {
+            this.displayProducts.map((product) => {
                 product.cantidad = 0;
             });
         })

@@ -33,6 +33,7 @@ import { CartTableComponent } from './components/products/cart-table/cart-table.
 import { CatalogListComponent } from './components/products/catalog-list/catalog-list.component';
 import { ProductsComponent } from './components/products/products.component';
 import { ProvidersComponent } from './components/providers/providers.component';
+import { ProductsListComponent } from './components/products/products-list/products-list.component';
 
 @NgModule({
     declarations: [
@@ -44,11 +45,13 @@ import { ProvidersComponent } from './components/providers/providers.component';
         CartTableComponent,
         CatalogListComponent,
         ProductsComponent,
+        ProductsListComponent,
     ],
     exports: [
         AlertComponent,
         ProvidersComponent,
         ProductsComponent,
+        ProductsListComponent,
         AddDialogComponent,
         CartDialogComponent,
         CartTableComponent,

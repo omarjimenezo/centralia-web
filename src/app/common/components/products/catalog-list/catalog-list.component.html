@@ -6,7 +6,7 @@
                 [src]="(product.img) ? product.img : '/assets/img/catalog/no-image.png'"
                 alt="Provider Picture"
             />
-            <mat-card-title>{{ product.descripcion }}</mat-card-title>
+            <mat-card-title>{{ product.producto.descripcion }}</mat-card-title>
             <mat-card-subtitle>Precio: {{ product.precio | currency}}</mat-card-subtitle>
             <mat-card-subtitle *ngIf="product.cantidad && product.cantidad > 0"><strong>Cantidad: {{ product.cantidad }}</strong></mat-card-subtitle>
         </mat-card-title-group>

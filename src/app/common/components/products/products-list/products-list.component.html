@@ -1,0 +1,13 @@
+<div class="card-container">
+    <mat-card [class.element-fadein]="!productFade" [class.element-fadeout]="productFade" class="product-card"
+        *ngFor="let product of displayProducts" (click)="openAddDialog(product)">
+        <mat-card-title-group>
+            <img mat-card-lg-image [src]="(product.img) ? product.img : '/assets/img/catalog/no-image.png'"
+                alt="Provider Picture" />
+            <mat-card-title>{{ product.producto.descripcion }}</mat-card-title>
+            <mat-card-subtitle>Precio: {{ product.precio | currency}}</mat-card-subtitle>
+            <mat-card-subtitle *ngIf="product.cantidad && product.cantidad > 0"><strong>Cantidad: {{ product.cantidad
+                    }}</strong></mat-card-subtitle>
+        </mat-card-title-group>
+    </mat-card>
+</div>
