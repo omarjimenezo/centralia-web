@@ -10,7 +10,7 @@ import {
 } from 'src/app/common/models/order.model';
 import { AlertService } from 'src/app/common/services/alert.service';
 import { IAlertInfo } from '../../business/models/alert.model';
-import { ICatalog } from '../models/catalog.model';
+import { IProduct } from '../models/product.model';
 import { IResponse } from '../models/common.model';
 import { GlobalConstants } from '../models/global.constants';
 import { DataService } from './data.service';
@@ -21,10 +21,10 @@ import { DataService } from './data.service';
 export class OrderService {
     private _total = new BehaviorSubject<number>(0);
     private _order = new BehaviorSubject<IOrder>({
-        id: 0,
+        id: '',
         status: 0,
         amount: 0,
-        provider_id: 0,
+        provider_id: '',
         description: [],
     });
     private _orders = new BehaviorSubject<IOrder[]>([]);
@@ -100,10 +100,10 @@ export class OrderService {
 
     public resetOrder(): void {
         let order: IOrder = {
-            id: 0,
+            id: '',
             status: 0,
             amount: 0,
-            provider_id: 0,
+            provider_id: '',
             description: [],
         };
         this.setOrder(order);
@@ -131,7 +131,7 @@ export class OrderService {
 
     // Products
 
-    public addProduct(quantity: number, element: ICatalog): void {
+    public addProduct(quantity: number, element: IProduct): void {
         const order = this._order.value;
         const productFound = order.description.find(
             (product) => product.product.id === element.id
@@ -157,7 +157,7 @@ export class OrderService {
         this._alertService.openAlert(`Se agregaron ${quantity} productos`, 0);
     }
 
-    public removeProduct(id: number) {
+    public removeProduct(id: string) {
         let order: IOrder = this._order.value;
         const alertInfo: IAlertInfo = { screen: 'catalog', type: 'success' };
         const producto = order.description.find(

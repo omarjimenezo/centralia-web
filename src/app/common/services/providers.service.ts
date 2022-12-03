@@ -1,7 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { BehaviorSubject, Observable } from "rxjs";
-import { ICatalog, ICatalogResponse, ICategory } from "../models/catalog.model";
+import { Observable } from "rxjs";
 import { GlobalConstants } from "../models/global.constants";
 import { IProviderResponse } from "../models/provider.model";
 

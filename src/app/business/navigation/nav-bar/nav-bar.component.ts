@@ -7,7 +7,7 @@ import { IOrder } from 'src/app/common/models/order.model';
 import { IUser } from 'src/app/common/models/user.model';
 import { DataService } from 'src/app/common/services/data.service';
 import { UserActionsDialogComponent } from 'src/app/provider/navigation/user-actions-dialog/user-actions-dialog.component';
-import { ICategory } from '../../../common/models/catalog.model';
+import { ICategory } from '../../../common/models/product.model';
 import { OrderService } from '../../../common/services/order.service';
 import { CatalogSearchService } from '../../services/catalog-search.service';
 import { CatalogService } from '../../services/catalog.service';
@@ -25,7 +25,7 @@ export class NavBarComponent implements OnInit {
     public loading: boolean = false;
     public totalFadeOut: boolean = false;
     public categories: ICategory[];
-    public providerId: number;
+    public providerId: string;
     public orderTotal: number;
     public catalogToolbar: boolean = false;
     public searchKey: string = '';

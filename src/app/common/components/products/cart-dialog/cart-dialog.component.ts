@@ -27,7 +27,7 @@ export class CartDialogComponent implements OnInit, OnDestroy {
     public loading: boolean = false;
     public client_address: string = '';
     public client_name: string = '';
-    public providerId: number;
+    public providerId: string;
 
     private sub_order: Subscription;
     private sub_total: Subscription;
@@ -78,8 +78,8 @@ export class CartDialogComponent implements OnInit, OnDestroy {
 
     public getProvider(): void {
         if(this._route.snapshot.paramMap.get('id')) {
-            this._dataService.setProviderId(parseInt(this._route.snapshot.paramMap.get('id')!))
-            this.providerId = parseInt(this._route.snapshot.paramMap.get('id')!);
+            this._dataService.setProviderId(this._route.snapshot.paramMap.get('id')!)
+            this.providerId = this._route.snapshot.paramMap.get('id')!;
         }
 
         this._dataService.getProviderId.subscribe((id) => {
@@ -146,7 +146,7 @@ export class CartDialogComponent implements OnInit, OnDestroy {
         this.client_address = '';
     }
 
-    public deleteProduct(id: number): void {
+    public deleteProduct(id: string): void {
         const orderList = this.order.description.filter((product) => {
             return product.product.id !== id;
         });

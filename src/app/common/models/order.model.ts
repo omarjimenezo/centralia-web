@@ -7,7 +7,7 @@ export interface IOrderStatusCatalogResponse {
 }
 
 export interface IOrder {
-    id?: number;
+    id?: string;
     date?: Date;
     status?: number;
     // total: number;
@@ -16,7 +16,7 @@ export interface IOrder {
     // client_address?: string;
     // provider_id: string;
     // order_list: IOrderList[]
-    provider_id: number;
+    provider_id: string;
     user_id?: string;
     description: IOrderList[];
     amount: number;
@@ -33,7 +33,7 @@ export interface IOrderList {
 }
 
 export interface IProduct {
-    id: number;
+    id: string;
     name: string;
     price: number;
 }
@@ -45,7 +45,7 @@ export interface IStatus {
 }
 
 export interface IOrderStatusRequest {
-    order_id: number;
+    order_id: string;
     status: number;
 }
 

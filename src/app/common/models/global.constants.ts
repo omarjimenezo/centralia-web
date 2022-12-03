@@ -24,6 +24,9 @@ export class GlobalConstants {
             GET_USER: `${this.API_BASE}${this.API_VERSION}/user`,
             GET_ORDER_STATUS_CATALOG: `${this.API_BASE}${this.API_VERSION}/data/status/catalog`,
         },
+        PRODUCT: {
+            GET_PRODUCTS:  `${this.API_BASE}${this.API_VERSION}/productos/negocio`,
+        },
         CATALOG: {
             GET_CATALOG: `${this.API_BASE}${this.API_VERSION}/catalog/provider`,
             GET_CATEGORIES: `${this.API_BASE}${this.API_VERSION}/category/provider`,

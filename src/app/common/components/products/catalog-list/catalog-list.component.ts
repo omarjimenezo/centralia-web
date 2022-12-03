@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { ICatalog } from 'src/app/common/models/catalog.model';
+import { ICatalog } from 'src/app/common/models/product.model';
 import { AddDialogComponent } from '../add-dialog/add-dialog.component';
 
 @Component({

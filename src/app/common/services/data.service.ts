@@ -11,7 +11,7 @@ import { IGuestUser, IUser, IUserResponse } from "../models/user.model";
     providedIn: 'root',
 })
 export class DataService {
-    private _providerId = new BehaviorSubject<number>(0);
+    private _providerId = new BehaviorSubject<string>('');
     private _vendorId = new BehaviorSubject<number>(0);
     private _orderStatusCatalog = new BehaviorSubject<IOrderStatusCatalog[]>([]);
 
@@ -31,7 +31,7 @@ export class DataService {
             '/'
         );
     }
-    
+
     public setGuestUser(): void {
         const user: IGuestUser = {
             proveedor_id:'0',
@@ -64,11 +64,11 @@ export class DataService {
         }
     }
 
-    get getProviderId(): Observable<number> {
+    get getProviderId(): Observable<string> {
         return this._providerId.asObservable();
     }
 
-    public setProviderId(providerId: number) {
+    public setProviderId(providerId: string) {
         this._providerId.next(providerId);
     }
 

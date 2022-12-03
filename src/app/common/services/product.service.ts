@@ -2,59 +2,57 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { GlobalConstants } from 'src/app/common/models/global.constants';
-import { DataService } from 'src/app/common/services/data.service';
-import { ICatalog, ICatalogResponse, ICategory, ICategoryResponse } from '../../common/models/catalog.model';
+import { IProduct, ICategory, IProductResponse, ICategoryResponse } from '../models/product.model';
 
 @Injectable({
     providedIn: 'root',
 })
-export class CatalogService {
-    private _catalog = new BehaviorSubject<ICatalog[]>([]);
+export class ProductService {
+    private _product = new BehaviorSubject<IProduct[]>([]);
     private _category = new BehaviorSubject<ICategory[]>([]);
-    private _resetCatalog = new BehaviorSubject('');
+    private _resetProduct = new BehaviorSubject('');
 
     constructor(
         private _http: HttpClient,
-        private _dataService: DataService,
         private _global: GlobalConstants
     ) {
-        
+
     }
 
     // Catalog
-    public initCatalog(providerId: number): void {
+    public initCatalog(businessId: string): void {
         this._http
-            .get<ICatalogResponse>(
-                `${this._global.ENDPOINTS.CATALOG.GET_CATALOG}/${providerId}`
+            .get<IProductResponse>(
+                `${this._global.ENDPOINTS.PRODUCT.GET_PRODUCTS}/${businessId}`
             )
-            .subscribe((catalog: ICatalogResponse) => {
+            .subscribe((catalog: IProductResponse) => {
                 if (catalog && catalog.data) {
-                    this.setCatalog(catalog.data);
+                    this.setProduct(catalog.data);
                 }
             });
     }
 
-    public setCatalog(catalog: ICatalog[]): void {
-        this._catalog.next(catalog);
+    public setProduct(catalog: IProduct[]): void {
+        this._product.next(catalog);
     }
 
-    get getCatalog(): Observable<ICatalog[]> {
-        return this._catalog.asObservable();
+    get getCatalog(): Observable<IProduct[]> {
+        return this._product.asObservable();
     }
 
     public resetQuantities(): void {
-        this._resetCatalog.next('');
+        this._resetProduct.next('');
     }
 
     get getResetQuantities(): Observable<string> {
-        return this._resetCatalog.asObservable();
+        return this._resetProduct.asObservable();
     }
 
     //  Category
-    public initCategories(providerId: number): void {
+    public initCategories(businessId: string): void {
         this._http
             .get<ICategoryResponse>(
-                `${this._global.ENDPOINTS.CATALOG.GET_CATEGORIES}/${providerId}`
+                `${this._global.ENDPOINTS.CATALOG.GET_CATEGORIES}/${businessId}`
             )
             .subscribe((category: ICategoryResponse) => {
                 if (category && category.data) {

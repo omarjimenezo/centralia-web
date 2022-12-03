@@ -6,7 +6,7 @@ import { LoginComponent } from 'src/app/auth/components/login/login.component';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { CatalogService } from 'src/app/business/services/catalog.service';
 import { CartDialogComponent } from 'src/app/common/components/products/cart-dialog/cart-dialog.component';
-import { ICategory } from 'src/app/common/models/catalog.model';
+import { ICategory } from 'src/app/common/models/product.model';
 import { IOrder } from 'src/app/common/models/order.model';
 import { IUser } from 'src/app/common/models/user.model';
 import { CatalogSearchService } from 'src/app/common/services/catalog-search.service';
@@ -25,7 +25,7 @@ export class NavBarComponent implements OnInit {
     public loading: boolean = false;
     public totalFadeOut: boolean = false;
     public categories: ICategory[];
-    public providerId: number;
+    public providerId: string;
     public orderTotal: number;
     public catalogToolbar: boolean = false;
     public searchKey: string = '';

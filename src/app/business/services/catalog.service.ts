@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { GlobalConstants } from 'src/app/common/models/global.constants';
 import { DataService } from 'src/app/common/services/data.service';
-import { ICatalog, ICatalogResponse, ICategory, ICategoryResponse } from '../../common/models/catalog.model';
+import { ICatalog, ICatalogResponse, ICategory, ICategoryResponse } from '../../common/models/product.model';
 
 @Injectable({
     providedIn: 'root',
@@ -18,14 +18,14 @@ export class CatalogService {
         private _dataService: DataService,
         private _global: GlobalConstants
     ) {
-        this._dataService.getProviderId.subscribe((providerId) => {
+        this._dataService.getProviderId.subscribe((providerId: string) => {
             this.initCatalog(providerId);
             this.initCategories(providerId);
         });
     }
 
     // Catalog
-    public initCatalog(providerId: number): void {
+    public initCatalog(providerId: string): void {
         if (providerId) {
             this._http
                 .get<ICatalogResponse>(
@@ -50,13 +50,13 @@ export class CatalogService {
     public resetQuantities(): void {
         this._resetCatalog.next('');
     }
-    
+
     get getResetQuantities(): Observable<string> {
         return this._resetCatalog.asObservable();
     }
 
     //  Category
-    public initCategories(providerId: number): void {
+    public initCategories(providerId: string): void {
         if (providerId) {
             this._http
                 .get<ICategoryResponse>(
