@@ -2,11 +2,10 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
-import { CartDialogComponent } from 'src/app/common/components/products/cart-dialog/cart-dialog.component';
-import { IOrder } from 'src/app/common/models/order.model';
+import { LoginComponent } from 'src/app/auth/components/login/login.component';
+import { AuthService } from 'src/app/auth/services/auth.service';
 import { IUser } from 'src/app/common/models/user.model';
 import { DataService } from 'src/app/common/services/data.service';
-import { UserActionsDialogComponent } from 'src/app/provider/navigation/user-actions-dialog/user-actions-dialog.component';
 import { ICategory } from '../../../common/models/product.model';
 import { OrderService } from '../../../common/services/order.service';
 import { CatalogSearchService } from '../../services/catalog-search.service';
@@ -33,13 +32,10 @@ export class NavBarComponent implements OnInit {
     public user: IUser;
 
     constructor(
-        private _route: ActivatedRoute,
         private _router: Router,
         private _catalogService: CatalogService,
-        private _orderService: OrderService,
-        private _navBarService: NavBarService,
+        private _authService: AuthService,
         private _catalogSearchService: CatalogSearchService,
-        private _bottomSheet: MatBottomSheet,
         private _dataService: DataService,
         public dialog: MatDialog
     ) {
@@ -58,6 +54,10 @@ export class NavBarComponent implements OnInit {
 
     public getUserInfo(): void {
         this.user = this._dataService.getUserInfo();
+    }
+
+    public isAuthenticated(): boolean {
+        return this._authService.isAuthenticated()
     }
 
     public getCategories(): void {
@@ -84,6 +84,17 @@ export class NavBarComponent implements OnInit {
             }
         })
     }
+
+    openLoginDialog(): void {
+        const dialogRef = this.dialog.open(LoginComponent, {
+          width: '350px',
+          data: {returnURL: false},
+        });
+
+        dialogRef.afterClosed().subscribe(result => {
+          console.log('The dialog was closed');
+        });
+      }
 
     public toogleSideNav(): void {
         this.menuOpen.emit('ok');

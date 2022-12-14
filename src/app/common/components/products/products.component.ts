@@ -5,16 +5,15 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
-import { Subscription } from 'rxjs';
-import { IBusinessProducts, IProduct } from '../../models/product.model';
 import { IOrder } from '../../models/order.model';
+import { IBusinessProducts, IProduct } from '../../models/product.model';
 import { IUser } from '../../models/user.model';
+import { OrdersDialogComponent } from './orders-dialog/orders-dialog.component';
 import { AlertService } from '../../services/alert.service';
 import { CatalogSearchService } from '../../services/catalog-search.service';
 import { DataService } from '../../services/data.service';
 import { OrderService } from '../../services/order.service';
 import { ProductService } from '../../services/product.service';
-import { CartDialogComponent } from '../products/cart-dialog/cart-dialog.component';
 
 @Component({
     selector: 'app-products',
@@ -23,25 +22,67 @@ import { CartDialogComponent } from '../products/cart-dialog/cart-dialog.compone
 })
 export class ProductsComponent implements OnInit {
 
-    public products: IBusinessProducts[] = [];
     public displayProducts: IBusinessProducts[] = [];
     public order: IOrder;
     public dataSource: MatTableDataSource<IProduct>;
     public loading: boolean = false;
     public buttonFadeOut: boolean = false;
     public productFade: boolean = false;
-    public cols: number = 2;
     public orderTotal: number = 0;
     public productsAdded: number = 0;
-    public client_address: string = '';
-    public client_name: string = '';
     public providerId: string;
     public userInfo: IUser;
 
-
-    private sub_catalog: Subscription;
-    private sub_order: Subscription;
-    private sub_total: Subscription;
+    public products: IBusinessProducts[] = [
+        {
+            producto: {
+                id: "01",
+                descripcion: "Coca-Cola 2L Retornable",
+                categoria: { id: "1", nombre: "Refrescos" },
+                codigo: "55223",
+                sku: undefined,
+            },
+            img: "https://cdn.shopify.com/s/files/1/0372/4450/2149/products/bebidas_25l-retornable1-2944af12f7044a308015856940174122-1024-1024_701x700.jpg",
+            precio: 25.50,
+            cantidad: undefined
+        },
+        {
+            producto: {
+                id: "02",
+                descripcion: "Coca-Cola 2L No-Retornable",
+                categoria: { id: "1", nombre: "Refrescos" },
+                codigo: "55223",
+                sku: undefined,
+            },
+            img: "https://cdn.shopify.com/s/files/1/0372/4450/2149/products/7501055302925-00-CH1200Wx1200H_1_700x700.jpg?v=1588184406",
+            precio: 25.50,
+            cantidad: undefined
+        },
+        {
+            producto: {
+                id: "03",
+                descripcion: "Coca-Cola 1.5L Retornable",
+                categoria: { id: "1", nombre: "Refrescos" },
+                codigo: "55223",
+                sku: undefined,
+            },
+            img: "https://cdnx.jumpseller.com/bepensa-bebidas/image/8166346/CC_1.5L_RP.png?1645836463",
+            precio: 15.50,
+            cantidad: undefined
+        },
+        {
+            producto: {
+                id: "04",
+                descripcion: "Coca-Cola 1.5L No-Retornable",
+                categoria: { id: "1", nombre: "Refrescos" },
+                codigo: "55223",
+                sku: undefined,
+            },
+            img: "https://res.cloudinary.com/walmart-labs/image/upload/d_default.jpg/w_960,dpr_auto,f_auto,q_auto:best/gr/images/product-images/img_large/00750105530354L.jpg",
+            precio: 15.50,
+            cantidad: undefined
+        }
+    ];
 
     @ViewChild(MatPaginator) paginator: MatPaginator;
     @ViewChild(MatSort) sort: MatSort;
@@ -61,95 +102,17 @@ export class ProductsComponent implements OnInit {
 
         if (this.providerId) {
             this._dataService.setProviderId(this.providerId);
-            this._productService.initCatalog(this.providerId);
-            this._productService.initCategories(this.providerId);
         }
     }
 
     public ngOnInit(): void {
-        this.getProducts();
-        this.getTotal();
         this.getFilter();
         this.getSearch();
     }
 
-    public ngOnDestroy(): void {
-        this.sub_order ? this.sub_order.unsubscribe() : null;
-        this.sub_total ? this.sub_total.unsubscribe() : null;
-    }
-
     public getProducts(): void {
-        // this.catalog = [];
-        // this.displayProducts = [];
-        // this.loading = true;
 
-        // this._productService.getCatalog.subscribe({
-        //     next: (catalog: IProduct[]) => {
-        //         if (catalog.length > 0) {
-        //             this.catalog = catalog;
-        //             this.displayProducts = catalog;
-        //         }
-        //         this.loading = false;
-        //     },
-        //     error: (error: any) => {
-        //         console.error(error);
-        //         this.loading = false;
-        //     }
-        // });
-
-        this.displayProducts = [
-            {
-                producto: {
-                    id: "",
-                    descripcion: "Coca-Cola 2L Retornable",
-                    categoria: { id: "1", nombre: "Refrescos" },
-                    codigo: "55223",
-                    sku: undefined,
-                },
-                img: "https://cdn.shopify.com/s/files/1/0372/4450/2149/products/bebidas_25l-retornable1-2944af12f7044a308015856940174122-1024-1024_701x700.jpg",
-                precio: 25.50,
-                cantidad: undefined
-            }
-        ]
     }
-
-    // public getDependency(): void {
-    //     if (this._authService.isAuthenticated()) {
-    //         this._dataService.getDependencyBySubId(this.userInfo.id).subscribe(
-    //             (dependency: IDependencyResponse) => {
-    //                 (dependency && dependency.data && dependency.data.length > 0) ? this._dataService.setVendorId(dependency.data[0].sup_user_id) : this._dataService.setVendorId(this.providerId)
-
-    //             },
-    //             (error) => {
-    //                 this._alertService.openAlert(
-    //                     this._global.ERROR_MESSAGES.CONNECTION_ERROR,
-    //                     1
-    //                 );
-    //                 console.error(error);
-    //             }
-    //         );
-    //     }
-    // }
-
-    // public getOrder(): void {
-    //     this.sub_order = this._orderService.getOrder.subscribe(
-    //         (order: IOrder) => {
-    //             this.elementFadeout();
-    //             this.order = order;
-    //             this.productsAdded = 0;
-    //             this.productsAdded = order.description.length;
-
-    //         },
-    //         (error: any) => {
-    //             console.error(error);
-
-    //         }
-    //     );
-    // }
-
-    // public getClient(): void {
-    //     this.userInfo = this._dataService.getUserInfo();
-    // }
 
     public getSearch(): void {
         this._catalogSearchService.getSearch.subscribe((data: string) => {
@@ -186,23 +149,8 @@ export class ProductsComponent implements OnInit {
         });
     }
 
-    public resetQuantities(): void {
-        this._productService.getResetQuantities.subscribe(() => {
-            this.elementFadeout();
-            this.displayProducts.map((product) => {
-                product.cantidad = 0;
-            });
-        })
-    }
-
-    public getTotal(): void {
-        this.sub_total = this._orderService.getTotal.subscribe(
-            (total) => (this.orderTotal = total)
-        );
-    }
-
-    public openOrderDialog(): void {
-        const dialogRef = this._matDialog.open(CartDialogComponent, {
+    public openOrdersDialog(): void {
+        const dialogRef = this._matDialog.open(OrdersDialogComponent, {
             data: { dialogMode: true },
             width: '99%',
         });

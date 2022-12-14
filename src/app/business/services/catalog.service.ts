@@ -19,8 +19,8 @@ export class CatalogService {
         private _global: GlobalConstants
     ) {
         this._dataService.getProviderId.subscribe((providerId: string) => {
-            this.initCatalog(providerId);
-            this.initCategories(providerId);
+            // this.initCatalog(providerId);
+            // this.initCategories(providerId);
         });
     }
 

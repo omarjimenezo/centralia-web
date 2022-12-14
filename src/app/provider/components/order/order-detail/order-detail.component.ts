@@ -24,13 +24,13 @@ export class OrderDetailComponent implements OnInit {
     public ngOnInit(): void { }
 
     public enableActionButton(buttonStatus: number): boolean {
-        return (buttonStatus === this.order.status)
+        return (buttonStatus === this.order.estatus!.id)
     }
 
     public onChangeStatus(status: number): void {
         let orderRequest: IOrderStatusRequest = {
-            order_id: this.order.id!,
-            status: status
+            orden_id: this.order.id!,
+            estatus: status
         }
 
         this._orderService.updateOrderStatus(orderRequest).subscribe((res: IResponse) => {
@@ -39,7 +39,7 @@ export class OrderDetailComponent implements OnInit {
                 if(orders) {
                     orders.forEach((order: IOrder) => {
                         if(order.id === this.order.id) {
-                            order.status = status
+                            order.estatus!.id = status
                             this._orderService.setOrders(orders);
                         }
                     });

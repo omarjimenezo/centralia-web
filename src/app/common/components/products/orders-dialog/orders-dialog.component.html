@@ -1,0 +1,2 @@
+<app-providers-list *ngIf="step === 1" (providerSelected)="providerSelected($event)"></app-providers-list>
+<app-order-list *ngIf="step === 2" (backButton)="backButton()" [providerId]="providerId"></app-order-list>

@@ -1,5 +1,5 @@
-import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
-import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Component, EventEmitter, Inject, Input, OnInit, Output } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -8,32 +8,35 @@ import { AuthService } from 'src/app/auth/services/auth.service';
 import { CatalogService } from 'src/app/business/services/catalog.service';
 import { IResponse } from 'src/app/common/models/common.model';
 import { GlobalConstants } from 'src/app/common/models/global.constants';
-import { IOrder, IOrderList } from 'src/app/common/models/order.model';
+import { IOrder, IOrderProduct } from 'src/app/common/models/order.model';
+import { IBusinessProducts, IProduct } from 'src/app/common/models/product.model';
 import { IUser } from 'src/app/common/models/user.model';
 import { AlertService } from 'src/app/common/services/alert.service';
 import { DataService } from 'src/app/common/services/data.service';
-import { OrderService } from '../../../services/order.service';
+import { OrderService } from 'src/app/common/services/order.service';
 
 @Component({
-    selector: 'cart-dialog',
-    templateUrl: './cart-dialog.component.html',
-    styleUrls: ['./cart-dialog.component.scss'],
+  selector: 'app-order-list',
+  templateUrl: './order-list.component.html',
+  styleUrls: ['./order-list.component.scss']
 })
-export class CartDialogComponent implements OnInit, OnDestroy {
-    public orderList: IOrderList[];
+export class OrderListComponent implements OnInit {
+    @Input() providerId: string;
+    @Output() backButton = new EventEmitter();
+
+    public orderList: IOrder[];
     public userInfo: IUser;
     public order: IOrder;
     public orderTotal: number = 0;
     public loading: boolean = false;
     public client_address: string = '';
     public client_name: string = '';
-    public providerId: string;
 
     private sub_order: Subscription;
     private sub_total: Subscription;
 
     public displayedColumns: string[] = ['product', 'quantity', 'actions'];
-    public dataSource: MatTableDataSource<IOrderList>;
+    public dataSource: MatTableDataSource<IOrderProduct>;
 
     constructor(
         @Inject(MAT_DIALOG_DATA) public data: { dialogMode: string, orderTotal: number },
@@ -52,7 +55,7 @@ export class CartDialogComponent implements OnInit, OnDestroy {
         this.getOrder();
         this.getTotal();
         this.getClient();
-        this.getProvider();
+        // this.getProvider();
     }
 
     public ngOnDestroy(): void {
@@ -61,31 +64,24 @@ export class CartDialogComponent implements OnInit, OnDestroy {
     }
 
     public getOrder(): void {
-        this.loading = true;
-        this._orderService.getOrder.subscribe(
-            (order: IOrder) => {
-                this.order = order;
-                this.dataSource = new MatTableDataSource<IOrderList>(
-                    this.order.description
+        if(this.providerId) {
+            this.order = this._orderService.getOrder(this.providerId)
+                this.dataSource = new MatTableDataSource<IOrderProduct>(
+                    this.order.productos
                 );
-            },
-            (error: any) => {
-                console.error(error);
-                this.loading = false;
-            }
-        );
-    }
-
-    public getProvider(): void {
-        if(this._route.snapshot.paramMap.get('id')) {
-            this._dataService.setProviderId(this._route.snapshot.paramMap.get('id')!)
-            this.providerId = this._route.snapshot.paramMap.get('id')!;
         }
-
-        this._dataService.getProviderId.subscribe((id) => {
-            this.providerId = id;
-        })
     }
+
+    // public getProvider(): void {
+    //     if(this._route.snapshot.paramMap.get('id')) {
+    //         this._dataService.setProviderId(this._route.snapshot.paramMap.get('id')!)
+    //         this.providerId = this._route.snapshot.paramMap.get('id')!;
+    //     }
+
+    //     this._dataService.getProviderId.subscribe((id) => {
+    //         this.providerId = id;
+    //     })
+    // }
 
     public getClient(): void {
         this.userInfo = this._dataService.getUserInfo();
@@ -94,9 +90,9 @@ export class CartDialogComponent implements OnInit, OnDestroy {
     public saveOrder(): void {
         if (this._autService.isAuthenticated()) {
             let saveOrder: IOrder = {
-                amount: this.orderTotal,
-                provider_id: this.providerId,
-                description: this.order.description,
+                total: this.orderTotal,
+                proveedor_id: this.providerId,
+                productos: this.order.productos,
             };
 
             this._orderService.saveOrder(saveOrder).subscribe(
@@ -134,26 +130,26 @@ export class CartDialogComponent implements OnInit, OnDestroy {
           data: {returnURL: `${this._global.ROUTES.BUSINESS.PRODUCTS}/${parseInt(this._route.snapshot.paramMap.get('id')!)}`},
         });
 
-        dialogRef.afterClosed().subscribe(result => {
-          console.log('The dialog was closed');
+        dialogRef.afterClosed().subscribe((result: any) => {
+          console.log('The dialog was closed', result);
         });
       }
 
     public resetOrder(): void {
-        this._orderService.resetOrder();
+        this._orderService.resetOrder(this.providerId);
         this._catalogService.resetQuantities();
         this.client_name = '';
         this.client_address = '';
     }
 
     public deleteProduct(id: string): void {
-        const orderList = this.order.description.filter((product) => {
-            return product.product.id !== id;
+        const orderList = this.order.productos.filter((product) => {
+            return product.producto.id !== id;
         });
 
-        this.order.description = orderList;
+        this.order.productos = orderList;
 
-        this._orderService.setOrder(this.order);
+        this._orderService.setOrder(this.order, this.providerId);
     }
 
     public getTotal(): void {
@@ -163,6 +159,10 @@ export class CartDialogComponent implements OnInit, OnDestroy {
     }
 
     public disableSaveOrderButton(): boolean {
-        return this.order.description.length <= 0;
+        return this.order.productos.length <= 0;
+    }
+
+    public backButtonClick(): void {
+        this.backButton.emit();
     }
 }

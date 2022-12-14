@@ -28,24 +28,23 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { CookieService } from 'ngx-cookie-service';
 import { AlertComponent } from './components/alert/alert.component';
 import { AddDialogComponent } from './components/products/add-dialog/add-dialog.component';
-import { CartDialogComponent } from './components/products/cart-dialog/cart-dialog.component';
-import { CartTableComponent } from './components/products/cart-table/cart-table.component';
-import { CatalogListComponent } from './components/products/catalog-list/catalog-list.component';
+import { ProductsListComponent } from './components/products/products-list/products-list.component';
 import { ProductsComponent } from './components/products/products.component';
 import { ProvidersComponent } from './components/providers/providers.component';
-import { ProductsListComponent } from './components/products/products-list/products-list.component';
+import { OrdersDialogComponent } from './components/products/orders-dialog/orders-dialog.component';
+import { ProvidersListComponent } from './components/products/orders-dialog/providers-list/providers-list.component';
+import { OrderListComponent } from './components/products/orders-dialog/order-list/order-list.component';
 
 @NgModule({
     declarations: [
         AlertComponent,
         ProvidersComponent,
         ProductsComponent,
-        AddDialogComponent,
-        CartDialogComponent,
-        CartTableComponent,
-        CatalogListComponent,
-        ProductsComponent,
         ProductsListComponent,
+        AddDialogComponent,
+        OrdersDialogComponent,
+        ProvidersListComponent,
+        OrderListComponent,
     ],
     exports: [
         AlertComponent,
@@ -53,9 +52,7 @@ import { ProductsListComponent } from './components/products/products-list/produ
         ProductsComponent,
         ProductsListComponent,
         AddDialogComponent,
-        CartDialogComponent,
-        CartTableComponent,
-        CatalogListComponent,
+        OrdersDialogComponent,
     ],
     imports: [
         CommonModule,

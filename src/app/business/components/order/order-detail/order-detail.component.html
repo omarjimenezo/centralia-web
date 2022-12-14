@@ -7,16 +7,16 @@
     </div>
 
     <div class="order-status-tile">
-        <h3 [ngStyle]="{
+        <!-- <h3 [ngStyle]="{
             color: _orderService.getStatusColor(order.status!)
-        }">Estatus: {{ _orderService.getStatus(order.status!) }}</h3>
+        }">Estatus: {{ _orderService.getStatus(order.estatus!.id) }}</h3> -->
     </div>
 
-    <h2>Total: {{ order.amount | currency }}</h2>
+    <h2>Total: {{ order.total | currency }}</h2>
 
     <mat-divider></mat-divider>
 
-    <order-detail-table [orderList]="order.description"></order-detail-table>
+    <!-- <order-detail-table [orderList]="order.description"></order-detail-table> -->
 </mat-dialog-content>
 
 <mat-divider></mat-divider>
@@ -27,6 +27,6 @@
 
     <button mat-raised-button *ngIf="enableActionButton(1)" (click)="onChangeStatus(2)" [mat-dialog-close]="order"
         color="primary">Atender Pedido</button> -->
-        
+
     <button mat-raised-button mat-dialog-close [mat-dialog-close]="order">Cerrar</button>
 </mat-dialog-actions>

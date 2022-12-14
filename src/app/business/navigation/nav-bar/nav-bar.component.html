@@ -1,56 +1,35 @@
 <mat-toolbar color="primary" [class.position-fixed]="catalogToolbar">
     <mat-toolbar-row>
-        <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon" (click)="toogleSideNav()">
+        <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon"
+            (click)="toogleSideNav()">
             <mat-icon>menu</mat-icon>
-          </button>
+        </button>
 
         <span class="nav-spacer"></span>
 
-        <span>Centralia</span>
+        <span class="centralia-title"><img class="logo" src="./assets/img/centralia/logo.png" />Centralia</span>
 
         <span class="nav-spacer"></span>
 
-        <img
-            *ngIf="user.avatar"
-            class="avatar mat-elevation-z4"
-            [src]="user.avatar"
-        />
+        <button *ngIf="!isAuthenticated()" mat-raised-button (click)="openLoginDialog()">Iniciar Sesión</button>
 
-        <img
-            *ngIf="!user.avatar"
-            class="avatar mat-elevation-z4"
-            src="./assets/img/profile/vendedor.png"
-        />
+        <img *ngIf="user.avatar && isAuthenticated()" class="avatar mat-elevation-z4" [src]="user.avatar" />
+
+        <img *ngIf="!user.avatar && isAuthenticated()" class="avatar mat-elevation-z4" src="./assets/img/profile/vendedor.png" />
     </mat-toolbar-row>
     <mat-toolbar-row *ngIf="catalogToolbar">
-        <mat-form-field
-            color="default"
-            appearance="standard"
-            class="catalog-category"
-        >
+        <mat-form-field color="default" appearance="standard" class="catalog-category">
             <mat-label>Categorias</mat-label>
             <mat-select (selectionChange)="onCategorySelect($event.value)" [(ngModel)]="filterKey">
                 <mat-option value="N">TODO</mat-option>
-                <mat-option
-                    *ngFor="let category of categories"
-                    value="{{ category.id }}"
-                    >{{ category.nombre }}</mat-option
-                >
+                <mat-option *ngFor="let category of categories" value="{{ category.id }}">{{ category.nombre }}
+                </mat-option>
             </mat-select>
         </mat-form-field>
 
-        <mat-form-field
-            color="primary"
-            appearance="standard"
-            class="catalog-search-field"
-        >
+        <mat-form-field color="primary" appearance="standard" class="catalog-search-field">
             <mat-label>Buscar</mat-label>
-            <input
-                matInput
-                (keyup)="onSearch($event)"
-                placeholder=""
-                [(ngModel)]="searchKey"
-            />
+            <input matInput (keyup)="onSearch($event)" placeholder="" [(ngModel)]="searchKey" />
             <mat-icon matSuffix>search</mat-icon>
         </mat-form-field>
     </mat-toolbar-row>

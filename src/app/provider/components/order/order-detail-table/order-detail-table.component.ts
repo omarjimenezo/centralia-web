@@ -4,7 +4,7 @@ import { Subscription } from 'rxjs';
 import { CatalogService } from 'src/app/business/services/catalog.service';
 import { OrderService } from 'src/app/common/services/order.service';
 import { IBusinessProducts } from 'src/app/common/models/product.model';
-import { IOrder, IOrderList } from 'src/app/common/models/order.model';
+import { IOrder } from 'src/app/common/models/order.model';
 
 @Component({
     selector: 'order-detail-table',
@@ -12,7 +12,7 @@ import { IOrder, IOrderList } from 'src/app/common/models/order.model';
     styleUrls: ['./order-detail-table.component.scss'],
 })
 export class OrderDetailTableComponent implements OnInit, OnDestroy {
-    @Input() orderList: IOrderList[];
+    @Input() orderList: IOrder[];
 
     public order: IOrder[] = [];
     public catalog: IBusinessProducts[] = [];
@@ -27,7 +27,7 @@ export class OrderDetailTableComponent implements OnInit, OnDestroy {
         'price',
         'quantity',
     ];
-    public dataSource: MatTableDataSource<IOrderList>;
+    public dataSource: MatTableDataSource<IOrder>;
 
     constructor(
         private _orderService: OrderService,
@@ -35,7 +35,7 @@ export class OrderDetailTableComponent implements OnInit, OnDestroy {
     ) {}
 
     ngOnInit(): void {
-        this.dataSource = new MatTableDataSource<IOrderList>(this.orderList);
+        this.dataSource = new MatTableDataSource<IOrder>(this.orderList);
     }
 
     public ngOnDestroy(): void {
@@ -70,7 +70,7 @@ export class OrderDetailTableComponent implements OnInit, OnDestroy {
             }
         });
 
-        this._orderService.removeProduct(id);
+        // this._orderService.removeProduct(id);
         this._catalogService.setCatalog(this.catalog);
     }
 }

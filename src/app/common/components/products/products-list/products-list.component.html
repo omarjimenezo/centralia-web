@@ -6,8 +6,6 @@
                 alt="Provider Picture" />
             <mat-card-title>{{ product.producto.descripcion }}</mat-card-title>
             <mat-card-subtitle>Precio: {{ product.precio | currency}}</mat-card-subtitle>
-            <mat-card-subtitle *ngIf="product.cantidad && product.cantidad > 0"><strong>Cantidad: {{ product.cantidad
-                    }}</strong></mat-card-subtitle>
         </mat-card-title-group>
     </mat-card>
 </div>

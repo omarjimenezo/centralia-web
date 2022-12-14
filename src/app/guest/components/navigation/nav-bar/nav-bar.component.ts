@@ -5,9 +5,7 @@ import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { LoginComponent } from 'src/app/auth/components/login/login.component';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { CatalogService } from 'src/app/business/services/catalog.service';
-import { CartDialogComponent } from 'src/app/common/components/products/cart-dialog/cart-dialog.component';
 import { ICategory } from 'src/app/common/models/product.model';
-import { IOrder } from 'src/app/common/models/order.model';
 import { IUser } from 'src/app/common/models/user.model';
 import { CatalogSearchService } from 'src/app/common/services/catalog-search.service';
 import { DataService } from 'src/app/common/services/data.service';
@@ -45,29 +43,19 @@ export class NavBarComponent implements OnInit {
     ) {
         this._router.events.subscribe((val) => {
             if (val instanceof NavigationEnd) {
-                this.catalogToolbar = this._router.url.includes('catalogo');
+                this.catalogToolbar = this._router.url.includes('productos');
             }
         });
     }
 
     public ngOnInit(): void {
         this.getUserInfo();
-        // this.getUrlParams();
         this.getCategories();
-        this.getOrder();
-        this.getTotal();
         this.getFilter();
     }
 
     public getUserInfo(): void {
         if (this._dataService.getUserInfo()) {
-            if (this._authService.isAuthenticated()) {
-                if (!this._dataService.getUserInfo()) {
-                    // let userInfo: IUser = this._dataService.getUserInfo();
-                    // this.confirmLogin(userInfo.id);
-                    // this._authService.landingPage(this._dataService.getUserRole())
-                }
-            }
             this.userInfo = this._dataService.getUserInfo();
         } else {
             this._dataService.setGuestUser();
@@ -75,16 +63,20 @@ export class NavBarComponent implements OnInit {
         }
     }
 
-  openLoginDialog(): void {
-    const dialogRef = this.dialog.open(LoginComponent, {
-      width: '350px',
-      data: {returnURL: false},
-    });
+    public isAuthenticated(): boolean {
+        return this._authService.isAuthenticated()
+    }
 
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-    });
-  }
+    openLoginDialog(): void {
+        const dialogRef = this.dialog.open(LoginComponent, {
+            width: '350px',
+            data: { returnURL: false },
+        });
+
+        dialogRef.afterClosed().subscribe(result => {
+            console.log('The dialog was closed');
+        });
+    }
 
     public getCategories(): void {
         this.loading = true;
@@ -103,27 +95,9 @@ export class NavBarComponent implements OnInit {
         );
     }
 
-    public getOrder(): void {
-        this._orderService.getOrder.subscribe(
-            (order: IOrder) => {
-                this.productsAdded = 0;
-                order.description.forEach((product) => {
-                    this.productsAdded += product.quantity;
-                });
-            }
-        );
-    }
-
-    public getTotal(): void {
-        this._orderService.getTotal.subscribe((total) => {
-            this.elementFadeout();
-            this.orderTotal = total;
-        });
-    }
-
     public getFilter(): void {
         this._catalogSearchService.getFilter.subscribe((data) => {
-            if(data === 'N') {
+            if (data === 'N') {
                 this.filterKey = data;
             }
         })
@@ -146,16 +120,6 @@ export class NavBarComponent implements OnInit {
         this._catalogSearchService.setSearch('');
         this.searchKey = '';
         this._catalogSearchService.setFilter(event);
-    }
-
-    public openCartDialog() {
-        const dialogRef = this.dialog.open(CartDialogComponent, {
-            width: '99%',
-        });
-
-        dialogRef.afterClosed().subscribe((result) => {
-            console.log(`Dialog closed: ${result}`);
-        });
     }
 
     public elementFadeout(): void {

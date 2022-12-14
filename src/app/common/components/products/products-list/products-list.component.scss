@@ -7,15 +7,15 @@
 
 .product-card {
     margin: 10px;
-    width: 45%;
+    width: 22%;
     padding: 5px;
 
     :hover {
         cursor: pointer;
     }
 
-    @media (min-width: 700px) and (max-width: 1008px) {
-        // max-width:100%;
+    @media (max-width: 1200px) {
+        width: 47%;
     }
 
     @media (max-width: 1008px) {

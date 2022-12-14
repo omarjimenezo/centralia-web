@@ -1,3 +1,5 @@
+import { IProduct } from "./product.model";
+
 export interface IOrderResponse {
     data: IOrder[]
 }
@@ -8,45 +10,26 @@ export interface IOrderStatusCatalogResponse {
 
 export interface IOrder {
     id?: string;
-    date?: Date;
-    status?: number;
-    // total: number;
-    // client_name?: string;
-    // client_id?: number;
-    // client_address?: string;
-    // provider_id: string;
-    // order_list: IOrderList[]
-    provider_id: string;
-    user_id?: string;
-    description: IOrderList[];
-    amount: number;
+    proveedor_id: string;
+    estatus?: IStatus;
+    productos: IOrderProduct[];
+    total: number;
 }
 
-export interface IOrderList {
-    // id: number;
-    // sku: string;
-    // description: string;
-    // price?: string;
-    // quantity: number;
-    product: IProduct;
-    quantity: number;
-}
-
-export interface IProduct {
-    id: string;
-    name: string;
-    price: number;
+export interface IOrderProduct {
+    producto: IProduct;
+    cantidad: number;
+    precio: number;
 }
 
 export interface IStatus {
     id: number;
-    label: string;
-    color: string;
+    nombre?: string;
 }
 
 export interface IOrderStatusRequest {
-    order_id: string;
-    status: number;
+    orden_id: string;
+    estatus: number;
 }
 
 export interface IOrderStatusCatalog {
