@@ -1,4 +1,4 @@
-<mat-toolbar color="primary" [class.position-fixed]="catalogToolbar">
+<mat-toolbar color="" [class.position-fixed]="catalogToolbar">
     <mat-toolbar-row>
         <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon"
             (click)="toogleSideNav()">
@@ -7,11 +7,11 @@
 
         <span class="nav-spacer"></span>
 
-        <span class="centralia-title"><img class="logo" src="./assets/img/centralia/logo.png" />Centralia</span>
+        <img class="logo" src="./assets/img/centralia/logo-centralia.jpeg" />
 
         <span class="nav-spacer"></span>
 
-        <button *ngIf="!isAuthenticated()" mat-raised-button (click)="openLoginDialog()">Iniciar Sesión</button>
+        <button color="primary" *ngIf="!isAuthenticated()" mat-raised-button (click)="openLoginDialog()">Iniciar Sesión</button>
 
         <img *ngIf="userInfo.avatar && isAuthenticated()" class="avatar mat-elevation-z4" [src]="userInfo.avatar" />
 
