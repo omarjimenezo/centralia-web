@@ -32,6 +32,7 @@ export class ProvidersComponent implements OnInit {
     }
 
     public onProviderCardClick(id: string) {
+        (this.isAuthenticated) ? this._router.navigate([this._global.ROUTES.BUSINESS.PRODUCTS, id]) :
         this._router.navigate([this._global.ROUTES.COMMON.PRODUCTS, id]);
     }
 
