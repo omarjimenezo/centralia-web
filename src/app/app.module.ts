@@ -9,6 +9,7 @@ import { BusinessModule } from './business/business.module';
 import { CommonComponentsModule } from './common/common.module';
 import { GuestModule } from './guest/guest.module';
 import { ProviderModule } from './provider/provider.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [AppComponent],
@@ -20,7 +21,8 @@ import { ProviderModule } from './provider/provider.module';
     GuestModule,
     BusinessModule,
     ProviderModule,
-    CommonComponentsModule
+    CommonComponentsModule,
+    BrowserAnimationsModule
   ],
   providers: [
     AuthGuardService,

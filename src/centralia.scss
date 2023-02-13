@@ -1,0 +1,106 @@
+// src/centralia.scss
+
+// ? Importing `Work Sans` font for headings, you can change this if you want
+@import url("https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500&display=swap");
+
+$centralia-blue-palette: (
+  50: #e3f7fc,
+  100: #b8e9f7,
+  200: #8ddaf3,
+  300: #67cbee,
+  400: #4fc0ec,
+  500: #40b4ea,
+  600: #39a6db,
+  700: #3193c8,
+  800: #2d82b4,
+  900: #236292,
+  A100: #82B1FF,
+  A200: #448AFF,
+  A400: #2979FF,
+  A700: #2962FF,
+  contrast: (
+    50: rgba(black, 0.87),
+    100: rgba(black, 0.87),
+    200: rgba(black, 0.87),
+    300: rgba(black, 0.87),
+    400: rgba(black, 0.87),
+    500: white,
+    600: white,
+    700: white,
+    800: white,
+    900: white,
+    A100: rgba(black, 0.87),
+    A200: rgba(black, 0.87),
+    A400: white,
+    A700: white,
+  )
+);
+
+$centralia-red-palette: (
+  50: #feecef,
+  100: #fecfd4,
+  200: #ee9d9e,
+  300: #e47779,
+  400: #ef5858,
+  500: #f44940,
+  600: #f44940,
+  700: #d33738,
+  800: #c63031,
+  900: #b72526,
+  A100: #FF8A80,
+  A200: #FF5252,
+  A400: #FF1744,
+  A700: #D50000,
+  contrast: (
+    50: rgba(black, 0.87),
+    100: rgba(black, 0.87),
+    200: rgba(black, 0.87),
+    300: rgba(black, 0.87),
+    400: rgba(black, 0.87),
+    500: white,
+    600: white,
+    700: white,
+    800: white,
+    900: white,
+    A100: rgba(black, 0.87),
+    A200: rgba(black, 0.87),
+    A400: white,
+    A700: white,
+  )
+);
+
+// ? 1. Default theme
+$centralia-material-components-primary: mat-palette($centralia-blue-palette, 600);
+$centralia-material-components-accent: mat-palette($centralia-blue-palette, 300);
+$centralia-material-components-warn: mat-palette($centralia-red-palette, 400);
+
+$centralia-material-components-theme: mat-light-theme(
+  $centralia-material-components-primary,
+  $centralia-material-components-accent,
+  $centralia-material-components-warn
+);
+
+// ? 2. Define an alternate dark theme.
+$dark-primary: mat-palette($mat-blue-grey);
+$dark-accent: mat-palette($mat-amber, A200, A100, A400);
+$dark-warn: mat-palette($mat-deep-orange);
+$dark-theme: mat-dark-theme(
+  (
+    color: (
+      primary: $dark-primary,
+      accent: $dark-accent,
+      warn: $dark-warn,
+    ),
+  )
+);
+
+// ? 3. Define a custom heading typography config
+$heading-font-family: "Roboto, sans-serif";
+$typography: mat-typography-config(
+  $display-4: mat-typography-level(112px, $font-family: $heading-font-family),
+  $display-3: mat-typography-level(56px, $font-family: $heading-font-family),
+  $display-2: mat-typography-level(45px, $font-family: $heading-font-family),
+  $display-1: mat-typography-level(34px, $font-family: $heading-font-family),
+  $headline: mat-typography-level(24px, $font-family: $heading-font-family),
+  $title: mat-typography-level(20px, $font-family: $heading-font-family),
+);
