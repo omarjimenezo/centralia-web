@@ -7,4 +7,13 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'centralia';
+
+  public events: string[] = [];
+    public opened: boolean = false;
+
+    constructor() {}
+
+    public menuOpen() {
+        console.log('menuOpen');
+    }
 }

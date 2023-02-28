@@ -27,13 +27,15 @@ import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { CookieService } from 'ngx-cookie-service';
 import { AlertComponent } from './components/alert/alert.component';
+import { NavBarComponent } from './components/navigation/nav-bar/nav-bar.component';
+import { SideNavComponent } from './components/navigation/side-nav/side-nav.component';
 import { AddDialogComponent } from './components/products/add-dialog/add-dialog.component';
+import { OrderListComponent } from './components/products/orders-dialog/order-list/order-list.component';
+import { OrdersDialogComponent } from './components/products/orders-dialog/orders-dialog.component';
+import { ProvidersListComponent } from './components/products/orders-dialog/providers-list/providers-list.component';
 import { ProductsListComponent } from './components/products/products-list/products-list.component';
 import { ProductsComponent } from './components/products/products.component';
 import { ProvidersComponent } from './components/providers/providers.component';
-import { OrdersDialogComponent } from './components/products/orders-dialog/orders-dialog.component';
-import { ProvidersListComponent } from './components/products/orders-dialog/providers-list/providers-list.component';
-import { OrderListComponent } from './components/products/orders-dialog/order-list/order-list.component';
 
 @NgModule({
     declarations: [
@@ -45,6 +47,8 @@ import { OrderListComponent } from './components/products/orders-dialog/order-li
         OrdersDialogComponent,
         ProvidersListComponent,
         OrderListComponent,
+        NavBarComponent,
+        SideNavComponent
     ],
     exports: [
         AlertComponent,
@@ -53,6 +57,8 @@ import { OrderListComponent } from './components/products/orders-dialog/order-li
         ProductsListComponent,
         AddDialogComponent,
         OrdersDialogComponent,
+        NavBarComponent,
+        SideNavComponent
     ],
     imports: [
         CommonModule,
@@ -62,9 +68,6 @@ import { OrderListComponent } from './components/products/orders-dialog/order-li
         ReactiveFormsModule,
 
         // Angular Material
-        MatSnackBarModule,
-        MatCardModule,
-        MatDividerModule,
         MatIconModule,
         MatCardModule,
         MatInputModule,
@@ -72,7 +75,6 @@ import { OrderListComponent } from './components/products/orders-dialog/order-li
         MatSnackBarModule,
         MatProgressSpinnerModule,
         MatToolbarModule,
-        MatIconModule,
         MatSidenavModule,
         MatCheckboxModule,
         MatDividerModule,

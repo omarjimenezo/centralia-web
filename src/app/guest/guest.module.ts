@@ -27,11 +27,11 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterModule } from '@angular/router';
+import { NavBarComponent } from '../common/components/navigation/nav-bar/nav-bar.component';
+import { SideNavComponent } from '../common/components/navigation/side-nav/side-nav.component';
 import { BusinessInfoComponent } from './components/info/business-info/business-info.component';
 import { GeneralInfoComponent } from './components/info/general-info/general-info.component';
 import { ProvidersInfoComponent } from './components/info/providers-info/providers-info.component';
-import { NavBarComponent } from './components/navigation/nav-bar/nav-bar.component';
-import { SideNavComponent } from './components/navigation/side-nav/side-nav.component';
 import { GuestRoutingModule } from './guest-routing.component';
 import { GuestComponent } from './guest.component';
 
@@ -41,16 +41,12 @@ import { GuestComponent } from './guest.component';
         ProvidersInfoComponent,
         GeneralInfoComponent,
         BusinessInfoComponent,
-        NavBarComponent,
-        SideNavComponent,
     ],
     exports: [
         GuestComponent,
         ProvidersInfoComponent,
         GeneralInfoComponent,
         BusinessInfoComponent,
-        NavBarComponent,
-        SideNavComponent,
     ],
     imports: [
         CommonModule,
@@ -60,6 +56,8 @@ import { GuestComponent } from './guest.component';
         ReactiveFormsModule,
         RouterModule,
         GuestRoutingModule,
+
+        
 
         // Angular Material
         MatCardModule,

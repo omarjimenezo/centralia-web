@@ -7,7 +7,7 @@ import { AuthGuardService as AuthGuard } from './auth/services/guard.service';
 const routes: Routes = [
     { path: '', redirectTo: 'invitado/info/general', pathMatch: 'full' },
 
-    { path: 'login', component: LoginComponent },
+    
     {
         path: 'invitado',
         loadChildren: () =>

@@ -59,14 +59,20 @@ export class LoginComponent implements OnInit {
                                 this.setUser(response.data.usuario);
                                 this.dialogRef.close();
                                 break;
+                            case 1:
+                                this._alertService.openAlert(
+                                    this._global.ERROR_MESSAGES.WRONG_USER_PASS,
+                                    1
+                                );
+                                break;
                             default:
                                 this._alertService.openAlert(
                                     this._global.ERROR_MESSAGES.WRONG_USER_PASS,
                                     1
                                 );
-                                this.loading = false;
                                 break;
                         }
+                        this.loading = false;
                     } else {
                         this._alertService.openAlert(
                             this._global.ERROR_MESSAGES.WRONG_USER_PASS,

@@ -4,17 +4,17 @@ import { AuthService } from "src/app/auth/services/auth.service";
 import { GlobalConstants } from "src/app/common/models/global.constants";
 import { IUser } from "src/app/common/models/user.model";
 import { DataService } from "src/app/common/services/data.service";
-import { NavBarService } from "../../services/nav-bar.service";
+import { NavBarService } from "src/app/guest/services/nav-bar.service";
 
 @Component({
-    selector: 'side-nav',
+    selector: 'centralia-side-nav',
     templateUrl: './side-nav.component.html',
     styleUrls: ['./side-nav.component.scss'],
 })
 export class SideNavComponent implements OnInit {
     @Output() menuOpen = new EventEmitter();
 
-    public user: IUser;
+    public userInfo: IUser;
 
     constructor(
         private _dataService: DataService, 
@@ -28,15 +28,21 @@ export class SideNavComponent implements OnInit {
     }
 
     public getUserInfo(): void {
-        this.user = this._dataService.getUserInfo();
+        this.userInfo = this._dataService.getUserInfo();
+    }
+
+    public isAuthenticated(): boolean {
+        return this._authService.isAuthenticated()
     }
 
     public onMenuItemClick(route: string): void {
         this._router.navigate([route]);
         this.menuOpen.emit('ok');
     }
-    
-    logout(event: MouseEvent): void {
+
+
+    logout(event: Event): void {
         this._authService.logout();
+        this.menuOpen.emit('ok');
     }
 }

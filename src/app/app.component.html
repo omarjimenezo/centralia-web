@@ -1,1 +1,13 @@
-<router-outlet></router-outlet>
+<centralia-nav-bar (menuOpen)="sidenav.toggle()"></centralia-nav-bar>
+
+<mat-sidenav-container class="main-container" [hasBackdrop]="true">
+    <mat-sidenav #sidenav mode="over" class="mat-elevation-z8" [(opened)]="opened">
+        <centralia-side-nav (menuOpen)="sidenav.toggle()"></centralia-side-nav>
+    </mat-sidenav>
+
+    <mat-sidenav-content>
+        <div class="content-container">
+            <router-outlet></router-outlet>
+        </div>
+    </mat-sidenav-content>
+</mat-sidenav-container>

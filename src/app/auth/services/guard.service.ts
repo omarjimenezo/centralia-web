@@ -21,7 +21,7 @@ export class AuthGuardService implements CanActivate {
         // decode the token to get its payload
         const userRole = this._dataService.getUserRole();
         if (!this._authService.isAuthenticated() || !expectedRole.includes(userRole)) {
-            this._router.navigate([this._global.ROUTES.AUTH.LOGIN]);
+            this._router.navigate([this._global.ROUTES.LANDINGPAGE]);
             this._alertService.openAlert(
                 this._global.ERROR_MESSAGES.USER_UNAUTHORIZED,
                 1

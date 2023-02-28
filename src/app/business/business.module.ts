@@ -26,33 +26,29 @@ import {
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { NavBarComponent } from '../common/components/navigation/nav-bar/nav-bar.component';
+import { SideNavComponent } from '../common/components/navigation/side-nav/side-nav.component';
 import { ClientRoutingModule } from './business-routing.module';
 import { BusinessComponent } from './business.component';
-import { NavBarComponent } from './navigation/nav-bar/nav-bar.component';
-import { OrderComponent } from './components/order/order.component';
-import { OrderDetailComponent } from './components/order/order-detail/order-detail.component';
 import { OrderDetailTableComponent } from './components/order/order-detail-table/order-detail-table.component';
+import { OrderDetailComponent } from './components/order/order-detail/order-detail.component';
 import { OrderTableComponent } from './components/order/order-table/order-table.component';
-import { SideNavComponent } from './navigation/side-nav/side-nav.component';
+import { OrderComponent } from './components/order/order.component';
 
 @NgModule({
     declarations: [
         BusinessComponent,
-        NavBarComponent,
         OrderComponent,
         OrderDetailComponent,
         OrderDetailTableComponent,
         OrderTableComponent,
-        SideNavComponent,
     ],
     exports: [
         BusinessComponent,
-        NavBarComponent,
         OrderComponent,
         OrderDetailComponent,
         OrderDetailTableComponent,
         OrderTableComponent,
-        SideNavComponent,
     ],
     imports: [
         CommonModule,
@@ -84,6 +80,7 @@ import { SideNavComponent } from './navigation/side-nav/side-nav.component';
         MatGridListModule,
         MatProgressBarModule,
         MatBottomSheetModule,
+        MatToolbarModule
     ],
     providers: [
         { provide: MAT_DIALOG_DATA, useValue: {} },

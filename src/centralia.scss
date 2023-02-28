@@ -23,7 +23,7 @@ $centralia-blue-palette: (
     100: rgba(black, 0.87),
     200: rgba(black, 0.87),
     300: rgba(black, 0.87),
-    400: rgba(black, 0.87),
+    400: white,
     500: white,
     600: white,
     700: white,
@@ -70,8 +70,8 @@ $centralia-red-palette: (
 );
 
 // ? 1. Default theme
-$centralia-material-components-primary: mat-palette($centralia-blue-palette, 600);
-$centralia-material-components-accent: mat-palette($centralia-blue-palette, 300);
+$centralia-material-components-primary: mat-palette($centralia-blue-palette, 900);
+$centralia-material-components-accent: mat-palette($centralia-blue-palette, 400);
 $centralia-material-components-warn: mat-palette($centralia-red-palette, 400);
 
 $centralia-material-components-theme: mat-light-theme(

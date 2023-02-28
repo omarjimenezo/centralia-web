@@ -12,7 +12,7 @@ import { DataService } from 'src/app/common/services/data.service';
 import { OrderService } from 'src/app/common/services/order.service';
 
 @Component({
-    selector: 'nav-bar',
+    selector: 'centralia-nav-bar',
     templateUrl: './nav-bar.component.html',
     styleUrls: ['./nav-bar.component.scss'],
 })
@@ -67,7 +67,7 @@ export class NavBarComponent implements OnInit {
         return this._authService.isAuthenticated()
     }
 
-    openLoginDialog(): void {
+    public openLoginDialog(): void {
         const dialogRef = this.dialog.open(LoginComponent, {
             width: '350px',
             data: { returnURL: false },
@@ -101,10 +101,6 @@ export class NavBarComponent implements OnInit {
                 this.filterKey = data;
             }
         })
-    }
-
-    public onLoginClick(): void {
-        console.log('Hacer Login')
     }
 
     public toogleSideNav(): void {
